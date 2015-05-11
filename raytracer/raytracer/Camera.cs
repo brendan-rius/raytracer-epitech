@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace raytracer
 {
-    public class Class1
+    public class Camera
     {
-        public int add(int a, int b)
-        {
-            return a + b;
-        }
     }
 }
