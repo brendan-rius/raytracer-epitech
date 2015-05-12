@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using raytracer;
 
 namespace tests
 {
     [TestClass]
-    public class CameraTest
+    public class FilmTest
     {
         [TestMethod]
         public void TesttoString()
         {
+            Film f = new Film(4, 5);
         }
     }
 }

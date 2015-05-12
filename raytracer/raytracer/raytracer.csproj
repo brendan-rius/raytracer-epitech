@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\raytracer.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +36,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Film.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ray.cs" />
+    <Compile Include="Renderer.cs" />
+    <Compile Include="Sample.cs" />
+    <Compile Include="Sampler.cs" />
+    <Compile Include="Scene.cs" />
+    <Compile Include="Spectrum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Numerics.Vectors">
