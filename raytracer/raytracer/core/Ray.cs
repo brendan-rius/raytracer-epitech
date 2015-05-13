@@ -8,7 +8,7 @@
     ///     <seealso cref="Scene" />
     ///     <seealso cref="Spectrum" />
     /// </summary>
-    internal class Ray
+    public class Ray
     {
         /// <summary>
         ///     The sample used to generate the ray
