@@ -22,5 +22,6 @@
             Sampler = sampler;
             Camera = camera;
         }
+
     }
 }

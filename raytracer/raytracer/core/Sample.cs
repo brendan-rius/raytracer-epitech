@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="x">the x coordinate</param>
         /// <param name="y">the y coordinate</param>
-        public Sample(int x, int y)
+        public Sample(float x, float y)
         {
             this.x = x;
             this.y = y;
@@ -22,11 +22,11 @@
         /// <summary>
         ///     The x coordinate on the camera
         /// </summary>
-        public int x { get; private set; }
+        public float x { get; private set; }
 
         /// <summary>
         ///     The y coordinate on the camera
         /// </summary>
-        public int y { get; private set; }
+        public float y { get; private set; }
     }
 }
