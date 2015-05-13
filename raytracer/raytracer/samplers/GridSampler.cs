@@ -28,9 +28,9 @@ namespace raytracer.samplers
 
         public override IEnumerable<Sample> Samples()
         {
-            for (var y = 0; y < Screen.y; ++y)
+            for (var y = 0.5f; y < Screen.y; ++y)
             {
-                for (var x = 0; x < Screen.x; ++x)
+                for (var x = 0.5f; x < Screen.x; ++x)
                 {
                     yield return new Sample(x, y);
                 }
