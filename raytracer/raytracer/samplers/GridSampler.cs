@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace raytracer.samplers
 {
@@ -14,7 +15,7 @@ namespace raytracer.samplers
         /// <summary>
         ///     The screen used to generate the samples
         /// </summary>
-        private Screen Screen;
+        protected Screen Screen;
 
         /// <summary>
         ///     Create the sampler from a screen.
@@ -33,6 +34,37 @@ namespace raytracer.samplers
                 for (var x = 0.5f; x < Screen.x; ++x)
                 {
                     yield return new Sample(x, y);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    ///     A jitter grid sampler create a random sample for each "pixel", (not at the center
+    ///     as a simple <seealso cref="GridSampler" /> would do. Thus, we can generate
+    ///     many sample for the same pixel, improving the render.
+    /// </summary>
+    internal class JitterGridSampler : GridSampler
+    {
+        private readonly Random RNG;
+
+        /// <summary>
+        ///     Creates a new sampler
+        /// </summary>
+        /// <param name="screen">the screen for the grid sampler</param>
+        /// <param name="rng">a random number generator. If null, this class will create one</param>
+        public JitterGridSampler(Screen screen, Random rng = null) : base(screen)
+        {
+            RNG = rng ?? new Random();
+        }
+
+        public override IEnumerable<Sample> Samples()
+        {
+            for (var y = 0f; y < Screen.y; ++y)
+            {
+                for (var x = 0f; x < Screen.x; ++x)
+                {
+                    yield return new Sample((float) RNG.NextDouble(), (float) RNG.NextDouble());
                 }
             }
         }
