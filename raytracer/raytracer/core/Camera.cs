@@ -7,7 +7,7 @@
     ///     A camera may also use lens.
     ///     <seealso cref="Film" />
     /// </summary>
-    internal abstract class Camera
+    public abstract class Camera
     {
         /// <summary>
         ///     Generate a ray from a camera sample
