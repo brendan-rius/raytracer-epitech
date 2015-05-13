@@ -1,6 +1,6 @@
 ﻿namespace raytracer
 {
-    internal class Scene
+    public class Scene
     {
     }
 }
