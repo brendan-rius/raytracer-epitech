@@ -10,7 +10,7 @@
     ///     <seealso cref="Sampler" />
     ///     <seealso cref="Sample" />
     /// </summary>
-    internal class Renderer
+    public class Renderer
     {
         protected Camera Camera;
         protected Sampler Sampler;
