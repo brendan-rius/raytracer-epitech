@@ -35,15 +35,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
-    <Compile Include="Film.cs" />
+    <Compile Include="core\Camera.cs" />
+    <Compile Include="core\Film.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ray.cs" />
-    <Compile Include="Renderer.cs" />
-    <Compile Include="Sample.cs" />
-    <Compile Include="Sampler.cs" />
-    <Compile Include="Scene.cs" />
-    <Compile Include="Spectrum.cs" />
+    <Compile Include="core\Ray.cs" />
+    <Compile Include="core\Renderer.cs" />
+    <Compile Include="core\Sample.cs" />
+    <Compile Include="core\Sampler.cs" />
+    <Compile Include="samplers\GridSampler.cs" />
+    <Compile Include="core\Scene.cs" />
+    <Compile Include="core\Spectrum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Numerics.Vectors">
