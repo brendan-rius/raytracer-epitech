@@ -37,6 +37,16 @@
         }
 
         /// <summary>
+        /// Create a new film from a screen
+        /// </summary>
+        /// <seealso cref="Screen"/>
+        /// <param name="screen"></param>
+        protected Film(Screen screen)
+        {
+            Screen = screen;
+        }
+
+        /// <summary>
         ///     A film has a screen size (which mays be, for a Film that creates an image, the image size).
         /// </summary>
         public Screen Screen { get; private set; }
