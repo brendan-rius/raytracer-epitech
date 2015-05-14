@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace raytracer
+namespace raytracer.core
 {
     /// <summary>
     ///     The goal of a sampler is to generate samples
@@ -9,8 +9,7 @@ namespace raytracer
     public abstract class Sampler
     {
         /// <summary>
-        ///     This methods generates a sample. It will be called many times,
-        ///     and this it has to give
+        ///     This methods method acts as an iterator over the samples
         /// </summary>
         /// <returns></returns>
         public abstract IEnumerable<Sample> Samples();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using raytracer.core;
 
 namespace raytracer.samplers
 {
@@ -29,9 +30,9 @@ namespace raytracer.samplers
 
         public override IEnumerable<Sample> Samples()
         {
-            for (var y = 0.5f; y < Screen.y; ++y)
+            for (var y = 0.5f; y < Screen.Height; ++y)
             {
-                for (var x = 0.5f; x < Screen.x; ++x)
+                for (var x = 0.5f; x < Screen.Width; ++x)
                 {
                     yield return new Sample(x, y);
                 }
@@ -44,7 +45,7 @@ namespace raytracer.samplers
     ///     as a simple <seealso cref="GridSampler" /> would do. Thus, we can generate
     ///     many sample for the same pixel, improving the render.
     /// </summary>
-    internal class JitterGridSampler : GridSampler
+    public class JitterGridSampler : GridSampler
     {
         private readonly Random RNG;
 
@@ -60,11 +61,11 @@ namespace raytracer.samplers
 
         public override IEnumerable<Sample> Samples()
         {
-            for (var y = 0f; y < Screen.y; ++y)
+            for (var y = 0f; y < Screen.Height; ++y)
             {
-                for (var x = 0f; x < Screen.x; ++x)
+                for (var x = 0f; x < Screen.Width; ++x)
                 {
-                    yield return new Sample((float) RNG.NextDouble(), (float) RNG.NextDouble());
+                    yield return new Sample(x + (float) RNG.NextDouble(), y + (float) RNG.NextDouble());
                 }
             }
         }

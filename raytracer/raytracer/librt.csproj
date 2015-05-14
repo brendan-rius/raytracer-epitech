@@ -37,8 +37,11 @@
   <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
     <Compile Include="core\Camera.cs" />
+    <Compile Include="core\mathematics\DifferentialGeometry.cs" />
     <Compile Include="core\Film.cs" />
+    <Compile Include="core\GeometricElement.cs" />
     <Compile Include="core\mathematics\Transformation.cs" />
+    <Compile Include="primitives\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="core\Ray.cs" />
     <Compile Include="core\Renderer.cs" />
@@ -56,6 +59,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

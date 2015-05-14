@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+﻿using raytracer.core.mathematics;
 
-namespace raytracer
+namespace raytracer.core
 {
     /// <summary>
     ///     The role of the camera is to see the scene, so that a film can record it.
@@ -14,16 +14,24 @@ namespace raytracer
         /// <summary>
         ///     Creates a camera.
         /// </summary>
+        /// <param name="screen">the screen of the camera</param>
         /// <param name="objectToWorld">the object-to-world transformation for the camera</param>
-        protected Camera(Screen screen, Matrix4x4 objectToWorld)
+        protected Camera(Screen screen, Transformation objectToWorld)
         {
             ObjectToWorld = objectToWorld;
             Screen = screen;
         }
 
-        public Screen Screen { get; protected set; }
+        /// <summary>
+        ///     The screen of the camera
+        /// </summary>
+        public Screen Screen { get; set; }
 
-        public Matrix4x4 ObjectToWorld { get; protected set; }
+        /// <summary>
+        ///     The transformation used to make an object in camera's space
+        ///     be an object in world space
+        /// </summary>
+        public Transformation ObjectToWorld { get; set; }
 
         /// <summary>
         ///     Generate a ray from a camera sample

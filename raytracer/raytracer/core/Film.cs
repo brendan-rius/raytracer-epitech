@@ -1,23 +1,30 @@
-﻿namespace raytracer
+﻿namespace raytracer.core
 {
     /// <summary>
-    ///     A screen is a basic structure containing a width (x) and a height (y).
+    ///     A screen is a basic structure containing a width and a height.
     ///     It defines the size of a screen.
     /// </summary>
     public struct Screen
     {
-        public readonly int x;
-        public readonly int y;
+        /// <summary>
+        ///     THe height of the screen
+        /// </summary>
+        public readonly uint Height;
+
+        /// <summary>
+        ///     The width of the screen
+        /// </summary>
+        public readonly uint Width;
 
         /// <summary>
         ///     Create a screen for width and height
         /// </summary>
-        /// <param name="x">the width</param>
-        /// <param name="y">the height</param>
-        public Screen(int x, int y)
+        /// <param name="width">the width</param>
+        /// <param name="height">the height</param>
+        public Screen(uint width, uint height)
         {
-            this.x = x;
-            this.y = y;
+            Width = width;
+            Height = height;
         }
     }
 
@@ -27,19 +34,9 @@
     public abstract class Film
     {
         /// <summary>
-        ///     Create a new film with a defined width and height
+        ///     Create a new film from a screen
         /// </summary>
-        /// <param name="x">the width of the film</param>
-        /// <param name="y">the height of the film</param>
-        protected Film(int x, int y)
-        {
-            Screen = new Screen(5, 5);
-        }
-
-        /// <summary>
-        /// Create a new film from a screen
-        /// </summary>
-        /// <seealso cref="Screen"/>
+        /// <seealso cref="Screen" />
         /// <param name="screen"></param>
         protected Film(Screen screen)
         {

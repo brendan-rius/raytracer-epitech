@@ -1,32 +1,32 @@
-﻿namespace raytracer
+﻿namespace raytracer.core
 {
     /// <summary>
     ///     A camera sample represents a "position" of the camera.
-    ///     A simple camera sample is made of x and a y coordinates, but
-    ///     it may also contain some information about time (the (x, y)'s pixel
+    ///     A simple camera sample is made of width and a height coordinates, but
+    ///     it may also contain some information about time (the (width, height)'s pixel
     ///     at time "t").
     /// </summary>
     public class Sample
     {
         /// <summary>
-        ///     Create a sample of coordinates (x; y)
+        ///     Create a sample of coordinates (width; height)
         /// </summary>
-        /// <param name="x">the x coordinate</param>
-        /// <param name="y">the y coordinate</param>
+        /// <param name="x">the width coordinate</param>
+        /// <param name="y">the height coordinate</param>
         public Sample(float x, float y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
 
         /// <summary>
-        ///     The x coordinate on the camera
+        ///     The X-coordinate on the camera
         /// </summary>
-        public float x { get; private set; }
+        public float X { get; private set; }
 
         /// <summary>
-        ///     The y coordinate on the camera
+        ///     The Y-coordinate on the camera
         /// </summary>
-        public float y { get; private set; }
+        public float Y { get; private set; }
     }
 }
