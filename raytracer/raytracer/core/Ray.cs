@@ -33,5 +33,29 @@ namespace raytracer.core
             Direction = direction;
             Origin = origin;
         }
+
+        /// <summary>
+        ///     Computes the point at a certain time on the ray
+        /// </summary>
+        /// <param name="t">the time</param>
+        /// <returns>a new point on the ray</returns>
+        public Vector3 PointAtTime(float t)
+        {
+            Vector3 point;
+            PointAtTime(t, out point);
+            return point;
+        }
+
+        /// <summary>
+        ///     Computes the point at a certain time on the ray
+        /// </summary>
+        /// <param name="t">the time</param>
+        /// <param name="point">the point</param>
+        public void PointAtTime(float t, out Vector3 point)
+        {
+            point.X = Origin.X + Direction.X*t;
+            point.Y = Origin.Y + Direction.Y*t;
+            point.Z = Origin.Z + Direction.Z*t;
+        }
     }
 }
