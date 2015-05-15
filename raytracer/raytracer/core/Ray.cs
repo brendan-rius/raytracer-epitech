@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+﻿using OpenTK;
 
 namespace raytracer.core
 {
@@ -10,8 +10,19 @@ namespace raytracer.core
     ///     <seealso cref="Scene" />
     ///     <seealso cref="Spectrum" />
     /// </summary>
-    public class Ray
+    public struct Ray
     {
+        /// <summary>
+        ///     The direction of the vector.
+        ///     This direction is not normalized.
+        /// </summary>
+        public Vector3 Direction;
+
+        /// <summary>
+        ///     The origin point of a ray
+        /// </summary>
+        public Vector3 Origin;
+
         /// <summary>
         ///     Create a ray from a direction and an origin
         /// </summary>
@@ -22,16 +33,5 @@ namespace raytracer.core
             Direction = direction;
             Origin = origin;
         }
-
-        /// <summary>
-        ///     The direction of the vector.
-        ///     This direction is not normalized.
-        /// </summary>
-        public Vector3 Direction { get; private set; }
-
-        /// <summary>
-        ///     The origin point of a ray
-        /// </summary>
-        public Vector3 Origin { get; private set; }
     }
 }

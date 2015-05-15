@@ -51,10 +51,12 @@
         /// </summary>
         public void Render()
         {
-            foreach (var sample in Sampler.Samples())
+            Ray ray;
+            var samples = Sampler.Samples();
+            foreach (var sample in samples)
             {
-                var ray = Camera.GenerateRay(sample);
-                Film.AddSample(sample, Scene.TryToIntersect(ray) ? Spectrum.BlueSpectrum : Spectrum.BlackSpectrum);
+                Camera.GenerateRay(sample, out ray);
+                Film.AddSample(sample, Scene.TryToIntersect(ref ray) ? Spectrum.BlueSpectrum : Spectrum.BlackSpectrum);
             }
         }
     }

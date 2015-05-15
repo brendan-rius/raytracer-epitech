@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
 
-[assembly: AssemblyTitle("rt")]
+[assembly: AssemblyTitle("console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("rt")]
+[assembly: AssemblyProduct("console")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
 
-[assembly: Guid("589eb1fe-f6c9-4301-9031-1c444e3aac03")]
+[assembly: Guid("955c14dc-0263-4a89-b9b9-102906ac99f7")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //

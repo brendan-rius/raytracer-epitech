@@ -32,6 +32,6 @@ namespace raytracer.core
         /// <param name="ray">the ray to intersect with the object</param>
         /// <param name="differentialGeometry">the differential geometry element to fill</param>
         /// <returns>either true of the intersection has be done, or false otherwise</returns>
-        public abstract bool TryToIntersect(Ray ray, out DifferentialGeometry? differentialGeometry);
+        public abstract bool TryToIntersect(ref Ray ray, out DifferentialGeometry? differentialGeometry);
     }
 }

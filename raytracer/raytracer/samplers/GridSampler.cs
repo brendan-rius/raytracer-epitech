@@ -47,17 +47,24 @@ namespace raytracer.samplers
     /// </summary>
     public class JitterGridSampler : GridSampler
     {
-        private readonly Random RNG;
+        private readonly Random _rng;
 
         /// <summary>
         ///     Creates a new sampler
         /// </summary>
         /// <param name="screen">the screen for the grid sampler</param>
+        /// <param name="nsamples">the number of sample to generate for each pixel</param>
         /// <param name="rng">a random number generator. If null, this class will create one</param>
-        public JitterGridSampler(Screen screen, Random rng = null) : base(screen)
+        public JitterGridSampler(Screen screen, uint nsamples = 4, Random rng = null) : base(screen)
         {
-            RNG = rng ?? new Random();
+            _rng = rng ?? new Random();
+            NumberOfSamples = nsamples;
         }
+
+        /// <summary>
+        ///     The number of sample generated for each pixel
+        /// </summary>
+        public uint NumberOfSamples { get; set; }
 
         public override IEnumerable<Sample> Samples()
         {
@@ -65,7 +72,10 @@ namespace raytracer.samplers
             {
                 for (var x = 0f; x < Screen.Width; ++x)
                 {
-                    yield return new Sample(x + (float) RNG.NextDouble(), y + (float) RNG.NextDouble());
+                    for (var i = 0; i < NumberOfSamples; ++i)
+                    {
+                        yield return new Sample(x + (float) _rng.NextDouble(), y + (float) _rng.NextDouble());
+                    }
                 }
             }
         }

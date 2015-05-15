@@ -46,7 +46,7 @@
         /// <summary>
         ///     A film has a screen size (which mays be, for a Film that creates an image, the image size).
         /// </summary>
-        public Screen Screen { get; private set; }
+        public Screen Screen { get; set; }
 
         /// <summary>
         ///     Adds the result of the ray casting (a spectrum) for the ray generated

@@ -24,12 +24,12 @@ namespace raytracer.core
         /// </summary>
         /// <param name="ray">the ray to intersect</param>
         /// <returns>true if the ray has been intersected, false otherwise</returns>
-        public bool TryToIntersect(Ray ray)
+        public bool TryToIntersect(ref Ray ray)
         {
             foreach (var element in Elements)
             {
                 DifferentialGeometry? dg;
-                if (element.TryToIntersect(ray, out dg))
+                if (element.TryToIntersect(ref ray, out dg))
                     return true;
             }
             return false;
