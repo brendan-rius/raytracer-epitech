@@ -16,11 +16,13 @@ namespace rt
         {
             InitializeComponent();
             var scene = new Scene();
-            scene.Elements.Add(new Sphere());
+            scene.Elements.Add(
+                new Sphere(Transformation.ScaleXYZ(200, 100, 100).InverseTransformation*
+                           Transformation.RotateZ(45).InverseTransformation));
             var screen = new Screen(1024, 768);
             var film = new MyFilm(screen);
-            var camera = new SimpleCamera(screen, Transformation.Translation(0, 0, 2));
-            var renderer = new Renderer(scene, new JitterGridSampler(screen), camera, film);
+            var camera = new SimpleCamera(screen, Transformation.Translation(0, 0, 500));
+            var renderer = new Renderer(scene, new GridSampler(screen), camera, film);
             renderer.Render();
             film.Display(pictureBox1);
         }
@@ -61,7 +63,7 @@ namespace rt
             for (var i = 0; i < screen.Height; ++i)
             {
                 for (var j = 0; j < screen.Width; ++j)
-                    Colors[i, j] = new SampledColor(4);
+                    Colors[i, j] = new SampledColor(1);
             }
             Screen = screen;
         }

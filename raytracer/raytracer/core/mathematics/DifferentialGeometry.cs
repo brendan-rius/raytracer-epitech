@@ -5,17 +5,21 @@ namespace raytracer.core.mathematics
     /// <summary>
     ///     Holds the information about an intersection with a <see cref="GeometricElement" />
     /// </summary>
-    public struct DifferentialGeometry
+    public class DifferentialGeometry
     {
         /// <summary>
         ///     Initialize a differential geometry from an intersection point and a normal vector
         /// </summary>
         /// <param name="point">the intersection point</param>
         /// <param name="normalVector">the normal vector</param>
-        public DifferentialGeometry(Vector3 point, Vector3 normalVector) : this()
+        public DifferentialGeometry(Vector3 point, Vector3 normalVector)
         {
             Point = point;
             NormalVector = normalVector;
+        }
+
+        public DifferentialGeometry()
+        {
         }
 
         /// <summary>

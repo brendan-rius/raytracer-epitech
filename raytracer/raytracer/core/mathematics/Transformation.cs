@@ -124,6 +124,28 @@ namespace raytracer.core.mathematics
         }
 
         /// <summary>
+        ///     Transform a point
+        /// </summary>
+        /// <param name="point">the point to transform</param>
+        /// <param name="transformedPoint">the result point</param>
+        public void TransformPoint(ref Vector3 point, out Vector3 transformedPoint)
+        {
+            Vector3.TransformPosition(ref point, ref TransformationMatrix, out transformedPoint);
+        }
+
+        /// <summary>
+        ///     Transform a point
+        /// </summary>
+        /// <param name="point">the point to transform</param>
+        /// <returns>the transformed point</returns>
+        public Vector3 TransformPoint(ref Vector3 point)
+        {
+            Vector3 transformedPoint;
+            Vector3.TransformPosition(ref point, ref TransformationMatrix, out transformedPoint);
+            return transformedPoint;
+        }
+
+        /// <summary>
         ///     Merge multiple transformations into a single one
         /// </summary>
         /// <param name="transformations">the list of transformations to merge</param>
@@ -141,8 +163,28 @@ namespace raytracer.core.mathematics
         /// <returns>the composed transformation</returns>
         public static Transformation operator *(Transformation left, Transformation right)
         {
-            return new Transformation(left.TransformationMatrix*right.TransformationMatrix,
-                left.InverseTransformationMatrix*right.InverseTransformationMatrix);
+            return new Transformation(right.TransformationMatrix*left.TransformationMatrix,
+                right.InverseTransformationMatrix*left.InverseTransformationMatrix);
+        }
+
+        public static Transformation RotateX(float x)
+        {
+            return new Transformation(Matrix4.CreateRotationX(x));
+        }
+
+        public static Transformation RotateY(float y)
+        {
+            return new Transformation(Matrix4.CreateRotationY(y));
+        }
+
+        public static Transformation RotateZ(float z)
+        {
+            return new Transformation(Matrix4.CreateRotationZ(z));
+        }
+
+        public static Transformation ScaleXYZ(float x, float y, float z)
+        {
+            return new Transformation(Matrix4.CreateScale(x, y, z));
         }
     }
 }

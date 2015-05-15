@@ -10,7 +10,7 @@ namespace raytracer.primitives
         {
         }
 
-        public override bool TryToIntersect(ref Ray ray, out DifferentialGeometry? differentialGeometry)
+        public override bool TryToIntersect(ref Ray ray, ref DifferentialGeometry differentialGeometry)
         {
             Ray rayInObjectWorld;
             WorldToObjectTransformation.TransformRay(ref ray, out rayInObjectWorld);
@@ -21,9 +21,13 @@ namespace raytracer.primitives
             Vector3.Dot(ref rayInObjectWorld.Origin, ref rayInObjectWorld.Origin, out c);
             c -= 1;
 
-            var d = b*b - 4*a*c;
-            differentialGeometry = null;
-            return !(d < 0f);
+            float t1, t2;
+            if (!Solver.TrySolvePolynomial2(a, b, c, out t1, out t2))
+                return false;
+            var intersectionPoint = rayInObjectWorld.PointAtTime(t1);
+            differentialGeometry.Point =
+                WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
+            return true;
         }
     }
 }

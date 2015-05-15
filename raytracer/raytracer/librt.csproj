@@ -40,6 +40,7 @@
     <Compile Include="core\mathematics\DifferentialGeometry.cs" />
     <Compile Include="core\Film.cs" />
     <Compile Include="core\GeometricElement.cs" />
+    <Compile Include="core\mathematics\Solver.cs" />
     <Compile Include="core\mathematics\Transformation.cs" />
     <Compile Include="primitives\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

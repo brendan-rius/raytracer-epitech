@@ -26,10 +26,11 @@ namespace raytracer.core
         /// <returns>true if the ray has been intersected, false otherwise</returns>
         public bool TryToIntersect(ref Ray ray)
         {
+            var dg = new DifferentialGeometry();
+            ;
             foreach (var element in Elements)
             {
-                DifferentialGeometry? dg;
-                if (element.TryToIntersect(ref ray, out dg))
+                if (element.TryToIntersect(ref ray, ref dg))
                     return true;
             }
             return false;
