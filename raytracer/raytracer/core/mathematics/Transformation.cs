@@ -167,24 +167,56 @@ namespace raytracer.core.mathematics
                 right.InverseTransformationMatrix*left.InverseTransformationMatrix);
         }
 
+        /// <summary>
+        ///     Rotation around X axis
+        /// </summary>
+        /// <param name="x">the rotation angle in degrees</param>
+        /// <returns>the transformation</returns>
         public static Transformation RotateX(float x)
         {
             return new Transformation(Matrix4.CreateRotationX(x));
         }
 
+        /// <summary>
+        ///     Rotation around Y axis
+        /// </summary>
+        /// <param name="y">the rotation angle in degrees</param>
+        /// <returns>the transformation</returns>
         public static Transformation RotateY(float y)
         {
             return new Transformation(Matrix4.CreateRotationY(y));
         }
 
+        /// <summary>
+        ///     Rotation around Z axis
+        /// </summary>
+        /// <param name="z">the rotation angle in degrees</param>
+        /// <returns>the transformation</returns>
         public static Transformation RotateZ(float z)
         {
             return new Transformation(Matrix4.CreateRotationZ(z));
         }
 
+        /// <summary>
+        ///     Scale anisotropically
+        /// </summary>
+        /// <param name="x">the x scaling factor</param>
+        /// <param name="y">the y scaling factor</param>
+        /// <param name="z">the z scaling factor</param>
+        /// <returns>the transformation</returns>
         public static Transformation ScaleXYZ(float x, float y, float z)
         {
             return new Transformation(Matrix4.CreateScale(x, y, z));
+        }
+
+        /// <summary>
+        ///     Scale uniformly by a factor
+        /// </summary>
+        /// <param name="factor">the scaling factor</param>
+        /// <returns>the transformation</returns>
+        public static Transformation Scale(float factor)
+        {
+            return new Transformation(Matrix4.CreateScale(factor, factor, factor));
         }
     }
 }
