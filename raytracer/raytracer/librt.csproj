@@ -50,7 +50,7 @@
     <Compile Include="core\Sampler.cs" />
     <Compile Include="samplers\GridSampler.cs" />
     <Compile Include="core\Scene.cs" />
-    <Compile Include="core\Spectrum.cs" />
+    <Compile Include="core\RGBSpectrum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
