@@ -27,7 +27,6 @@ namespace raytracer.core
         public bool TryToIntersect(ref Ray ray)
         {
             var dg = new DifferentialGeometry();
-            ;
             foreach (var element in Elements)
             {
                 if (element.TryToIntersect(ref ray, ref dg))
