@@ -8,10 +8,7 @@ namespace raytracer.primitives
         public override bool TryToIntersect(ref Ray ray, ref DifferentialGeometry differentialGeometry)
         {
             var rayInObjectWorld = WorldToObjectTransformation.TransformRay(ref ray);
-            if (ray.Direction.Y == 0f)
-            {
-                return ray.Origin.Y == 0f;
-            }
+            if (ray.Direction.Y == 0f) return false;
             var t = -ray.Origin.Y/ray.Direction.Y;
             if (t < ray.Start || t > ray.End)
                 return false;
@@ -21,4 +18,4 @@ namespace raytracer.primitives
             return true;
         }
     }
-}
+}   
