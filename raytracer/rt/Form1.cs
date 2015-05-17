@@ -44,7 +44,7 @@ namespace rt
             B += color.Blue;
         }
 
-        public Color toColor()
+        public Color ToColor()
         {
             return Color.FromArgb(Math.Min((int) (R/NumberOfSamples*255), 255),
                 Math.Min((int) (G/NumberOfSamples*255), 255),
@@ -76,7 +76,7 @@ namespace rt
             {
                 for (var x = 0; x < Screen.Width; ++x)
                 {
-                    Flag.SetPixel(x, y, Colors[y, x].toColor());
+                    Flag.SetPixel(x, y, Colors[y, x].ToColor());
                 }
             }
             picture.Image = Flag;
@@ -84,7 +84,7 @@ namespace rt
 
         public override void AddSample(Sample sample, RGBSpectrum spectrum)
         {
-            var color = Colors[(int)sample.Y, (int)sample.X];
+            var color = Colors[(int) sample.Y, (int) sample.X];
             if (color != null)
                 color.AddSample(spectrum);
         }
