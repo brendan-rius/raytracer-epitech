@@ -14,6 +14,8 @@ namespace raytracer.cameras
         {
             ray.Direction = new Vector3(-Screen.Width/2f + sample.X, Screen.Height/2f - sample.Y, 400);
             ray.Origin = Vector3.Zero;
+            ray.Start = Ray.DefaultStartValue;
+            ray.End = Ray.DefaultEndValue;
             ObjectToWorld.TransformRay(ref ray, out ray);
         }
     }

@@ -11,6 +11,9 @@ namespace raytracer.core
     /// </summary>
     public struct Ray
     {
+        public const float DefaultEndValue = float.PositiveInfinity;
+        public const float DefaultStartValue = 0f;
+
         /// <summary>
         ///     The direction of the vector.
         ///     This direction is not normalized.
@@ -42,7 +45,8 @@ namespace raytracer.core
         /// <param name="origin">the origin of the ray</param>
         /// <param name="start">the start time of the ray (0 by default)</param>
         /// <param name="end">the end time of the ray (+Infinity by default)</param>
-        public Ray(Vector3 direction, Vector3 origin, float start = 0f, float end = float.PositiveInfinity)
+        public Ray(Vector3 direction, Vector3 origin, float start = DefaultStartValue,
+            float end = float.PositiveInfinity)
         {
             Direction = direction;
             Origin = origin;

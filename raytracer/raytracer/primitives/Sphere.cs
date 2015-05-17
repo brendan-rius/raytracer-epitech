@@ -24,7 +24,13 @@ namespace raytracer.primitives
             float t1, t2;
             if (!Solver.TrySolvePolynomial2(a, b, c, out t1, out t2))
                 return false;
-            var intersectionPoint = rayInObjectWorld.PointAtTime(t1);
+            var thit = t1;
+            if (t1 < ray.Start)
+            {
+                thit = t2;
+                if (thit > ray.End) return false;
+            }
+            var intersectionPoint = rayInObjectWorld.PointAtTime(thit);
             differentialGeometry.Point =
                 WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
             return true;

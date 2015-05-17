@@ -13,7 +13,7 @@ namespace raytracer.primitives
                 return ray.Origin.Y == 0f;
             }
             var t = -ray.Origin.Y/ray.Direction.Y;
-            if (t < 0)
+            if (t < ray.Start || t > ray.End)
                 return false;
             var intersectionPoint = rayInObjectWorld.PointAtTime(t);
             differentialGeometry.Point =
