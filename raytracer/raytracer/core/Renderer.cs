@@ -56,7 +56,7 @@
             foreach (var sample in samples)
             {
                 Camera.GenerateRay(sample, out ray);
-                Film.AddSample(sample, Scene.TryToIntersect(ref ray) ? Spectrum.BlueSpectrum : Spectrum.BlackSpectrum);
+                Film.AddSample(sample, Scene.TryToIntersect(ref ray) ? new RGBSpectrum(1, 0, 0) : new RGBSpectrum(0, 0, 1));
             }
         }
     }

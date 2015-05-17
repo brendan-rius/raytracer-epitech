@@ -31,7 +31,7 @@
     /// <summary>
     ///     A film records
     /// </summary>
-    public abstract class Film<T> where T : Spectrum<T>
+    public abstract class Film
     {
         /// <summary>
         ///     Create a new film from a screen
@@ -56,6 +56,6 @@
         /// </summary>
         /// <param name="sample">the sample from which the ray was generated</param>
         /// <param name="spectrum">the result of the casting of the ray in the scene</param>
-        public abstract void AddSample(Sample sample, T spectrum);
+        public abstract void AddSample(Sample sample, RGBSpectrum spectrum);
     }
 }

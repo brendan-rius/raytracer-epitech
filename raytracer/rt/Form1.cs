@@ -16,12 +16,10 @@ namespace rt
         {
             InitializeComponent();
             var scene = new Scene();
-            scene.Elements.Add(
-                new Sphere(Transformation.ScaleXYZ(200, 100, 100).InverseTransformation*
-                           Transformation.RotateZ(45).InverseTransformation));
+            scene.Elements.Add(new Plane());
             var screen = new Screen(1024, 768);
             var film = new MyFilm(screen);
-            var camera = new SimpleCamera(screen, Transformation.Translation(0, 0, 500));
+            var camera = new SimpleCamera(screen, Transformation.Translation(0, 10, 500));
             var renderer = new Renderer(scene, new GridSampler(screen), camera, film);
             renderer.Render();
             film.Display(pictureBox1);
@@ -39,7 +37,7 @@ namespace rt
 
         public uint NumberOfSamples { get; set; }
 
-        public void addSample(Spectrum color)
+        public void AddSample(RGBSpectrum color)
         {
             R += color.Red;
             G += color.Green;
@@ -72,13 +70,6 @@ namespace rt
         public Bitmap Flag { get; set; }
         public PictureBox Picture { get; set; }
 
-        public override void AddSample(Sample sample, Spectrum spectrum)
-        {
-            var color = Colors[(int) sample.Y, (int) sample.X];
-            if (color != null)
-                color.addSample(spectrum);
-        }
-
         public void Display(PictureBox picture)
         {
             for (var y = 0; y < Screen.Height; ++y)
@@ -89,6 +80,13 @@ namespace rt
                 }
             }
             picture.Image = Flag;
+        }
+
+        public override void AddSample(Sample sample, RGBSpectrum spectrum)
+        {
+            var color = Colors[(int)sample.Y, (int)sample.X];
+            if (color != null)
+                color.AddSample(spectrum);
         }
     }
 }

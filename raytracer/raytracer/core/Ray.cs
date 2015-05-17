@@ -8,7 +8,6 @@ namespace raytracer.core
     ///     <seealso cref="Camera" />
     ///     <seealso cref="Sample" />
     ///     <seealso cref="Scene" />
-    ///     <seealso cref="Spectrum" />
     /// </summary>
     public struct Ray
     {
@@ -19,19 +18,36 @@ namespace raytracer.core
         public Vector3 Direction;
 
         /// <summary>
+        ///     The endpoint of the ray in terms of time
+        /// </summary>
+        public float End;
+
+        /// <summary>
         ///     The origin point of a ray
         /// </summary>
         public Vector3 Origin;
 
         /// <summary>
-        ///     Create a ray from a direction and an origin
+        ///     The start point of the ray in terms of time
+        /// </summary>
+        public float Start;
+
+        /// <summary>
+        ///     Create a ray from a direction and an origin.
+        ///     A ray can have a start and an end time which define the two end-points of the
+        ///     ray. By default these are 0 (for start time on the ray), and +Infinity (for
+        ///     end start of the ray)
         /// </summary>
         /// <param name="direction">the direction of the ray</param>
         /// <param name="origin">the origin of the ray</param>
-        public Ray(Vector3 direction, Vector3 origin)
+        /// <param name="start">the start time of the ray (0 by default)</param>
+        /// <param name="end">the end time of the ray (+Infinity by default)</param>
+        public Ray(Vector3 direction, Vector3 origin, float start = 0f, float end = float.PositiveInfinity)
         {
             Direction = direction;
             Origin = origin;
+            Start = start;
+            End = end;
         }
 
         /// <summary>
