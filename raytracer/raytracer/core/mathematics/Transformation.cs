@@ -148,6 +148,27 @@ namespace raytracer.core.mathematics
         }
 
         /// <summary>
+        ///     Transform a vector
+        /// </summary>
+        /// <param name="vector">the vector to transform</param>
+        /// <param name="transformedVector">the result vector</param>
+        public void TransformVector(ref Vector3 vector, out Vector3 transformedVector)
+        {
+            Vector3.TransformVector(ref vector, ref TransformationMatrix, out transformedVector);
+        }
+
+        /// <summary>
+        ///     Transform a vector
+        /// </summary>
+        /// <param name="vector">the vector to transform</param>
+        public Vector3 TransformVector(ref Vector3 vector)
+        {
+            Vector3 transformedVector;
+            Vector3.TransformVector(ref vector, ref TransformationMatrix, out transformedVector);
+            return transformedVector;
+        }
+
+        /// <summary>
         ///     Merge multiple transformations into a single one
         /// </summary>
         /// <param name="transformations">the list of transformations to merge</param>

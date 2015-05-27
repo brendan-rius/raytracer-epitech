@@ -18,13 +18,19 @@
         /// <param name="scene">the scene to render</param>
         /// <param name="sampler">the sampler</param>
         /// <param name="camera">the camera</param>
-        public Renderer(Scene scene, Sampler sampler, Camera camera, Film film)
+        public Renderer(Scene scene, Sampler sampler, Camera camera, Film film, Integrator integrator)
         {
             Film = film;
             Scene = scene;
             Sampler = sampler;
             Camera = camera;
+            Integrator = integrator;
         }
+
+        /// <summary>
+        ///     The integrator used
+        /// </summary>
+        public Integrator Integrator { get; set; }
 
         /// <summary>
         ///     The film to which the scene will be rendered
@@ -52,12 +58,16 @@
         public void Render()
         {
             Ray ray;
+            Intersection intersection;
+
             var samples = Sampler.Samples();
             foreach (var sample in samples)
             {
                 Camera.GenerateRay(sample, out ray);
-                Film.AddSample(sample,
-                    Scene.TryToIntersect(ref ray) ? new RGBSpectrum(1, 0, 0) : new RGBSpectrum(0, 0, 1));
+                if (Scene.TryToIntersect(ref ray, out intersection))
+                {
+                    Film.AddSample(sample, Integrator.Li(Scene, ref ray, ref intersection));
+                }
             }
         }
     }

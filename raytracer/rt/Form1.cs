@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using OpenTK;
 using raytracer.cameras;
 using raytracer.core;
 using raytracer.core.mathematics;
@@ -16,11 +17,13 @@ namespace rt
         {
             InitializeComponent();
             var scene = new Scene();
-            scene.Elements.Add(new Plane());
+            scene.Lights.Add(new Light(new Vector3(50, 0, 0)));
+            scene.Elements.Add(new Primitive(new Sphere(Transformation.Scale(50).InverseTransformation),
+                new MatteMaterial()));
             var screen = new Screen(1024, 768);
             var film = new MyFilm(screen);
             var camera = new SimpleCamera(screen, Transformation.Translation(0, 10, 500));
-            var renderer = new Renderer(scene, new GridSampler(screen), camera, film);
+            var renderer = new Renderer(scene, new GridSampler(screen), camera, film, new WhittedIntegrator());
             renderer.Render();
             film.Display(pictureBox1);
         }
@@ -37,18 +40,18 @@ namespace rt
 
         public uint NumberOfSamples { get; set; }
 
-        public void AddSample(RGBSpectrum color)
+        public void AddSample(Tuple<float, float, float> color)
         {
-            R += color.Red;
-            G += color.Green;
-            B += color.Blue;
+            R += color.Item1;
+            G += color.Item2;
+            B += color.Item3;
         }
 
         public Color ToColor()
         {
-            return Color.FromArgb(Math.Min((int) (R/NumberOfSamples*255), 255),
-                Math.Min((int) (G/NumberOfSamples*255), 255),
-                Math.Min((int) (B/NumberOfSamples*255), 255));
+            return Color.FromArgb((int) MathHelper.Clamp(R/NumberOfSamples*255, 0, 255),
+                (int) MathHelper.Clamp(G/NumberOfSamples*255, 0, 255),
+                (int) MathHelper.Clamp(G/NumberOfSamples*255, 0, 255));
         }
     }
 
@@ -82,11 +85,11 @@ namespace rt
             picture.Image = Flag;
         }
 
-        public override void AddSample(Sample sample, RGBSpectrum spectrum)
+        public override void AddSample(Sample sample, SampledSpectrum spectrum)
         {
             var color = Colors[(int) sample.Y, (int) sample.X];
             if (color != null)
-                color.AddSample(spectrum);
+                color.AddSample(spectrum.ToRGB());
         }
     }
 }

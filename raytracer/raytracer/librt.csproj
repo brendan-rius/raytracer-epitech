@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>raytracer</RootNamespace>
-    <AssemblyName>²</AssemblyName>
+    <AssemblyName>librt</AssemblyName>
     <DefaultLanguage>fr-FR</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\².xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\librt.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,12 +36,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
+    <Compile Include="core\BRDF.cs" />
+    <Compile Include="core\BSDF.cs" />
+    <Compile Include="core\BTDF.cs" />
     <Compile Include="core\Camera.cs" />
-    <Compile Include="core\mathematics\DifferentialGeometry.cs" />
+    <Compile Include="core\Integrator.cs" />
+    <Compile Include="core\IIntersectable.cs" />
+    <Compile Include="core\Intersection.cs" />
     <Compile Include="core\Film.cs" />
-    <Compile Include="core\GeometricElement.cs" />
+    <Compile Include="core\Light.cs" />
+    <Compile Include="core\Material.cs" />
+    <Compile Include="core\mathematics\BxDF.cs" />
+    <Compile Include="core\Shape.cs" />
     <Compile Include="core\mathematics\Solver.cs" />
     <Compile Include="core\mathematics\Transformation.cs" />
+    <Compile Include="core\CoefficientSpectrum.cs" />
+    <Compile Include="core\Primitive.cs" />
+    <Compile Include="core\SampledSpectrum.cs" />
+    <Compile Include="core\StaticRandom.cs" />
+    <Compile Include="Material.cs" />
     <Compile Include="primitives\Plane.cs" />
     <Compile Include="primitives\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,7 +64,6 @@
     <Compile Include="core\Sampler.cs" />
     <Compile Include="samplers\GridSampler.cs" />
     <Compile Include="core\Scene.cs" />
-    <Compile Include="core\RGBSpectrum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

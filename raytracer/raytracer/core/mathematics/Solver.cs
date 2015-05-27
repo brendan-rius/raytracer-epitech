@@ -26,5 +26,10 @@ namespace raytracer.core.mathematics
             secondRoot = tmp;
             return true;
         }
+
+        public static float Lerp(float t, float start, float end)
+        {
+            return (1 - t)*start + t*end;
+        }
     }
 }

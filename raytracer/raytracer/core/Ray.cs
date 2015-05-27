@@ -16,7 +16,7 @@ namespace raytracer.core
 
         /// <summary>
         ///     The direction of the vector.
-        ///     This direction is not normalized.
+        ///     This direction is normalized.
         /// </summary>
         public Vector3 Direction;
 

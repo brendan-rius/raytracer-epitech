@@ -5,7 +5,7 @@ namespace raytracer.core
     /// <summary>
     ///     A geometric element
     /// </summary>
-    public abstract class GeometricElement
+    public abstract class Shape : IIntersectable
     {
         /// <summary>
         ///     Create a geometric element and set its transformation
@@ -14,7 +14,7 @@ namespace raytracer.core
         ///     the transformation used to make an object in world space be an
         ///     object in element's space
         /// </param>
-        protected GeometricElement(Transformation worldToObjectTransformation = null)
+        protected Shape(Transformation worldToObjectTransformation = null)
         {
             WorldToObjectTransformation = worldToObjectTransformation ?? Transformation.Identity;
         }
@@ -26,12 +26,12 @@ namespace raytracer.core
         public Transformation WorldToObjectTransformation { get; set; }
 
         /// <summary>
-        ///     Try to intersect a ray with an element, and get the differential geometry info
-        ///     about the intersection
+        ///     Try to intersect a ray with an element, and get informations about
+        ///     intersection
         /// </summary>
         /// <param name="ray">the ray to intersect with the object</param>
-        /// <param name="differentialGeometry">the differential geometry element to fill</param>
+        /// <param name="intersection">the intersection information holder to fill</param>
         /// <returns>either true of the intersection has be done, or false otherwise</returns>
-        public abstract bool TryToIntersect(ref Ray ray, ref DifferentialGeometry differentialGeometry);
+        public abstract bool TryToIntersect(ref Ray ray, ref Intersection intersection);
     }
 }

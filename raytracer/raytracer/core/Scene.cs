@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using raytracer.core.mathematics;
 
 namespace raytracer.core
 {
@@ -8,15 +7,22 @@ namespace raytracer.core
     /// </summary>
     public class Scene
     {
-        private List<GeometricElement> _elements = new List<GeometricElement>();
+        private List<Primitive> _elements = new List<Primitive>();
+        private List<Light> _lights = new List<Light>();
 
         /// <summary>
         ///     The elements of the scene
         /// </summary>
-        public List<GeometricElement> Elements
+        public List<Primitive> Elements
         {
             get { return _elements; }
             set { _elements = value; }
+        }
+
+        public List<Light> Lights
+        {
+            get { return _lights; }
+            set { _lights = _lights; }
         }
 
         /// <summary>
@@ -24,12 +30,12 @@ namespace raytracer.core
         /// </summary>
         /// <param name="ray">the ray to intersect</param>
         /// <returns>true if the ray has been intersected, false otherwise</returns>
-        public bool TryToIntersect(ref Ray ray)
+        public bool TryToIntersect(ref Ray ray, out Intersection intersection)
         {
-            var dg = new DifferentialGeometry();
+            intersection = new Intersection();
             foreach (var element in Elements)
             {
-                if (element.TryToIntersect(ref ray, ref dg))
+                if (element.TryToIntersect(ref ray, ref intersection))
                     return true;
             }
             return false;

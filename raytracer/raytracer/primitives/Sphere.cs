@@ -4,13 +4,13 @@ using raytracer.core.mathematics;
 
 namespace raytracer.primitives
 {
-    public class Sphere : GeometricElement
+    public class Sphere : Shape
     {
         public Sphere(Transformation worldToObjectTransformation = null) : base(worldToObjectTransformation)
         {
         }
 
-        public override bool TryToIntersect(ref Ray ray, ref DifferentialGeometry differentialGeometry)
+        public override bool TryToIntersect(ref Ray ray, ref Intersection intersection)
         {
             Ray rayInObjectWorld;
             WorldToObjectTransformation.TransformRay(ref ray, out rayInObjectWorld);
@@ -31,8 +31,8 @@ namespace raytracer.primitives
                 if (thit > ray.End) return false;
             }
             var intersectionPoint = rayInObjectWorld.PointAtTime(thit);
-            differentialGeometry.Point =
-                WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
+            intersection.Point = WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
+            intersection.NormalVector = WorldToObjectTransformation.InverseTransformation.TransformVector(ref intersectionPoint).Normalized();
             return true;
         }
     }

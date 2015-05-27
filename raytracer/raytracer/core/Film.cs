@@ -7,7 +7,7 @@
     public struct Screen
     {
         /// <summary>
-        ///     THe height of the screen
+        ///     The height of the screen
         /// </summary>
         public readonly uint Height;
 
@@ -51,11 +51,11 @@
         /// <summary>
         ///     Adds the result of the ray casting (a spectrum) for the ray generated
         ///     by a sample
-        ///     <seealso cref="Spectrum" />
+        ///     <seealso cref="CoefficientSpectrum" />
         ///     <seealso cref="Sample" />
         /// </summary>
         /// <param name="sample">the sample from which the ray was generated</param>
         /// <param name="spectrum">the result of the casting of the ray in the scene</param>
-        public abstract void AddSample(Sample sample, RGBSpectrum spectrum);
+        public abstract void AddSample(Sample sample, SampledSpectrum spectrum);
     }
 }

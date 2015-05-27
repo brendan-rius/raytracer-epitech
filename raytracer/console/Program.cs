@@ -32,7 +32,7 @@ namespace console
         {
         }
 
-        public override void AddSample(Sample sample, Spectrum spectrum)
+        public override void AddSample(Sample sample, RGBSpectrum spectrum)
         {
         }
     }
