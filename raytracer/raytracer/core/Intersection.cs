@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Numerics;
+using OpenTK;
 
 namespace raytracer.core
 {
@@ -22,7 +23,7 @@ namespace raytracer.core
 
         public BSDF GetBSDF(Ray ray)
         {
-            return Primitive.GetBSDF();
+            return Primitive.GetBSDF(this);
         }
     }
 }

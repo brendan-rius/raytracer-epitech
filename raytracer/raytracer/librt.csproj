@@ -44,6 +44,7 @@
     <Compile Include="core\IIntersectable.cs" />
     <Compile Include="core\Intersection.cs" />
     <Compile Include="core\Film.cs" />
+    <Compile Include="core\LambertianReflection.cs" />
     <Compile Include="core\Light.cs" />
     <Compile Include="core\Material.cs" />
     <Compile Include="core\mathematics\BxDF.cs" />

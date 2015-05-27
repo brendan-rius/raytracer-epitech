@@ -1,4 +1,6 @@
-﻿namespace raytracer.core
+﻿using System.Diagnostics;
+
+namespace raytracer.core
 {
     /// <summary>
     ///     The renderer is the glue between the scene, the camera and the sampler.
@@ -53,13 +55,16 @@
         public Scene Scene { get; set; }
 
         /// <summary>
-        ///     Render the scene
+        ///     Render the scene.
+        ///     <returns>the duration of rendering (in milliseconds)</returns>
         /// </summary>
-        public void Render()
+        public long Render()
         {
             Ray ray;
             Intersection intersection;
 
+            var sw = new Stopwatch();
+            sw.Start();
             var samples = Sampler.Samples();
             foreach (var sample in samples)
             {
@@ -69,6 +74,8 @@
                     Film.AddSample(sample, Integrator.Li(Scene, ref ray, ref intersection));
                 }
             }
+            sw.Stop();
+            return sw.ElapsedMilliseconds;
         }
     }
 }

@@ -32,7 +32,8 @@ namespace raytracer.primitives
             }
             var intersectionPoint = rayInObjectWorld.PointAtTime(thit);
             intersection.Point = WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
-            intersection.NormalVector = WorldToObjectTransformation.InverseTransformation.TransformVector(ref intersectionPoint).Normalized();
+            intersection.NormalVector =
+                WorldToObjectTransformation.InverseTransformation.TransformVector(ref intersectionPoint).Normalized();
             return true;
         }
     }

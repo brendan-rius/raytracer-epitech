@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using raytracer.core;
 
 namespace raytracer.samplers
@@ -47,7 +46,6 @@ namespace raytracer.samplers
     /// </summary>
     public class JitterGridSampler : GridSampler
     {
-
         /// <summary>
         ///     Creates a new sampler
         /// </summary>
@@ -64,6 +62,10 @@ namespace raytracer.samplers
         /// </summary>
         public uint NumberOfSamples { get; set; }
 
+        /// <summary>
+        ///     Get the samples
+        /// </summary>
+        /// <returns></returns>
         public override IEnumerable<Sample> Samples()
         {
             for (var y = 0f; y < Screen.Height; ++y)

@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Numerics;
+using OpenTK;
 
 namespace raytracer.core
 {
@@ -10,14 +11,14 @@ namespace raytracer.core
             Position = position;
         }
 
+        public SampledSpectrum Intensity { get; private set; }
+        public Vector3 Position { get; private set; }
+
         public SampledSpectrum L(Vector3 point, out Vector3 incomingVector)
         {
             var direction = point - Position;
-            incomingVector = direction.Normalized();
-            return Intensity / direction.LengthSquared;
+            incomingVector = Vector3.Normalize(direction);
+            return Intensity/direction.LengthSquared;
         }
-
-        public SampledSpectrum Intensity { get; private set; }
-        public Vector3 Position { get; private set; }
     }
 }

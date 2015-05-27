@@ -12,10 +12,13 @@ namespace raytracer.cameras
 
         public override void GenerateRay(Sample sample, out Ray ray)
         {
-            ray.Direction = new Vector3(-Screen.Width/2f + sample.X, Screen.Height/2f - sample.Y, 400).Normalized();
-            ray.Origin = Vector3.Zero;
-            ray.Start = Ray.DefaultStartValue;
-            ray.End = Ray.DefaultEndValue;
+            ray = new Ray
+            {
+                Direction = new Vector3(-Screen.Width/2f + sample.X, Screen.Height/2f - sample.Y, 400).Normalized(),
+                Origin = Vector3.Zero,
+                Start = Ray.DefaultStartValue,
+                End = Ray.DefaultEndValue
+            };
             ObjectToWorld.TransformRay(ref ray, out ray);
         }
     }

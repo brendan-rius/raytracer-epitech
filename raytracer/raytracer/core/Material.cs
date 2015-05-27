@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace raytracer.core
+﻿namespace raytracer.core
 {
     public abstract class Material
     {
@@ -9,9 +7,11 @@ namespace raytracer.core
 
     public class MatteMaterial : Material
     {
+        private readonly LambertianReflection _brdf = new LambertianReflection(SampledSpectrum.Random());
+
         public override BSDF GetBSDF(Intersection intersection)
         {
-            throw new NotImplementedException();
+            return new BSDF(_brdf, new BTDF());
         }
     }
 }

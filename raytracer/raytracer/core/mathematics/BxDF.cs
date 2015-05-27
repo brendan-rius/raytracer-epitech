@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Numerics;
+using OpenTK;
 
 namespace raytracer.core.mathematics
 {
@@ -18,7 +19,7 @@ namespace raytracer.core.mathematics
         {
             var parallel = ((st*cosi) - (si*cost))/((st*cosi) + (si*cost));
             var perpendicular = ((si*cosi) - (st*cost))/((si*cosi) + (st*cost));
-            return (SampledSpectrum) (parallel*parallel + perpendicular*perpendicular);
+            return parallel*parallel + perpendicular*perpendicular;
         }
     }
 }

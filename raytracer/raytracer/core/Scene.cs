@@ -22,7 +22,7 @@ namespace raytracer.core
         public List<Light> Lights
         {
             get { return _lights; }
-            set { _lights = _lights; }
+            set { _lights = value; }
         }
 
         /// <summary>

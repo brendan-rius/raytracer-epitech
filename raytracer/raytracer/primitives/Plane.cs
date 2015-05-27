@@ -1,5 +1,4 @@
 ﻿using raytracer.core;
-using raytracer.core.mathematics;
 
 namespace raytracer.primitives
 {
