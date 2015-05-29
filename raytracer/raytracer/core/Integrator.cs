@@ -20,8 +20,13 @@ namespace raytracer.core
             foreach (var light in lights)
             {
                 Vector3 incoming;
-                var lightSpectrum = light.L(point, out incoming);
-                spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*Vector3.Dot(incoming, normalNormalized);
+                VisibilityTester visibilityTester;
+                var lightSpectrum = light.L(point, scene, out incoming, out visibilityTester);
+                // We compute the BSDF value only if the light is not black and it is not occluded. Note that it is important
+                // for the occlusion test to be after the test for black spectrum, because checking for intersection is an
+                // expansive operation.
+                if (!lightSpectrum.IsBlack() && !visibilityTester.Occluded())
+                    spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*Vector3.Dot(incoming, normalNormalized);
             }
             return spectrum;
         }

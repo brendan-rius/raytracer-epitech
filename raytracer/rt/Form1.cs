@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Numerics;
 using System.Windows.Forms;
 using OpenTK;
 using raytracer.cameras;
@@ -24,7 +23,7 @@ namespace rt
             var screen = new Screen(1024, 768);
             var film = new MyFilm(screen);
             var camera = new SimpleCamera(screen, Transformation.Translation(0, 10, 500));
-            var renderer = new Renderer(scene, new JitterGridSampler(screen), camera, film, new WhittedIntegrator());
+            var renderer = new Renderer(scene, new GridSampler(screen), camera, film, new WhittedIntegrator());
             var elapsed = renderer.Render();
             label1.Text = "Rendered in " + elapsed + " milliseconds";
             film.Display(pictureBox1);
@@ -66,7 +65,7 @@ namespace rt
             for (var i = 0; i < screen.Height; ++i)
             {
                 for (var j = 0; j < screen.Width; ++j)
-                    Colors[i, j] = new SampledColor(4);
+                    Colors[i, j] = new SampledColor(1);
             }
             Screen = screen;
         }

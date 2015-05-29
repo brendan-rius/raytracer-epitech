@@ -36,5 +36,25 @@ namespace raytracer.primitives
                 WorldToObjectTransformation.InverseTransformation.TransformVector(ref intersectionPoint).Normalized();
             return true;
         }
+
+        public override bool Intersect(ref Ray ray)
+        {
+            Ray rayInObjectWorld;
+            WorldToObjectTransformation.TransformRay(ref ray, out rayInObjectWorld);
+            float a, b, c;
+            Vector3.Dot(ref rayInObjectWorld.Direction, ref rayInObjectWorld.Direction, out a);
+            Vector3.Dot(ref rayInObjectWorld.Origin, ref rayInObjectWorld.Direction, out b);
+            b += b;
+            Vector3.Dot(ref rayInObjectWorld.Origin, ref rayInObjectWorld.Origin, out c);
+            c -= 1;
+
+            float t1, t2;
+            if (!Solver.TrySolvePolynomial2(a, b, c, out t1, out t2))
+                return false;
+            var thit = t1;
+            if (!(t1 < ray.Start)) return true;
+            thit = t2;
+            return !(thit > ray.End);
+        }
     }
 }

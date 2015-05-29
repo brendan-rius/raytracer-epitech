@@ -55,6 +55,7 @@
     <Compile Include="core\Primitive.cs" />
     <Compile Include="core\SampledSpectrum.cs" />
     <Compile Include="core\StaticRandom.cs" />
+    <Compile Include="core\VisibilityTester.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="primitives\Plane.cs" />
     <Compile Include="primitives\Sphere.cs" />

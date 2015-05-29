@@ -5,7 +5,7 @@ namespace raytracer.core
     /// <summary>
     ///     A scene holds intersectable elements
     /// </summary>
-    public class Scene
+    public class Scene : IIntersectable
     {
         private List<Primitive> _elements = new List<Primitive>();
         private List<Light> _lights = new List<Light>();
@@ -19,23 +19,30 @@ namespace raytracer.core
             set { _elements = value; }
         }
 
+        /// <summary>
+        ///     The lights in the scene
+        /// </summary>
         public List<Light> Lights
         {
             get { return _lights; }
             set { _lights = value; }
         }
 
-        /// <summary>
-        ///     Try to intersect a ray in the scene.
-        /// </summary>
-        /// <param name="ray">the ray to intersect</param>
-        /// <returns>true if the ray has been intersected, false otherwise</returns>
-        public bool TryToIntersect(ref Ray ray, out Intersection intersection)
+        public bool TryToIntersect(ref Ray ray, ref Intersection intersection)
         {
-            intersection = new Intersection();
             foreach (var element in Elements)
             {
                 if (element.TryToIntersect(ref ray, ref intersection))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool Intersect(ref Ray ray)
+        {
+            foreach (var element in Elements)
+            {
+                if (element.Intersect(ref ray))
                     return true;
             }
             return false;

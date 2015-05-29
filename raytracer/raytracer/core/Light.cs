@@ -14,10 +14,11 @@ namespace raytracer.core
         public SampledSpectrum Intensity { get; private set; }
         public Vector3 Position { get; private set; }
 
-        public SampledSpectrum L(Vector3 point, out Vector3 incomingVector)
+        public SampledSpectrum L(Vector3 point, Scene scene, out Vector3 incomingVector, out VisibilityTester visibilityTester)
         {
             var direction = point - Position;
             incomingVector = Vector3.Normalize(direction);
+            visibilityTester = new VisibilityTester(Position, point, scene);
             return Intensity/direction.LengthSquared;
         }
     }

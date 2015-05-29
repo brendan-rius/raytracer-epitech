@@ -16,5 +16,13 @@ namespace raytracer.primitives
                 WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
             return true;
         }
+
+        public override bool Intersect(ref Ray ray)
+        {
+            var rayInObjectWorld = WorldToObjectTransformation.TransformRay(ref ray);
+            if (ray.Direction.Y == 0f) return false;
+            var t = -ray.Origin.Y / ray.Direction.Y;
+            return !(t < ray.Start) && !(t > ray.End);
+        }
     }
 }
