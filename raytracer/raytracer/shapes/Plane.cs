@@ -1,4 +1,5 @@
-﻿using raytracer.core;
+﻿using OpenTK;
+using raytracer.core;
 using raytracer.core.mathematics;
 
 namespace raytracer.primitives
@@ -19,6 +20,8 @@ namespace raytracer.primitives
             var intersectionPoint = rayInObjectWorld.PointAtTime(t);
             intersection.Point =
                 WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
+            var normal = new Vector3(0, 1, 0);
+            intersection.NormalVector = WorldToObjectTransformation.InverseTransformation.TransformVector(ref normal);
             return true;
         }
 

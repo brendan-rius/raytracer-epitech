@@ -18,7 +18,9 @@ namespace rt
         {
             InitializeComponent();
             var scene = new Scene();
-            scene.Lights.Add(new PointLight(Transformation.Translation(-50, 0, 0)));
+            scene.Lights.Add(new PointLight(Transformation.Translation(-10, 0, 0)));
+            scene.Lights.Add(new PointLight(Transformation.Translation(-10, -100, 0)));
+            scene.Lights.Add(new PointLight(Transformation.Translation(-10, 0, -100)));
             scene.Elements.Add(new Primitive(new Sphere(Transformation.Scale(50).InverseTransformation),
                 new MatteMaterial()));
             scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial()));
