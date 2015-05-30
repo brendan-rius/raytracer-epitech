@@ -101,6 +101,7 @@ namespace raytracer.core.mathematics
             Vector3.TransformPosition(ref ray.Origin, ref TransformationMatrix, out newRay.Origin);
             newRay.End = ray.End;
             newRay.Start = ray.Start;
+            newRay.Depth = ray.Depth;
         }
 
         /// <summary>

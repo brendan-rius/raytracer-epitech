@@ -1,25 +1,39 @@
-﻿using System.Numerics;
-using OpenTK;
+﻿using OpenTK;
+using raytracer.core.mathematics;
 
 namespace raytracer.core
 {
-    public class Light
+    /// <summary>
+    ///     Represent a light in a scene
+    /// </summary>
+    public abstract class Light
     {
-        public Light(Vector3 position, SampledSpectrum intensity = null)
+        /// <summary>
+        ///     Create a light from a transformation
+        /// </summary>
+        /// <param name="objectToWorld">the light-to-world transformation</param>
+        protected Light(Transformation objectToWorld)
         {
-            Intensity = intensity ?? new SampledSpectrum(3000f);
-            Position = position;
+            ObjectToWorld = objectToWorld;
         }
 
-        public SampledSpectrum Intensity { get; private set; }
-        public Vector3 Position { get; private set; }
+        /// <summary>
+        ///     The light-to-world transformation
+        /// </summary>
+        public Transformation ObjectToWorld { get; protected set; }
 
-        public SampledSpectrum L(Vector3 point, Scene scene, out Vector3 incomingVector, out VisibilityTester visibilityTester)
-        {
-            var direction = point - Position;
-            incomingVector = Vector3.Normalize(direction);
-            visibilityTester = new VisibilityTester(Position, point, scene);
-            return Intensity/direction.LengthSquared;
-        }
+        /// <summary>
+        ///     Return the radiance from the light to a point in a scene and
+        ///     instantiate an "inciming vector" (which is a normalized vector coming from light to point)
+        ///     and a visibility tester which holds information about if there is any
+        ///     object between light an point in the scene.
+        /// </summary>
+        /// <param name="point">the point</param>
+        /// <param name="scene">the scene</param>
+        /// <param name="incomingVector">the vector from light to point</param>
+        /// <param name="visibilityTester">the visibility tester</param>
+        /// <returns>the radiance</returns>
+        public abstract SampledSpectrum L(Vector3 point, Scene scene, out Vector3 incomingVector,
+            out VisibilityTester visibilityTester);
     }
 }

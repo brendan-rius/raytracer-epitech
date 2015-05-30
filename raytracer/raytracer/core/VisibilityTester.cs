@@ -43,7 +43,7 @@ namespace raytracer.core
         /// </summary>
         /// <param name="delta">the offset used to avoid wrong self-intersections</param>
         /// <returns>true if the path is occluded, false otherwise</returns>
-        public bool Occluded(float delta = 0.0005f)
+        public bool Occluded(float delta = 0.005f)
         {
             var direction = _p2 - _p1;
             var ray = new Ray(direction.Normalized(), _p1, delta, direction.Length - delta);

@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using OpenTK;
+﻿using OpenTK;
 
 namespace raytracer.core
 {
@@ -14,6 +13,13 @@ namespace raytracer.core
     {
         public const float DefaultEndValue = float.PositiveInfinity;
         public const float DefaultStartValue = 0f;
+
+        /// <summary>
+        ///     The depth of the ray is the number of times the ray
+        ///     bounced on a surface. It is used to stop infinite
+        ///     reflection.
+        /// </summary>
+        public uint Depth;
 
         /// <summary>
         ///     The direction of the vector.
@@ -46,13 +52,15 @@ namespace raytracer.core
         /// <param name="origin">the origin of the ray</param>
         /// <param name="start">the start time of the ray (0 by default)</param>
         /// <param name="end">the end time of the ray (+Infinity by default)</param>
+        /// <param name="depth">the depth of the ray</param>
         public Ray(Vector3 direction, Vector3 origin, float start = DefaultStartValue,
-            float end = float.PositiveInfinity)
+            float end = float.PositiveInfinity, uint depth = 0)
         {
             Direction = direction;
             Origin = origin;
             Start = start;
             End = end;
+            Depth = depth;
         }
 
         /// <summary>

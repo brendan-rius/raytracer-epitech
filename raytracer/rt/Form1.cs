@@ -5,6 +5,7 @@ using OpenTK;
 using raytracer.cameras;
 using raytracer.core;
 using raytracer.core.mathematics;
+using raytracer.lights;
 using raytracer.primitives;
 using raytracer.samplers;
 using Screen = raytracer.core.Screen;
@@ -17,9 +18,10 @@ namespace rt
         {
             InitializeComponent();
             var scene = new Scene();
-            scene.Lights.Add(new Light(new Vector3(50, 0, 0)));
+            scene.Lights.Add(new PointLight(Transformation.Translation(-50, 0, 0)));
             scene.Elements.Add(new Primitive(new Sphere(Transformation.Scale(50).InverseTransformation),
                 new MatteMaterial()));
+            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial()));
             var screen = new Screen(1024, 768);
             var film = new MyFilm(screen);
             var camera = new SimpleCamera(screen, Transformation.Translation(0, 10, 500));

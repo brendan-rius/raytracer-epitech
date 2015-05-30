@@ -56,9 +56,10 @@
     <Compile Include="core\SampledSpectrum.cs" />
     <Compile Include="core\StaticRandom.cs" />
     <Compile Include="core\VisibilityTester.cs" />
+    <Compile Include="lights\PointLight.cs" />
     <Compile Include="Material.cs" />
-    <Compile Include="primitives\Plane.cs" />
-    <Compile Include="primitives\Sphere.cs" />
+    <Compile Include="shapes\Plane.cs" />
+    <Compile Include="shapes\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="core\Ray.cs" />
     <Compile Include="core\Renderer.cs" />
