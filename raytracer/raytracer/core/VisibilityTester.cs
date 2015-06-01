@@ -10,14 +10,9 @@ namespace raytracer.core
     public class VisibilityTester
     {
         /// <summary>
-        ///     The first point
+        ///     The ray
         /// </summary>
-        private readonly Vector3 _p1;
-
-        /// <summary>
-        ///     The second point
-        /// </summary>
-        private readonly Vector3 _p2;
+        private readonly Ray _ray;
 
         /// <summary>
         ///     The scene in which to test the visibility
@@ -30,24 +25,22 @@ namespace raytracer.core
         /// <param name="p1">the first point</param>
         /// <param name="p2">the second point</param>
         /// <param name="scene">the scene</param>
-        public VisibilityTester(Vector3 p1, Vector3 p2, Scene scene)
+        /// <param name="deltaStart"></param>
+        /// <param name="deltaEnd"></param>
+        public VisibilityTester(Vector3 p1, Vector3 p2, Scene scene, float deltaStart = 0.5f, float deltaEnd = 0.5f)
         {
-            _p1 = p1;
-            _p2 = p2;
+            var direction = p2 - p1;
             _scene = scene;
+            _ray = new Ray(direction.Normalized(), p1, deltaStart, direction.Length - deltaEnd);
         }
 
         /// <summary>
-        ///     Check if the visibility is occluded between the points points
-        ///     in the scene.
+        ///     Check if the visibility is occluded
         /// </summary>
-        /// <param name="delta">the offset used to avoid wrong self-intersections</param>
         /// <returns>true if the path is occluded, false otherwise</returns>
-        public bool Occluded(float delta = 0.005f)
+        public bool Occluded()
         {
-            var direction = _p2 - _p1;
-            var ray = new Ray(direction.Normalized(), _p1, delta, direction.Length - delta);
-            return _scene.Intersect(ref ray);
+            return _scene.Intersect(_ray);
         }
     }
 }

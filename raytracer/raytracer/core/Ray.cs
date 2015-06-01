@@ -9,7 +9,7 @@ namespace raytracer.core
     ///     <seealso cref="Sample" />
     ///     <seealso cref="Scene" />
     /// </summary>
-    public struct Ray
+    public class Ray
     {
         public const float DefaultEndValue = float.PositiveInfinity;
         public const float DefaultStartValue = 0f;

@@ -39,13 +39,6 @@ namespace raytracer.core
         /// </summary>
         /// <param name="sample"></param>
         /// <returns>the generate ray</returns>
-        public virtual Ray GenerateRay(Sample sample)
-        {
-            Ray newRay;
-            GenerateRay(sample, out newRay);
-            return newRay;
-        }
-
-        public abstract void GenerateRay(Sample sample, out Ray ray);
+        public abstract Ray GenerateRay(Sample sample);
     }
 }

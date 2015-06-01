@@ -83,25 +83,14 @@ namespace raytracer.core.mathematics
         /// </summary>
         /// <param name="ray">the ray to transform</param>
         /// <returns>a transformed ray</returns>
-        public Ray TransformRay(ref Ray ray)
+        public Ray TransformRay(Ray ray)
         {
-            Ray newRay;
-            TransformRay(ref ray, out newRay);
-            return newRay;
-        }
+            Vector3 direction;
+            Vector3 origin;
 
-        /// <summary>
-        ///     Transforms a ray
-        /// </summary>
-        /// <param name="ray">the ray to transform</param>
-        /// <param name="newRay">the result ray</param>
-        public void TransformRay(ref Ray ray, out Ray newRay)
-        {
-            Vector3.TransformVector(ref ray.Direction, ref TransformationMatrix, out newRay.Direction);
-            Vector3.TransformPosition(ref ray.Origin, ref TransformationMatrix, out newRay.Origin);
-            newRay.End = ray.End;
-            newRay.Start = ray.Start;
-            newRay.Depth = ray.Depth;
+            Vector3.TransformVector(ref ray.Direction, ref TransformationMatrix, out direction);
+            Vector3.TransformPosition(ref ray.Origin, ref TransformationMatrix, out origin);
+            return new Ray(direction, origin, ray.Start, ray.End, ray.Depth);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using OpenTK;
@@ -8,6 +9,7 @@ using raytracer.core.mathematics;
 using raytracer.lights;
 using raytracer.primitives;
 using raytracer.samplers;
+using raytracer.shapes;
 using Screen = raytracer.core.Screen;
 
 namespace rt
@@ -18,15 +20,23 @@ namespace rt
         {
             InitializeComponent();
             var scene = new Scene();
-            scene.Lights.Add(new PointLight(Transformation.Translation(-10, 0, 0)));
-            scene.Lights.Add(new PointLight(Transformation.Translation(-10, -100, 0)));
-            scene.Lights.Add(new PointLight(Transformation.Translation(-10, 0, -100)));
-            scene.Elements.Add(new Primitive(new Sphere(Transformation.Scale(50).InverseTransformation),
-                new MatteMaterial()));
-            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial()));
+            scene.Lights.Add(new PointLight(Transformation.Translation(0, 300, 10)));
+            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial(new SampledSpectrum(3))));
+            scene.Elements.Add(
+                new Primitive(
+                    new Polygon(new List<Vector3>
+                    {
+                        new Vector3(-100, 0, 0),
+                        new Vector3(100, 0, 0),
+                        new Vector3(0, 200, 0)
+                    }), new MatteMaterial()));
+            scene.Elements.Add(
+                new Primitive(
+                    new Sphere(Transformation.Scale(100).InverseTransformation),
+                    new MatteMaterial(new SampledSpectrum(3))));
             var screen = new Screen(1024, 768);
             var film = new MyFilm(screen);
-            var camera = new SimpleCamera(screen, Transformation.Translation(0, 10, 500));
+            var camera = new SimpleCamera(screen, Transformation.Translation(0, 50, 500));
             var renderer = new Renderer(scene, new GridSampler(screen), camera, film, new WhittedIntegrator());
             var elapsed = renderer.Render();
             label1.Text = "Rendered in " + elapsed + " milliseconds";

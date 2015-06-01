@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace raytracer.core
 {
@@ -28,24 +29,22 @@ namespace raytracer.core
             set { _lights = value; }
         }
 
-        public bool TryToIntersect(ref Ray ray, ref Intersection intersection)
+        public bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
+            intersection.Distance = float.PositiveInfinity;
             foreach (var element in Elements)
             {
-                if (element.TryToIntersect(ref ray, ref intersection))
-                    return true;
+                var tmp = new Intersection();
+                if (!element.TryToIntersect(ray, ref tmp)) continue;
+                if (tmp.Distance < intersection.Distance)
+                    intersection = tmp;
             }
-            return false;
+            return intersection.Distance != float.PositiveInfinity;
         }
 
-        public bool Intersect(ref Ray ray)
+        public bool Intersect(Ray ray)
         {
-            foreach (var element in Elements)
-            {
-                if (element.Intersect(ref ray))
-                    return true;
-            }
-            return false;
+            return Elements.Any(element => element.Intersect(ray));
         }
     }
 }

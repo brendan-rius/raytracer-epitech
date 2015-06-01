@@ -1,20 +1,24 @@
-﻿using System.Numerics;
-using OpenTK;
+﻿using OpenTK;
 
 namespace raytracer.core
 {
     public struct Intersection
     {
         /// <summary>
-        ///     The point of the intersection
+        ///     The distance of the intersection
         /// </summary>
-        public Vector3 Point { get; set; }
+        public float Distance;
 
         /// <summary>
         ///     The normal vector at the intersection. THis vector
         ///     should be normalized
         /// </summary>
-        public Vector3 NormalVector { get; set; }
+        public Vector3 NormalVector;
+
+        /// <summary>
+        ///     The point of the intersection
+        /// </summary>
+        public Vector3 Point;
 
         /// <summary>
         ///     The intersected primitive

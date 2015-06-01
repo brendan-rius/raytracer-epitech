@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using OpenTK;
+﻿using OpenTK;
 
 namespace raytracer.core.mathematics
 {

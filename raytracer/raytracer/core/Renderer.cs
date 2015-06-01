@@ -65,10 +65,9 @@ namespace raytracer.core
             var samples = Sampler.Samples();
             foreach (var sample in samples)
             {
-                Ray ray;
-                Camera.GenerateRay(sample, out ray);
+                var ray = Camera.GenerateRay(sample);
                 var intersection = new Intersection();
-                if (Scene.TryToIntersect(ref ray, ref intersection))
+                if (Scene.TryToIntersect(ray, ref intersection))
                 {
                     Film.AddSample(sample, Integrator.Li(Scene, ref ray, ref intersection));
                 }
