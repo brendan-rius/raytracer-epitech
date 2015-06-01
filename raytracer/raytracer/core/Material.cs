@@ -7,7 +7,15 @@
 
     public class MatteMaterial : Material
     {
-        private readonly LambertianReflection _brdf = new LambertianReflection(SampledSpectrum.Random());
+        private readonly LambertianReflection _brdf;
+
+        public MatteMaterial(SampledSpectrum spectrum = null)
+        {
+            if (spectrum != null)
+                _brdf = new LambertianReflection(spectrum);
+            else
+                _brdf = new LambertianReflection(SampledSpectrum.Random());
+        }
 
         public override BSDF GetBSDF(Intersection intersection)
         {

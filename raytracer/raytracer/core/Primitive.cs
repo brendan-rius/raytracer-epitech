@@ -28,16 +28,16 @@
         /// </summary>
         public Material Material { get; private set; }
 
-        public bool TryToIntersect(ref Ray ray, ref Intersection intersection)
+        public bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
-            if (!Shape.TryToIntersect(ref ray, ref intersection)) return false;
+            if (!Shape.TryToIntersect(ray, ref intersection)) return false;
             intersection.Primitive = this;
             return true;
         }
 
-        public bool Intersect(ref Ray ray)
+        public bool Intersect(Ray ray)
         {
-            return Shape.Intersect(ref ray);
+            return Shape.Intersect(ray);
         }
 
         /// <summary>
