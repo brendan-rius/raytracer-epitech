@@ -30,7 +30,7 @@ namespace raytracer.shapes
         {
             var rayInObjectWorld = WorldToObjectTransformation.TransformRay(ray);
             if (rayInObjectWorld.Direction.Y == 0f) return false;
-            var t = -rayInObjectWorld.Origin.Y / rayInObjectWorld.Direction.Y;
+            var t = -rayInObjectWorld.Origin.Y/rayInObjectWorld.Direction.Y;
             return !(t < rayInObjectWorld.Start) && !(t > rayInObjectWorld.End);
         }
     }

@@ -27,7 +27,8 @@ namespace raytracer.core
                 // for the occlusion test to be after the test for black spectrum, because checking for intersection is an
                 // expansive operation.
                 if (!lightSpectrum.IsBlack())
-                    spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*Math.Abs(Vector3.Dot(incoming, normalNormalized));
+                    spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*
+                                Math.Abs(Vector3.Dot(incoming, normalNormalized));
             }
             return spectrum;
         }

@@ -26,7 +26,6 @@ namespace raytracer.core
         public Transformation WorldToObjectTransformation { get; set; }
 
         public abstract bool TryToIntersect(Ray ray, ref Intersection intersection);
-
         public abstract bool Intersect(Ray ray);
     }
 }
