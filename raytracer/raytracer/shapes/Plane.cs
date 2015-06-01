@@ -2,7 +2,7 @@
 using raytracer.core;
 using raytracer.core.mathematics;
 
-namespace raytracer.primitives
+namespace raytracer.shapes
 {
     public class Plane : Shape
     {
@@ -10,9 +10,9 @@ namespace raytracer.primitives
         {
         }
 
-        public override bool TryToIntersect(ref Ray ray, ref Intersection intersection)
+        public override bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
-            var rayInObjectWorld = WorldToObjectTransformation.TransformRay(ref ray);
+            var rayInObjectWorld = WorldToObjectTransformation.TransformRay(ray);
             if (rayInObjectWorld.Direction.Y == 0f) return false;
             var t = -rayInObjectWorld.Origin.Y/rayInObjectWorld.Direction.Y;
             if (t < rayInObjectWorld.Start || t > rayInObjectWorld.End)
@@ -22,12 +22,13 @@ namespace raytracer.primitives
                 WorldToObjectTransformation.InverseTransformation.TransformPoint(ref intersectionPoint);
             var normal = new Vector3(0, 1, 0);
             intersection.NormalVector = WorldToObjectTransformation.InverseTransformation.TransformVector(ref normal);
+            intersection.Distance = (ray.Origin - intersection.Point).Length;
             return true;
         }
 
-        public override bool Intersect(ref Ray ray)
+        public override bool Intersect(Ray ray)
         {
-            var rayInObjectWorld = WorldToObjectTransformation.TransformRay(ref ray);
+            var rayInObjectWorld = WorldToObjectTransformation.TransformRay(ray);
             if (rayInObjectWorld.Direction.Y == 0f) return false;
             var t = -rayInObjectWorld.Origin.Y / rayInObjectWorld.Direction.Y;
             return !(t < rayInObjectWorld.Start) && !(t > rayInObjectWorld.End);
