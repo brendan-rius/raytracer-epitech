@@ -9,12 +9,25 @@ using System.Threading.Tasks;
 
 namespace raytracer.shapes
 {
+    /// <summary>
+    ///     Represents a polygon that can be intersected by light rays.
+    /// </summary>
     public class Polygon : Shape
     {
+        /// <summary>
+        ///     List of the polygon's vertices.
+        /// </summary>
         private List<Vector3> Vertices;
 
+        /// <summary>
+        ///     The plane normalized vector.
+        /// </summary>
         private Vector3 PlaneNormal;
 
+        /// <summary>
+        ///     Create a olygon from the list of its vertices.
+        /// </summary>
+        /// <param name="vertices"></param>
         public Polygon(List<Vector3> vertices) : base()
         {
             if (vertices.Count < 3)
@@ -32,6 +45,11 @@ namespace raytracer.shapes
             this.Vertices = vertices;
         }
 
+        /// <summary>
+        ///     Checks whether a point is comprised in a polygon.
+        /// </summary>
+        /// <param name="point">The checked point</param>
+        /// <returns>Whether the point is in the polygon or not</returns>
         protected bool PointInPolygon(ref Vector3 point)
         {
             int intersections = 0;
@@ -58,6 +76,13 @@ namespace raytracer.shapes
             return true;
         }
 
+        /// <summary>
+        ///     Try to intersect the ray with the polygon.
+        ///     Returns true and fill intersection if it intersects, otherwise returns false and doesn't fill intersection.
+        /// </summary>
+        /// <param name="ray">The ray to intersect with</param>
+        /// <param name="intersection">Data about the intersection</param>
+        /// <returns>Whether the ray intersected with the polygon</returns>
         public override bool TryToIntersect(ref Ray ray, ref Intersection intersection)
         {
             float denom, num;
@@ -76,6 +101,11 @@ namespace raytracer.shapes
             return true;
         }
 
+        /// <summary>
+        ///     Intersect the ray with the polygon
+        /// </summary>
+        /// <param name="ray">Ray to intersect</param>
+        /// <returns>Whether the ray intersected</returns>
         public override bool Intersect(ref Ray ray)
         {
             float denom, num;
