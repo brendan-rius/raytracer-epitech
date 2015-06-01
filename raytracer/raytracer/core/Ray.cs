@@ -54,7 +54,7 @@ namespace raytracer.core
         /// <param name="end">the end time of the ray (+Infinity by default)</param>
         /// <param name="depth">the depth of the ray</param>
         public Ray(Vector3 direction, Vector3 origin, float start = DefaultStartValue,
-            float end = float.PositiveInfinity, uint depth = 0)
+            float end = DefaultEndValue, uint depth = 0)
         {
             Direction = direction;
             Origin = origin;
