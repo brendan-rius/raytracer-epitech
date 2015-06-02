@@ -12,15 +12,15 @@ namespace raytracer.core
 
         public abstract SampledSpectrum Li(Scene scene, Ray ray, Renderer renderer, Sample sample, ref Intersection i);
 
-        public SampledSpectrum SpecularReflect(Ray ray, Renderer renderer, Sample sample, ref Intersection i)
+        public SampledSpectrum SpecularReflect(Ray ray, Renderer renderer, Sample sample, BSDF bsdf, ref Intersection i)
         {
             var leaving = -ray.Direction;
             var normalNormalized = i.NormalVector;
-            var wi = new Vector3(1, 0, 0);
-            var f = SampledSpectrum.Random(); //i.GetBSDF(ray).Sample());
+            var incoming = new Vector3();
+            var f = bsdf.Sample(leaving, out incoming);
             if (f.IsBlack()) return f;
-            var reflectedRay = ray.GenerateChild(wi, i.Point);
-            return f*renderer.Li(sample, reflectedRay)*Math.Abs(Vector3.Dot(wi, normalNormalized));
+            var reflectedRay = ray.GenerateChild(incoming, i.Point);
+            return f*renderer.Li(sample, reflectedRay)*Math.Abs(Vector3.Dot(incoming, normalNormalized));
         }
     }
 
@@ -42,14 +42,12 @@ namespace raytracer.core
                 // We compute the BSDF value only if the light is not black and it is not occluded. Note that it is important
                 // for the occlusion test to be after the test for black spectrum, because checking for intersection is an
                 // expansive operation.
-                if (!lightSpectrum.IsBlack()) /* todo: check occlusion */
+                if (!lightSpectrum.IsBlack() && !visibilityTester.Occluded())
                     spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*
                                 Math.Abs(Vector3.Dot(incoming, normalNormalized));
             }
-            /*
             if (ray.Depth + 1 < MaxDepth)
-                spectrum += SpecularReflect(ray, renderer, sample, ref i);
-             */
+                spectrum += SpecularReflect(ray, renderer, sample, bsdfAtPoint, ref i);
             return spectrum;
         }
     }

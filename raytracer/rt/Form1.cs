@@ -18,6 +18,7 @@ namespace rt
 {
     public partial class Form1 : Form
     {
+        private const uint NSamples = 1;
         private readonly MyFilm _film;
         private readonly ThreadedRenderer _renderer;
 
@@ -26,19 +27,16 @@ namespace rt
             InitializeComponent();
             var scene = new Scene();
             var screen = new Screen(1024, 768);
-            _film = new MyFilm(screen);
+            _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
                 Transformation.Translation(0, 300, 600)*Transformation.RotateX(-30));
-            _renderer = new ThreadedRenderer(scene, new GridSampler(screen), camera, _film,
+            _renderer = new ThreadedRenderer(scene,
+                new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
-            scene.Lights.Add(new PointLight(Transformation.Translation(0, 300, -100)));
-            SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\torus.obj");
-            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial(new SampledSpectrum(0.7f))));
-            /*_scene.Elements.Add(
-                new Primitive(
-                    new Plane(
-                        (Transformation.RotateX(90)*Transformation.Translation(0, 0, -100))
-                            .InverseTransformation), new MatteMaterial(new SampledSpectrum(0.7f))));*/
+            scene.Lights.Add(new PointLight(Transformation.Translation(0, 400, 500)));
+            SimpleObjParser(scene,
+                @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\cube.obj");
+            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial()));
             Render();
         }
 
@@ -70,7 +68,8 @@ namespace rt
                     var p3 = verts.ElementAt(int.Parse(nums[2]) - 1);
                     return new Triangle(new Vector3[3] {p1, p2, p3});
                 })
-                .ToList().ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial(new SampledSpectrum(0.7f)))));
+                .ToList()
+                .ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial(new SampledSpectrum(0.7f)))));
         }
     }
 
@@ -102,14 +101,14 @@ namespace rt
 
     internal class MyFilm : Film
     {
-        public MyFilm(Screen screen) : base(screen)
+        public MyFilm(Screen screen, uint nsamples) : base(screen)
         {
             Flag = new Bitmap((int) screen.Width, (int) screen.Height);
             Colors = new SampledColor[screen.Height, screen.Width];
             for (var i = 0; i < screen.Height; ++i)
             {
                 for (var j = 0; j < screen.Width; ++j)
-                    Colors[i, j] = new SampledColor(1);
+                    Colors[i, j] = new SampledColor(nsamples);
             }
             Screen = screen;
         }

@@ -56,7 +56,7 @@ namespace raytracer.samplers
         /// <param name="screen">the screen for the grid sampler</param>
         /// <param name="nsamples">the number of sample to generate for each pixel</param>
         /// <param name="rng">a random number generator. If null, this class will create one</param>
-        public JitterGridSampler(Screen screen, uint nsamples = 4) : base(screen)
+        public JitterGridSampler(Screen screen, uint? startLine = null, uint? endLine = null, uint nsamples = 4) : base(screen, startLine, endLine)
         {
             NumberOfSamples = nsamples;
         }
@@ -65,6 +65,20 @@ namespace raytracer.samplers
         ///     The number of sample generated for each pixel
         /// </summary>
         public uint NumberOfSamples { get; set; }
+
+        public override List<ThreadedSampler> GetSamplers(uint nsamplers = 4)
+        {
+            if (nsamplers > EndLine - StartLine)
+                throw new Exception("Too much samplers");
+            var samplers = new List<ThreadedSampler>();
+            var nlines = (EndLine - StartLine) / nsamplers; // the number of lines each sampler has to handle
+            /* We generate all the samplers except the last one */
+            for (uint i = 0; i < nsamplers - 1; ++i)
+                samplers.Add(new JitterGridSampler(Screen, StartLine + i * nlines, StartLine + i * nlines + nlines, NumberOfSamples));
+            /* THe last sampler handles the left lines */
+            samplers.Add(new JitterGridSampler(Screen, StartLine + (nsamplers - 1) * nlines, EndLine, NumberOfSamples));
+            return samplers;
+        }
 
         /// <summary>
         ///     Get the samples

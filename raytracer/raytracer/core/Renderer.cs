@@ -111,7 +111,7 @@ namespace raytracer.core
         /// <param name="integrator">the integrator</param>
         /// <param name="nthreads">the number of threads to use</param>
         public ThreadedRenderer(Scene scene, ThreadedSampler sampler, Camera camera, Film film, Integrator integrator,
-            uint nthreads = 4) : base(scene, sampler, camera, film, integrator)
+            uint nthreads = 16) : base(scene, sampler, camera, film, integrator)
         {
             _samplers = sampler.GetSamplers(nthreads);
         }

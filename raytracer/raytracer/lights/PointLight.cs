@@ -16,7 +16,7 @@ namespace raytracer.lights
         /// <param name="intensity">its intensity</param>
         public PointLight(Transformation lightToWorld, SampledSpectrum intensity = null) : base(lightToWorld)
         {
-            Intensity = intensity ?? new SampledSpectrum(1000000f);
+            Intensity = intensity ?? SampledSpectrum.Random() * 500000;
             var lightPositionInLightSpace = Vector3.Zero;
             Position = lightToWorld.TransformPoint(ref lightPositionInLightSpace);
         }
