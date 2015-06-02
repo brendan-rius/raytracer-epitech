@@ -70,21 +70,19 @@ namespace raytracer.core
         /// <returns>a new point on the ray</returns>
         public Vector3 PointAtTime(float t)
         {
-            Vector3 point;
-            PointAtTime(t, out point);
-            return point;
+            return new Vector3(
+                Origin.X + Direction.X*t,
+                Origin.Y + Direction.Y*t,
+                Origin.Z + Direction.Z*t);
         }
-
+        
         /// <summary>
-        ///     Computes the point at a certain time on the ray
+        ///     Create a child ray, with a grater depth level
         /// </summary>
-        /// <param name="t">the time</param>
-        /// <param name="point">the point</param>
-        public void PointAtTime(float t, out Vector3 point)
+        /// <returns></returns>
+        public Ray GenerateChild(Vector3 direction, Vector3 origin, float start = DefaultStartValue, float end = DefaultEndValue)
         {
-            point.X = Origin.X + Direction.X*t;
-            point.Y = Origin.Y + Direction.Y*t;
-            point.Z = Origin.Z + Direction.Z*t;
+            return new Ray(direction, origin, start, end, Depth + 1);
         }
     }
 }

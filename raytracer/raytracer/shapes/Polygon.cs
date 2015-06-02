@@ -93,6 +93,7 @@ namespace raytracer.shapes
                 return false;
             intersection.Point = point;
             intersection.NormalVector = _planeNormal.Normalized();
+            intersection.Distance = (intersection.Point - ray.Origin).Length;
             return true;
         }
 

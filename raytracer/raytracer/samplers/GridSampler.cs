@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using raytracer.core;
 
 namespace raytracer.samplers
@@ -10,32 +11,35 @@ namespace raytracer.samplers
     ///     <seealso cref="Sample" />
     ///     <seealso cref="Screen" />
     /// </summary>
-    public class GridSampler : Sampler
+    public class GridSampler : ThreadedSampler
     {
-        /// <summary>
-        ///     The screen used to generate the samples
-        /// </summary>
-        protected Screen Screen;
-
-        /// <summary>
-        ///     Create the sampler from a screen.
-        ///     <seealso cref="Screen" />
-        /// </summary>
-        /// <param name="screen"></param>
-        public GridSampler(Screen screen)
-        {
-            Screen = screen;
-        }
-
         public override IEnumerable<Sample> Samples()
         {
-            for (var y = 0.5f; y < Screen.Height; ++y)
+            for (var y = StartLine + 0.5f; y < EndLine; ++y)
             {
                 for (var x = 0.5f; x < Screen.Width; ++x)
                 {
                     yield return new Sample(x, y);
                 }
             }
+        }
+
+        public override List<ThreadedSampler> GetSamplers(uint nsamplers = 4)
+        {
+            if (nsamplers > EndLine - StartLine)
+                throw new Exception("Too much samplers");
+            var samplers = new List<ThreadedSampler>();
+            var nlines = (EndLine - StartLine) / nsamplers; // the number of lines each sampler has to handle
+            /* We generate all the samplers except the last one */
+            for (uint i = 0; i < nsamplers - 1; ++i)
+                samplers.Add(new GridSampler(Screen, StartLine + i * nlines, StartLine + i * nlines + nlines));
+            /* THe last sampler handles the left lines */
+            samplers.Add(new GridSampler(Screen, StartLine + (nsamplers - 1) * nlines, EndLine));
+            return samplers;
+        }
+
+        public GridSampler(Screen screen, uint? startLine = null, uint? endLine = null) : base(screen, startLine, endLine)
+        {
         }
     }
 
@@ -68,7 +72,7 @@ namespace raytracer.samplers
         /// <returns></returns>
         public override IEnumerable<Sample> Samples()
         {
-            for (var y = 0f; y < Screen.Height; ++y)
+            for (var y = StartLine; y < EndLine; ++y)
             {
                 for (var x = 0f; x < Screen.Width; ++x)
                 {

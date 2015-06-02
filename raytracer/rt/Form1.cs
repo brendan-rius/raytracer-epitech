@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using OpenTK;
 using raytracer.cameras;
 using raytracer.core;
 using raytracer.core.mathematics;
 using raytracer.lights;
-using raytracer.primitives;
 using raytracer.samplers;
 using raytracer.shapes;
 using Screen = raytracer.core.Screen;
@@ -16,31 +19,61 @@ namespace rt
 {
     public partial class Form1 : Form
     {
+        private readonly Camera _camera;
+        private readonly MyFilm _film;
+        private readonly ThreadedRenderer _renderer;
+        private readonly Scene _scene;
+        private readonly Screen _screen;
+
         public Form1()
         {
             InitializeComponent();
-            var scene = new Scene();
-            scene.Lights.Add(new PointLight(Transformation.Translation(0, 300, 10)));
-            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial(new SampledSpectrum(3))));
-            scene.Elements.Add(
+            _scene = new Scene();
+            _screen = new Screen(1024, 768);
+            _film = new MyFilm(_screen);
+            _camera = new SimpleCamera(_screen,
+                Transformation.Translation(0, 500, 500)*Transformation.RotateX(-30));
+            _renderer = new ThreadedRenderer(_scene, new GridSampler(_screen), _camera, _film,
+                new WhittedIntegrator());
+            _scene.Lights.Add(new PointLight(Transformation.Translation(10, 300, 100)));
+            _scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial(new SampledSpectrum(0.7f))));
+            _scene.Elements.Add(
                 new Primitive(
-                    new Polygon(new List<Vector3>
-                    {
-                        new Vector3(-100, 0, 0),
-                        new Vector3(100, 0, 0),
-                        new Vector3(0, 200, 0)
-                    }), new MatteMaterial()));
-            scene.Elements.Add(
-                new Primitive(
-                    new Sphere(Transformation.Scale(100).InverseTransformation),
-                    new MatteMaterial(new SampledSpectrum(3))));
-            var screen = new Screen(1024, 768);
-            var film = new MyFilm(screen);
-            var camera = new SimpleCamera(screen, Transformation.Translation(0, 50, 500));
-            var renderer = new Renderer(scene, new GridSampler(screen), camera, film, new WhittedIntegrator());
-            var elapsed = renderer.Render();
+                    new Plane(
+                        (Transformation.RotateX(90)*Transformation.Translation(0, 0, -100))
+                            .InverseTransformation), new MatteMaterial(new SampledSpectrum(0.7f))));
+            Render();
+        }
+
+        public async void Render()
+        {
+            var elapsed = await _renderer.RenderAsync();
             label1.Text = "Rendered in " + elapsed + " milliseconds";
-            film.Display(pictureBox1);
+            _film.Display(pictureBox1);
+        }
+
+        public void SimpleObjParser(Scene scene, string filename)
+        {
+            var lines = File.ReadAllLines(filename);
+            var verts = lines.Where(l => Regex.IsMatch(l, @"^v(\s+-?\d+\.?\d+([eE][-+]?\d+)?){3,3}$"))
+                .Select(l => Regex.Split(l, @"\s+", RegexOptions.None).Skip(1).ToArray()) //Skip v
+                .Select(
+                    nums =>
+                        new Vector3(float.Parse(nums[0], CultureInfo.InvariantCulture),
+                            float.Parse(nums[1], CultureInfo.InvariantCulture),
+                            float.Parse(nums[2], CultureInfo.InvariantCulture)))
+                .ToList();
+            lines.Where(l => Regex.IsMatch(l, @"^f(\s\d+(\/+\d+)?){3,3}$"))
+                .Select(l => Regex.Split(l, @"\s+", RegexOptions.None).Skip(1).ToArray())
+                .Select(i => i.Select(a => Regex.Match(a, @"\d+", RegexOptions.None).Value).ToArray())
+                .Select(nums =>
+                {
+                    var p1 = verts.ElementAt(int.Parse(nums[0]) - 1);
+                    var p2 = verts.ElementAt(int.Parse(nums[1]) - 1);
+                    var p3 = verts.ElementAt(int.Parse(nums[2]) - 1);
+                    return new Polygon(new List<Vector3> {p1, p2, p3});
+                })
+                .ToList().ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial(new SampledSpectrum(3)))));
         }
     }
 
