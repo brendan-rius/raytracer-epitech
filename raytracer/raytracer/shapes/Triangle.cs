@@ -8,7 +8,7 @@ using OpenTK;
 
 namespace raytracer.shapes
 {
-    class Triangle : Shape
+    public class Triangle : Shape
     {
         /// <summary>
         /// Stores the three triangle vertices.
