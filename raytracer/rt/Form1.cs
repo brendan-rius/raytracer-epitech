@@ -37,11 +37,11 @@ namespace rt
                 new WhittedIntegrator());
             _scene.Lights.Add(new PointLight(Transformation.Translation(10, 300, 100)));
             _scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial(new SampledSpectrum(0.7f))));
-            _scene.Elements.Add(
+            /*_scene.Elements.Add(
                 new Primitive(
                     new Plane(
                         (Transformation.RotateX(90)*Transformation.Translation(0, 0, -100))
-                            .InverseTransformation), new MatteMaterial(new SampledSpectrum(0.7f))));
+                            .InverseTransformation), new MatteMaterial(new SampledSpectrum(0.7f))));*/
             Render();
         }
 
@@ -56,7 +56,7 @@ namespace rt
         {
             var lines = File.ReadAllLines(filename);
             var verts = lines.Where(l => Regex.IsMatch(l, @"^v(\s+-?\d+\.?\d+([eE][-+]?\d+)?){3,3}$"))
-                .Select(l => Regex.Split(l, @"\s+", RegexOptions.None).Skip(1).ToArray()) //Skip v
+                .Select(l => Regex.Split(l, @"\s+", RegexOptions.None).Skip(1).ToArray())
                 .Select(
                     nums =>
                         new Vector3(float.Parse(nums[0], CultureInfo.InvariantCulture),

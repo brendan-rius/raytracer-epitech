@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using OpenTK;
 
 namespace raytracer.core
 {
     public abstract class Integrator
     {
+        /// <summary>
+        ///     The max depth for reflection and refraction
+        /// </summary>
+        public const uint MaxDepth = 10;
+
         public abstract SampledSpectrum Li(Scene scene, Ray ray, Renderer renderer, Sample sample, ref Intersection i);
 
         public SampledSpectrum SpecularReflect(Ray ray, Renderer renderer, Sample sample, ref Intersection i)
@@ -13,7 +17,7 @@ namespace raytracer.core
             var leaving = -ray.Direction;
             var normalNormalized = i.NormalVector;
             var wi = new Vector3(1, 0, 0);
-            var f = SampledSpectrum.Random();//i.GetBSDF(ray).Sample());
+            var f = SampledSpectrum.Random(); //i.GetBSDF(ray).Sample());
             if (f.IsBlack()) return f;
             var reflectedRay = ray.GenerateChild(wi, i.Point);
             return f*renderer.Li(sample, reflectedRay)*Math.Abs(Vector3.Dot(wi, normalNormalized));
@@ -42,11 +46,8 @@ namespace raytracer.core
                     spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*
                                 Math.Abs(Vector3.Dot(incoming, normalNormalized));
             }
-            if (ray.Depth + 1 < 5)
-            {
-                ray.Depth += 1;
+            if (ray.Depth + 1 < MaxDepth)
                 spectrum += SpecularReflect(ray, renderer, sample, ref i);
-            }
             return spectrum;
         }
     }
