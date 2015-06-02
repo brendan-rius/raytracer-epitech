@@ -71,6 +71,8 @@
     <Compile Include="shapes\Triangle.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\cube.obj" />
+    <None Include="assets\torus.obj" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

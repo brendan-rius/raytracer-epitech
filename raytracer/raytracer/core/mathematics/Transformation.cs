@@ -227,7 +227,7 @@ namespace raytracer.core.mathematics
         /// <param name="y">y angle in degrees</param>
         /// <param name="z">z angle in degrees</param>
         /// <returns></returns>
-        public static Transformation RotateXYZ(float x, float y, float z)
+        public static Transformation Rotate(float x, float y, float z)
         {
             return RotateX(x)*RotateY(y)*RotateZ(z);
         }

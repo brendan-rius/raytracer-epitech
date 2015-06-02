@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -19,24 +18,22 @@ namespace rt
 {
     public partial class Form1 : Form
     {
-        private readonly Camera _camera;
         private readonly MyFilm _film;
         private readonly ThreadedRenderer _renderer;
-        private readonly Scene _scene;
-        private readonly Screen _screen;
 
         public Form1()
         {
             InitializeComponent();
-            _scene = new Scene();
-            _screen = new Screen(1024, 768);
-            _film = new MyFilm(_screen);
-            _camera = new SimpleCamera(_screen,
-                Transformation.Translation(0, 500, 500)*Transformation.RotateX(-30));
-            _renderer = new ThreadedRenderer(_scene, new GridSampler(_screen), _camera, _film,
+            var scene = new Scene();
+            var screen = new Screen(1024, 768);
+            _film = new MyFilm(screen);
+            Camera camera = new SimpleCamera(screen,
+                Transformation.Translation(0, 300, 600)*Transformation.RotateX(-30));
+            _renderer = new ThreadedRenderer(scene, new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
-            _scene.Lights.Add(new PointLight(Transformation.Translation(10, 300, 100)));
-            _scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial(new SampledSpectrum(0.7f))));
+            scene.Lights.Add(new PointLight(Transformation.Translation(0, 300, -100)));
+            SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\torus.obj");
+            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial(new SampledSpectrum(0.7f))));
             /*_scene.Elements.Add(
                 new Primitive(
                     new Plane(
@@ -71,9 +68,9 @@ namespace rt
                     var p1 = verts.ElementAt(int.Parse(nums[0]) - 1);
                     var p2 = verts.ElementAt(int.Parse(nums[1]) - 1);
                     var p3 = verts.ElementAt(int.Parse(nums[2]) - 1);
-                    return new Polygon(new List<Vector3> {p1, p2, p3});
+                    return new Triangle(new Vector3[3] {p1, p2, p3});
                 })
-                .ToList().ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial(new SampledSpectrum(3)))));
+                .ToList().ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial(new SampledSpectrum(0.7f)))));
         }
     }
 

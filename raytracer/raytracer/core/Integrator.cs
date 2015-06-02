@@ -8,7 +8,7 @@ namespace raytracer.core
         /// <summary>
         ///     The max depth for reflection and refraction
         /// </summary>
-        public const uint MaxDepth = 10;
+        public const uint MaxDepth = 5;
 
         public abstract SampledSpectrum Li(Scene scene, Ray ray, Renderer renderer, Sample sample, ref Intersection i);
 
@@ -42,12 +42,14 @@ namespace raytracer.core
                 // We compute the BSDF value only if the light is not black and it is not occluded. Note that it is important
                 // for the occlusion test to be after the test for black spectrum, because checking for intersection is an
                 // expansive operation.
-                if (!lightSpectrum.IsBlack() && !visibilityTester.Occluded())
+                if (!lightSpectrum.IsBlack()) /* todo: check occlusion */
                     spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*
                                 Math.Abs(Vector3.Dot(incoming, normalNormalized));
             }
+            /*
             if (ray.Depth + 1 < MaxDepth)
                 spectrum += SpecularReflect(ray, renderer, sample, ref i);
+             */
             return spectrum;
         }
     }
