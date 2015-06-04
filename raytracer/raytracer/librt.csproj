@@ -71,6 +71,7 @@
     <Compile Include="samplers\GridSampler.cs" />
     <Compile Include="core\Scene.cs" />
     <Compile Include="shapes\Triangle.cs" />
+    <Compile Include="shapes\TriangleMesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\bite.obj" />
