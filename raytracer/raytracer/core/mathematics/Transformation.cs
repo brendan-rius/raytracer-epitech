@@ -187,7 +187,7 @@ namespace raytracer.core.mathematics
         public static Transformation operator *(Transformation left, Transformation right)
         {
             return new Transformation(right.TransformationMatrix*left.TransformationMatrix,
-                right.InverseTransformationMatrix*left.InverseTransformationMatrix);
+                left.InverseTransformationMatrix*right.InverseTransformationMatrix);
         }
 
         /// <summary>
@@ -252,6 +252,27 @@ namespace raytracer.core.mathematics
         public static Transformation Scale(float factor)
         {
             return new Transformation(Matrix4.CreateScale(factor, factor, factor));
+        }
+
+        /// <summary>
+        ///     Create a coordinate system from a single vector
+        /// </summary>
+        /// <param name="v1">the vector</param>
+        /// <param name="v2"></param>
+        /// <param name="v3"></param>
+        public static void CoordinateSystem(ref Vector3 v1, out Vector3 v2, out Vector3 v3)
+        {
+            if (Math.Abs(v1.X) > Math.Abs(v1.Y))
+            {
+                var invlen = 1/(float) Math.Sqrt(v1.X*v1.X + v1.Z*v1.Z);
+                v2 = new Vector3(-v1.Z*invlen, 0, v1.X*invlen);
+            }
+            else
+            {
+                var invlen = 1/(float) Math.Sqrt(v1.Y*v1.Y + v1.Z*v1.Z);
+                v2 = new Vector3(0, v1.Z*invlen, -v1.Y*invlen);
+            }
+            Vector3.Cross(ref v1, ref v2, out v3);
         }
     }
 }

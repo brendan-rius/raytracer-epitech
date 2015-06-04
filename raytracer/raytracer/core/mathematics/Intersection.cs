@@ -21,13 +21,23 @@ namespace raytracer.core
         public Vector3 Point;
 
         /// <summary>
+        ///     How the point moves on surface when "u" changes
+        /// </summary>
+        public Vector3 PointDifferentialOverU;
+
+        /// <summary>
+        ///     How the point moves on surface when "v" changes
+        /// </summary>
+        public Vector3 PointDifferentialOverV;
+
+        /// <summary>
         ///     The intersected primitive
         /// </summary>
         public Primitive Primitive { get; set; }
 
         public BSDF GetBSDF(Ray ray)
         {
-            return Primitive.GetBSDF(this);
+            return Primitive.GetBSDF(ref this);
         }
     }
 }

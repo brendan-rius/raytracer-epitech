@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenTK;
 using raytracer.core;
+using raytracer.core.mathematics;
 
 namespace raytracer.shapes
 {
@@ -26,10 +27,10 @@ namespace raytracer.shapes
                 throw new Exception();
             Vertices = vertices;
 
-            Vector3 v1, v2, normal;
-            Vector3.Subtract(ref vertices[1], ref vertices[0], out v1);
-            Vector3.Subtract(ref vertices[2], ref vertices[0], out v2);
-            Vector3.Cross(ref v1, ref v2, out normal);
+            Vector3 normal, dp1, dp2;
+            Vector3.Subtract(ref vertices[0], ref vertices[2], out dp1);
+            Vector3.Subtract(ref vertices[1], ref vertices[2], out dp2);
+            Vector3.Cross(ref dp1, ref dp2, out normal);
             Vector3.Normalize(ref normal, out _planeNormal);
         }
 
@@ -59,7 +60,7 @@ namespace raytracer.shapes
             var b2 = Vector3.Dot(ray.Direction, s2)*invDivisor;
             if (b2 < 0 || (b1 + b2) > 1)
                 return false;
-            var t = Vector3.Dot(e2, s2) * invDivisor;
+            var t = Vector3.Dot(e2, s2)*invDivisor;
             return !(t < ray.Start) && !(t > ray.End);
         }
 
@@ -96,6 +97,8 @@ namespace raytracer.shapes
             intersection.Point = ray.PointAtTime(t);
             intersection.NormalVector = _planeNormal;
             intersection.Distance = (ray.Origin - intersection.Point).Length;
+            Transformation.CoordinateSystem(ref intersection.NormalVector, out intersection.PointDifferentialOverU,
+                out intersection.PointDifferentialOverV);
             return true;
         }
 

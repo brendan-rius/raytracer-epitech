@@ -17,14 +17,9 @@ namespace raytracer.core
             _spectrum = spectrum;
         }
 
-        public override SampledSpectrum BidirectionalScattering(Vector3 incoming, Vector3 leaving)
+        public override SampledSpectrum F(Vector3 incoming, Vector3 leaving)
         {
             return _spectrum*INV_PI;
-        }
-
-        public override SampledSpectrum Reflectance(Vector3 leaving)
-        {
-            throw new NotImplementedException();
         }
     }
 }

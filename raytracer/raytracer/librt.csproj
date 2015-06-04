@@ -41,28 +41,32 @@
     <Compile Include="core\BSDF.cs" />
     <Compile Include="core\BTDF.cs" />
     <Compile Include="core\Camera.cs" />
+    <Compile Include="core\reflection\Fresnel.cs" />
     <Compile Include="core\Integrator.cs" />
-    <Compile Include="core\IIntersectable.cs" />
-    <Compile Include="core\Intersection.cs" />
+    <Compile Include="core\mathematics\IIntersectable.cs" />
+    <Compile Include="core\mathematics\Intersection.cs" />
     <Compile Include="core\Film.cs" />
     <Compile Include="core\KdTreeAccel.cs" />
     <Compile Include="core\LambertianReflection.cs" />
     <Compile Include="core\Light.cs" />
     <Compile Include="core\Material.cs" />
-    <Compile Include="core\mathematics\BxDF.cs" />
+    <Compile Include="core\reflection\BxDF.cs" />
+    <Compile Include="core\reflection\OrenNayar.cs" />
     <Compile Include="core\Shape.cs" />
     <Compile Include="core\mathematics\Solver.cs" />
     <Compile Include="core\mathematics\Transformation.cs" />
     <Compile Include="core\CoefficientSpectrum.cs" />
     <Compile Include="core\Primitive.cs" />
     <Compile Include="core\SampledSpectrum.cs" />
+    <Compile Include="core\reflection\SpecularReflection.cs" />
     <Compile Include="core\StaticRandom.cs" />
     <Compile Include="core\VisibilityTester.cs" />
+    <Compile Include="integrators\WhittedIntegrator.cs" />
     <Compile Include="lights\PointLight.cs" />
-    <Compile Include="Material.cs" />
+    <Compile Include="materials\MatteMaterial.cs" />
+    <Compile Include="materials\ReflectiveMaterial.cs" />
     <Compile Include="shapes\Plane.cs" />
     <Compile Include="shapes\Polygon.cs" />
-    <Compile Include="shapes\Sphere.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="core\Ray.cs" />
     <Compile Include="core\Renderer.cs" />
@@ -78,6 +82,7 @@
     <None Include="assets\cube.obj" />
     <None Include="assets\torus.obj" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

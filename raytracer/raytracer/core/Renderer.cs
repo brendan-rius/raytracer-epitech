@@ -113,7 +113,7 @@ namespace raytracer.core
         public ThreadedRenderer(Scene scene, ThreadedSampler sampler, Camera camera, Film film, Integrator integrator,
             uint nthreads = 16) : base(scene, sampler, camera, film, integrator)
         {
-            _samplers = sampler.GetSamplers(nthreads);
+            _samplers = sampler.GetSamplers(1/*nthreads*/);
         }
 
         /// <summary>
