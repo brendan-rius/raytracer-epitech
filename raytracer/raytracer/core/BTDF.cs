@@ -7,11 +7,11 @@ namespace raytracer.core
     public class BTDF : BxDF
     {
         /// <summary>
-        ///     This is the BRDF used to create the BTDF (is any)
+        ///     This is the BRDF used to create the BTDF (if any)
         /// </summary>
         private readonly BRDF _sourceBRDF;
 
-        public BTDF()
+        public BTDF() : base(BxDFType.Transmission)
         {
         }
 
@@ -19,27 +19,27 @@ namespace raytracer.core
         ///     Creates a BTDF based on a BRDF
         /// </summary>
         /// <param name="brdf"></param>
-        public BTDF(BRDF brdf)
+        public BTDF(BRDF brdf) : base (BxDFType.Transmission)
         {
             _sourceBRDF = brdf;
         }
 
-        public override SampledSpectrum BidirectionalScattering(Vector3 incoming, Vector3 leaving)
+        public override SampledSpectrum F(Vector3 incoming, Vector3 leaving)
         {
             return _sourceBRDF != null
-                ? _sourceBRDF.BidirectionalScattering(OtherHemisphere(incoming), leaving)
+                ? _sourceBRDF.F(OtherHemisphere(incoming), leaving)
                 : SampledSpectrum.Random();
         }
 
-        public override SampledSpectrum Reflectance(Vector3 leaving)
+        public override SampledSpectrum Sample(ref Vector3 leaving, out Vector3 incoming)
         {
-            throw new NotImplementedException();
+            incoming = new Vector3(0, 0, 0);
+            return SampledSpectrum.Black();
         }
 
         public static Vector3 OtherHemisphere(Vector3 v)
         {
-            v.Z = -v.Z;
-            return v;
+            return new Vector3(v.X, v.Y, -v.Z);
         }
     }
 }

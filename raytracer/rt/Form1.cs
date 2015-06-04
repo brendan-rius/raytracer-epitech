@@ -10,6 +10,7 @@ using raytracer.cameras;
 using raytracer.core;
 using raytracer.core.mathematics;
 using raytracer.lights;
+using raytracer.materials;
 using raytracer.samplers;
 using raytracer.shapes;
 using Screen = raytracer.core.Screen;
@@ -29,14 +30,13 @@ namespace rt
             var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 300, 600)*Transformation.RotateX(-30));
+                Transformation.Translation(0, 500, 1000)*Transformation.RotateX(-30));
             _renderer = new ThreadedRenderer(scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
-            scene.Lights.Add(new PointLight(Transformation.Translation(0, 400, 500)));
-            SimpleObjParser(scene,
-                @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\cube.obj");
-            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial()));
+            scene.Lights.Add(new PointLight(Transformation.Translation(0, 600, 800)));
+            SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\cube.obj");
+            scene.Elements.Add(new Primitive(new Plane(), new ReflectiveMaterial()));
             Render();
         }
 
@@ -69,7 +69,7 @@ namespace rt
                     return new Triangle(new Vector3[3] {p1, p2, p3});
                 })
                 .ToList()
-                .ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial(new SampledSpectrum(0.7f)))));
+                .ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial())));
         }
     }
 
@@ -93,9 +93,9 @@ namespace rt
 
         public Color ToColor()
         {
-            return Color.FromArgb((int) MathHelper.Clamp(R/NumberOfSamples*255, 0, 255),
-                (int) MathHelper.Clamp(G/NumberOfSamples*255, 0, 255),
-                (int) MathHelper.Clamp(G/NumberOfSamples*255, 0, 255));
+            return Color.FromArgb(MathHelper.Clamp((int) (R/NumberOfSamples*255), 0, 255),
+                MathHelper.Clamp((int) (G/NumberOfSamples*255), 0, 255),
+                MathHelper.Clamp((int) (G/NumberOfSamples*255), 0, 255));
         }
     }
 

@@ -16,7 +16,7 @@ namespace raytracer.lights
         /// <param name="intensity">its intensity</param>
         public PointLight(Transformation lightToWorld, SampledSpectrum intensity = null) : base(lightToWorld)
         {
-            Intensity = intensity ?? SampledSpectrum.Random() * 500000;
+            Intensity = intensity ?? SampledSpectrum.Random() * 1500000;
             var lightPositionInLightSpace = Vector3.Zero;
             Position = lightToWorld.TransformPoint(ref lightPositionInLightSpace);
         }
@@ -35,7 +35,7 @@ namespace raytracer.lights
             out VisibilityTester visibilityTester)
         {
             var direction = point - Position;
-            incomingVector = Vector3.Normalize(direction);
+            incomingVector = direction.Normalized();
             visibilityTester = new VisibilityTester(Position, point, scene);
             return Intensity/direction.LengthSquared;
         }

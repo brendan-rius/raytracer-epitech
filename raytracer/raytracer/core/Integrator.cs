@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK;
+using raytracer.core.mathematics;
 
 namespace raytracer.core
 {
@@ -15,12 +16,13 @@ namespace raytracer.core
         public SampledSpectrum SpecularReflect(Ray ray, Renderer renderer, Sample sample, BSDF bsdf, ref Intersection i)
         {
             var leaving = -ray.Direction;
-            var normalNormalized = i.NormalVector;
-            var incoming = new Vector3();
-            var f = bsdf.Sample(leaving, out incoming);
+            Vector3 incoming;
+            var f = bsdf.Sample(ref leaving, out incoming, BxDF.BxDFType.Reflection);
             if (f.IsBlack()) return f;
             var reflectedRay = ray.GenerateChild(incoming, i.Point);
-            return f*renderer.Li(sample, reflectedRay)*Math.Abs(Vector3.Dot(incoming, normalNormalized));
+            var li = renderer.Li(sample, reflectedRay);
+            var angle = Math.Abs(Vector3.Dot(incoming.Normalized(), i.NormalVector));
+            return f*li*angle;
         }
     }
 
@@ -43,8 +45,11 @@ namespace raytracer.core
                 // for the occlusion test to be after the test for black spectrum, because checking for intersection is an
                 // expansive operation.
                 if (!lightSpectrum.IsBlack() && !visibilityTester.Occluded())
-                    spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*
-                                Math.Abs(Vector3.Dot(incoming, normalNormalized));
+                {
+                    var angle = Math.Abs(Vector3.Dot(incoming, normalNormalized));
+                    var bsdf = bsdfAtPoint.F(incoming, leaving);
+                    spectrum += bsdf * lightSpectrum * angle;
+                }
             }
             if (ray.Depth + 1 < MaxDepth)
                 spectrum += SpecularReflect(ray, renderer, sample, bsdfAtPoint, ref i);

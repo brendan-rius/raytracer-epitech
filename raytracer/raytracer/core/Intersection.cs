@@ -10,6 +10,16 @@ namespace raytracer.core
         public float Distance;
 
         /// <summary>
+        ///     How the point moves on surface when "u" changes
+        /// </summary>
+        public Vector3 PointDifferentialOverU;
+
+        /// <summary>
+        ///     How the point moves on surface when "v" changes
+        /// </summary>
+        public Vector3 PointDifferentialOverV;
+
+        /// <summary>
         ///     The normal vector at the intersection. THis vector
         ///     should be normalized
         /// </summary>
@@ -27,7 +37,7 @@ namespace raytracer.core
 
         public BSDF GetBSDF(Ray ray)
         {
-            return Primitive.GetBSDF(this);
+            return Primitive.GetBSDF(ref this);
         }
     }
 }

@@ -45,9 +45,9 @@
         /// </summary>
         /// <param name="intersection">the intersection</param>
         /// <returns>the BSDF</returns>
-        public BSDF GetBSDF(Intersection intersection)
+        public BSDF GetBSDF(ref Intersection intersection)
         {
-            return Material.GetBSDF(intersection);
+            return Material.GetBSDF(ref intersection);
         }
     }
 }
