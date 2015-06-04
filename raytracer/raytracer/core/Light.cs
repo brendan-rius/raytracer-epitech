@@ -35,5 +35,15 @@ namespace raytracer.core
         /// <returns>the radiance</returns>
         public abstract SampledSpectrum L(Vector3 point, Scene scene, out Vector3 incomingVector,
             out VisibilityTester visibilityTester);
+
+        /// <summary>
+        ///     Return the spectrum of light when ray does not hit anything.
+        /// </summary>
+        /// <param name="ray">the ray</param>
+        /// <returns></returns>
+        public virtual SampledSpectrum Le(Ray ray)
+        {
+            return SampledSpectrum.Black();
+        }
     }
 }

@@ -138,6 +138,16 @@ namespace raytracer.core.mathematics
         }
 
         /// <summary>
+        ///     Transforms a normal vector
+        /// </summary>
+        /// <param name="normal">the normal vector</param>
+        /// <returns>the transformed normal vector</returns>
+        public Vector3 TransformNormal(Vector3 normal)
+        {
+            return Vector3.TransformNormal(normal, TransformationMatrix);
+        }
+
+        /// <summary>
         ///     Transform a vector
         /// </summary>
         /// <param name="vector">the vector to transform</param>
@@ -187,7 +197,7 @@ namespace raytracer.core.mathematics
         /// <returns>the transformation</returns>
         public static Transformation RotateX(float x)
         {
-            return new Transformation(Matrix4.CreateRotationX(x));
+            return new Transformation(Matrix4.CreateRotationX(MathHelper.DegreesToRadians(x)));
         }
 
         /// <summary>
@@ -197,7 +207,7 @@ namespace raytracer.core.mathematics
         /// <returns>the transformation</returns>
         public static Transformation RotateY(float y)
         {
-            return new Transformation(Matrix4.CreateRotationY(y));
+            return new Transformation(Matrix4.CreateRotationY(MathHelper.DegreesToRadians(y)));
         }
 
         /// <summary>
@@ -207,7 +217,19 @@ namespace raytracer.core.mathematics
         /// <returns>the transformation</returns>
         public static Transformation RotateZ(float z)
         {
-            return new Transformation(Matrix4.CreateRotationZ(z));
+            return new Transformation(Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(z)));
+        }
+
+        /// <summary>
+        ///     Rotation around X, Y and Z
+        /// </summary>
+        /// <param name="x">x angle in degrees</param>
+        /// <param name="y">y angle in degrees</param>
+        /// <param name="z">z angle in degrees</param>
+        /// <returns></returns>
+        public static Transformation Rotate(float x, float y, float z)
+        {
+            return RotateX(x)*RotateY(y)*RotateZ(z);
         }
 
         /// <summary>

@@ -14,12 +14,12 @@ namespace raytracer.shapes
         /// <summary>
         ///     List of the polygon's vertices.
         /// </summary>
-        private readonly List<Vector3> Vertices;
+        private readonly List<Vector3> _vertices;
 
         /// <summary>
         ///     The plane normalized vector.
         /// </summary>
-        private Vector3 PlaneNormal;
+        private Vector3 _planeNormal;
 
         /// <summary>
         ///     Create a olygon from the list of its vertices.
@@ -37,9 +37,9 @@ namespace raytracer.shapes
             Vector3 v1, v2;
             Vector3.Subtract(ref p2, ref p1, out v1);
             Vector3.Subtract(ref p3, ref p1, out v2);
-            Vector3.Cross(ref v1, ref v2, out PlaneNormal);
+            Vector3.Cross(ref v1, ref v2, out _planeNormal);
 
-            Vertices = vertices;
+            _vertices = vertices;
         }
 
         /// <summary>
@@ -55,10 +55,10 @@ namespace raytracer.shapes
             Vector3 vertex;
             Vector3 nvertex;
 
-            for (index = 0; index < Vertices.Count - 1; index++)
+            for (index = 0; index < _vertices.Count - 1; index++)
             {
-                vertex = Vertices.ElementAt(index);
-                nvertex = Vertices.ElementAt(index + 1);
+                vertex = _vertices.ElementAt(index);
+                nvertex = _vertices.ElementAt(index + 1);
 
                 if (((vertex.Y <= point.Y) && (nvertex.Y > point.Y))
                     || ((vertex.Y > point.Y) && (nvertex.Y <= point.Y)))
@@ -68,9 +68,7 @@ namespace raytracer.shapes
                         intersections++;
                 }
             }
-            if ((intersections%2) == 0)
-                return false;
-            return true;
+            return intersections%2 != 0;
         }
 
         /// <summary>
@@ -83,10 +81,10 @@ namespace raytracer.shapes
         public override bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
             float denom, num;
-            Vector3.Dot(ref PlaneNormal, ref ray.Direction, out denom);
+            Vector3.Dot(ref _planeNormal, ref ray.Direction, out denom);
             if (denom == 0)
                 return false;
-            Vector3.Dot(ref PlaneNormal, ref ray.Origin, out num);
+            Vector3.Dot(ref _planeNormal, ref ray.Origin, out num);
             num *= -1;
             var t = num/denom;
             if (t < ray.Start || t > ray.End) return false;
@@ -94,7 +92,8 @@ namespace raytracer.shapes
             if (!PointInPolygon(ref point))
                 return false;
             intersection.Point = point;
-            intersection.NormalVector = PlaneNormal.Normalized();
+            intersection.NormalVector = _planeNormal.Normalized();
+            intersection.Distance = (intersection.Point - ray.Origin).Length;
             return true;
         }
 
@@ -106,10 +105,10 @@ namespace raytracer.shapes
         public override bool Intersect(Ray ray)
         {
             float denom, num;
-            Vector3.Dot(ref PlaneNormal, ref ray.Direction, out denom);
+            Vector3.Dot(ref _planeNormal, ref ray.Direction, out denom);
             if (denom == 0)
                 return false;
-            Vector3.Dot(ref PlaneNormal, ref ray.Origin, out num);
+            Vector3.Dot(ref _planeNormal, ref ray.Origin, out num);
             num *= -1;
             var t = num/denom;
             if (t < ray.Start || t > ray.End) return false;

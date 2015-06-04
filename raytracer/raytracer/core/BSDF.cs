@@ -17,5 +17,11 @@ namespace raytracer.core
         {
             return BRDF.BidirectionalScattering(incoming, leaving);
         }
+
+        public SampledSpectrum Sample(Vector3 leaving, out Vector3 incoming)
+        {
+            incoming = Vector3.Cross(leaving, Vector3.UnitX);
+            return SampledSpectrum.Random();
+        }
     }
 }

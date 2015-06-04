@@ -5,12 +5,28 @@ namespace raytracer.core
 {
     public abstract class Integrator
     {
-        public abstract SampledSpectrum Li(Scene scene, ref Ray ray, ref Intersection i);
+        /// <summary>
+        ///     The max depth for reflection and refraction
+        /// </summary>
+        public const uint MaxDepth = 5;
+
+        public abstract SampledSpectrum Li(Scene scene, Ray ray, Renderer renderer, Sample sample, ref Intersection i);
+
+        public SampledSpectrum SpecularReflect(Ray ray, Renderer renderer, Sample sample, BSDF bsdf, ref Intersection i)
+        {
+            var leaving = -ray.Direction;
+            var normalNormalized = i.NormalVector;
+            var incoming = new Vector3();
+            var f = bsdf.Sample(leaving, out incoming);
+            if (f.IsBlack()) return f;
+            var reflectedRay = ray.GenerateChild(incoming, i.Point);
+            return f*renderer.Li(sample, reflectedRay)*Math.Abs(Vector3.Dot(incoming, normalNormalized));
+        }
     }
 
     public class WhittedIntegrator : Integrator
     {
-        public override SampledSpectrum Li(Scene scene, ref Ray ray, ref Intersection i)
+        public override SampledSpectrum Li(Scene scene, Ray ray, Renderer renderer, Sample sample, ref Intersection i)
         {
             var spectrum = SampledSpectrum.Black();
             var lights = scene.Lights;
@@ -26,10 +42,12 @@ namespace raytracer.core
                 // We compute the BSDF value only if the light is not black and it is not occluded. Note that it is important
                 // for the occlusion test to be after the test for black spectrum, because checking for intersection is an
                 // expansive operation.
-                if (!lightSpectrum.IsBlack())
+                if (!lightSpectrum.IsBlack() && !visibilityTester.Occluded())
                     spectrum += bsdfAtPoint.F(incoming, leaving)*lightSpectrum*
                                 Math.Abs(Vector3.Dot(incoming, normalNormalized));
             }
+            if (ray.Depth + 1 < MaxDepth)
+                spectrum += SpecularReflect(ray, renderer, sample, bsdfAtPoint, ref i);
             return spectrum;
         }
     }

@@ -8,7 +8,10 @@ namespace raytracer.core
 
         public static float NextFloat()
         {
-            return (float) _rng.NextDouble();
+            lock (_rng)
+            {
+                return (float) _rng.NextDouble();
+            }
         }
     }
 }

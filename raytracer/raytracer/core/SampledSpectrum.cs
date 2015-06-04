@@ -858,7 +858,10 @@ namespace raytracer.core
 
         public static SampledSpectrum Random()
         {
-            return new SampledSpectrum(StaticRandom.NextFloat());
+            var spectrum = Black();
+            for (var i = 0; i < spectrum._nsamples; ++i)
+                spectrum.Samples[i] = StaticRandom.NextFloat();
+            return spectrum;
         }
 
         public static SampledSpectrum Black()
