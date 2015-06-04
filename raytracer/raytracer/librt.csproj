@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
+    <Compile Include="core\BBox.cs" />
     <Compile Include="core\BRDF.cs" />
     <Compile Include="core\BSDF.cs" />
     <Compile Include="core\BTDF.cs" />
