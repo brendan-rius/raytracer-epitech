@@ -28,7 +28,7 @@ namespace raytracer.core
             {
                 float sinphiIncoming = SinPhi(ref incoming), cosphiIncoming = CosPhi(ref incoming);
                 float sinphiLeaving = SinPhi(ref leaving), cosphiLeaving = CosPhi(ref leaving);
-                float dcos = cosphiIncoming*cosphiLeaving + sinphiIncoming*sinphiLeaving;
+                var dcos = cosphiIncoming*cosphiLeaving + sinphiIncoming*sinphiLeaving;
                 maxcos = Math.Max(0, dcos);
             }
             float sinalpha, tanbeta;

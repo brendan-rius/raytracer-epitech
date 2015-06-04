@@ -10,16 +10,6 @@ namespace raytracer.core
         public float Distance;
 
         /// <summary>
-        ///     How the point moves on surface when "u" changes
-        /// </summary>
-        public Vector3 PointDifferentialOverU;
-
-        /// <summary>
-        ///     How the point moves on surface when "v" changes
-        /// </summary>
-        public Vector3 PointDifferentialOverV;
-
-        /// <summary>
         ///     The normal vector at the intersection. THis vector
         ///     should be normalized
         /// </summary>
@@ -29,6 +19,16 @@ namespace raytracer.core
         ///     The point of the intersection
         /// </summary>
         public Vector3 Point;
+
+        /// <summary>
+        ///     How the point moves on surface when "u" changes
+        /// </summary>
+        public Vector3 PointDifferentialOverU;
+
+        /// <summary>
+        ///     How the point moves on surface when "v" changes
+        /// </summary>
+        public Vector3 PointDifferentialOverV;
 
         /// <summary>
         ///     The intersected primitive

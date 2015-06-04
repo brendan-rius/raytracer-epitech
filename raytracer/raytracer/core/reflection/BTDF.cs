@@ -1,5 +1,4 @@
-﻿using System;
-using OpenTK;
+﻿using OpenTK;
 using raytracer.core.mathematics;
 
 namespace raytracer.core
@@ -19,7 +18,7 @@ namespace raytracer.core
         ///     Creates a BTDF based on a BRDF
         /// </summary>
         /// <param name="brdf"></param>
-        public BTDF(BRDF brdf) : base (BxDFType.Transmission)
+        public BTDF(BRDF brdf) : base(BxDFType.Transmission)
         {
             _sourceBRDF = brdf;
         }

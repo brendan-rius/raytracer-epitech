@@ -26,7 +26,7 @@ namespace raytracer.integrators
                 {
                     var angle = Math.Abs(Vector3.Dot(incoming, normalNormalized));
                     var bsdf = bsdfAtPoint.F(incoming, leaving);
-                    spectrum += bsdf * lightSpectrum * angle;
+                    spectrum += bsdf*lightSpectrum*angle;
                 }
             }
             if (ray.Depth + 1 < MaxDepth)

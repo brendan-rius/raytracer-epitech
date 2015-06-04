@@ -76,24 +76,24 @@ namespace raytracer.core.mathematics
 
         protected static float SinThetaSquared(ref Vector3 v)
         {
-            return 1f - CosTheta(ref v) * CosTheta(ref v);
+            return 1f - CosTheta(ref v)*CosTheta(ref v);
         }
 
         protected static float SinTheta(ref Vector3 v)
         {
-            return (float)Math.Sqrt(SinThetaSquared(ref v));
+            return (float) Math.Sqrt(SinThetaSquared(ref v));
         }
 
         protected static float CosPhi(ref Vector3 v)
         {
             var sintheta = SinTheta(ref v);
-            return sintheta == 0f ? 1 : v.X / sintheta;
+            return sintheta == 0f ? 1 : v.X/sintheta;
         }
 
         protected static float SinPhi(ref Vector3 v)
         {
             var sintheta = SinTheta(ref v);
-            return sintheta == 0f ? 0f : v.Y / sintheta;
+            return sintheta == 0f ? 0f : v.Y/sintheta;
         }
     }
 }
