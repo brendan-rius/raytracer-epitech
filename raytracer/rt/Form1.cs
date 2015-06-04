@@ -9,6 +9,7 @@ using OpenTK;
 using raytracer.cameras;
 using raytracer.core;
 using raytracer.core.mathematics;
+using raytracer.integrators;
 using raytracer.lights;
 using raytracer.materials;
 using raytracer.samplers;
@@ -30,13 +31,15 @@ namespace rt
             var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 500, 1000)*Transformation.RotateX(-30));
+                Transformation.Translation(0, 200, 1000));
             _renderer = new ThreadedRenderer(scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
-            scene.Lights.Add(new PointLight(Transformation.Translation(0, 600, 800)));
-            SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\cube.obj");
-            scene.Elements.Add(new Primitive(new Plane(), new ReflectiveMaterial()));
+            scene.Lights.Add(new PointLight(Transformation.Translation(0, 500, 500)));
+            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial()));
+            scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
+            scene.Elements.Add(new Primitive(new Plane(Transformation.RotateZ(90)*Transformation.Translation(-600, 0, 0)), new MatteMaterial()));
+            scene.Elements.Add(new Primitive(new Plane(Transformation.RotateZ(90)*Transformation.Translation(600, 0, 0)), new MatteMaterial()));
             Render();
         }
 

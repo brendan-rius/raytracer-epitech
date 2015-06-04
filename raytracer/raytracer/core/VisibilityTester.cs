@@ -27,7 +27,7 @@ namespace raytracer.core
         /// <param name="scene">the scene</param>
         /// <param name="deltaStart"></param>
         /// <param name="deltaEnd"></param>
-        public VisibilityTester(Vector3 p1, Vector3 p2, Scene scene, float deltaStart = 0.005f, float deltaEnd = 0.005f)
+        public VisibilityTester(Vector3 p1, Vector3 p2, Scene scene, float deltaStart = 0.115f, float deltaEnd = 0.115f)
         {
             var direction = p2 - p1;
             _scene = scene;

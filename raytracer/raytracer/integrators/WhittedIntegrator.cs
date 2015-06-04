@@ -29,8 +29,8 @@ namespace raytracer.integrators
                     spectrum += bsdf*lightSpectrum*angle;
                 }
             }
-            if (ray.Depth + 1 < MaxDepth)
-                spectrum += SpecularReflect(ray, renderer, sample, bsdfAtPoint, ref i);
+            /*if (ray.Depth + 1 < MaxDepth)
+                spectrum += SpecularReflect(ray, renderer, sample, bsdfAtPoint, ref i);*/
             return spectrum;
         }
     }

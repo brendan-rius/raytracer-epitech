@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Diagnostics;
+using OpenTK;
 using raytracer.core.mathematics;
 
 namespace raytracer.core
@@ -46,7 +47,12 @@ namespace raytracer.core
             /* Since we are in the reflection system, rotating the vector by PI radians
              * around the normal consists of negating its x component and its y component */
             incoming = new Vector3(-leaving.X, -leaving.Y, leaving.Z);
-            return _spectrum*_fresnel.Evaluate(CosTheta(ref leaving))/AbsCosTheta(ref incoming);
+            var reflectedAmount = _fresnel.Evaluate(CosTheta(ref incoming));
+            var abscostheta = AbsCosTheta(ref incoming);
+            var reflectedLight = _spectrum*reflectedAmount/abscostheta;
+            if (reflectedLight.HasNaNs())
+                Debug.WriteLine("NAN");
+            return reflectedLight;
         }
     }
 }

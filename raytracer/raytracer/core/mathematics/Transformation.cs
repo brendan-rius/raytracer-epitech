@@ -187,7 +187,7 @@ namespace raytracer.core.mathematics
         public static Transformation operator *(Transformation left, Transformation right)
         {
             return new Transformation(right.TransformationMatrix*left.TransformationMatrix,
-                right.InverseTransformationMatrix*left.InverseTransformationMatrix);
+                left.InverseTransformationMatrix*right.InverseTransformationMatrix);
         }
 
         /// <summary>

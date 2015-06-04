@@ -8,7 +8,7 @@ namespace raytracer.materials
 
         public ReflectiveMaterial(SampledSpectrum spectrum = null, Fresnel fresnel = null)
         {
-            _specular = new SpecularReflection(fresnel ?? new FresnelConductor(1, 1.5f),
+            _specular = new SpecularReflection(fresnel ?? new FresnelConductor(1.4f, 1f),
                 spectrum ?? SampledSpectrum.Random());
         }
 
