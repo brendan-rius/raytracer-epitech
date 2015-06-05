@@ -97,6 +97,11 @@ namespace raytracer.core
     public class ThreadedRenderer : Renderer
     {
         /// <summary>
+        ///     The number of tasks to process
+        /// </summary>
+        protected const uint NTasks = 64;
+
+        /// <summary>
         ///     The list of sub-samplers
         /// </summary>
         private readonly List<ThreadedSampler> _samplers;
@@ -110,10 +115,10 @@ namespace raytracer.core
         /// <param name="film">the film</param>
         /// <param name="integrator">the integrator</param>
         /// <param name="nthreads">the number of threads to use</param>
-        public ThreadedRenderer(Scene scene, ThreadedSampler sampler, Camera camera, Film film, Integrator integrator,
-            uint nthreads = 16) : base(scene, sampler, camera, film, integrator)
+        public ThreadedRenderer(Scene scene, ThreadedSampler sampler, Camera camera, Film film, Integrator integrator)
+            : base(scene, sampler, camera, film, integrator)
         {
-            _samplers = sampler.GetSamplers(1/*nthreads*/);
+            _samplers = sampler.GetSamplers(NTasks);
         }
 
         /// <summary>

@@ -31,15 +31,20 @@ namespace rt
             var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 200, 1000));
+                Transformation.Translation(0, 200, -1000));
             _renderer = new ThreadedRenderer(scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
-            scene.Lights.Add(new PointLight(Transformation.Translation(0, 500, 500)));
-            scene.Elements.Add(new Primitive(new Plane(), new MatteMaterial()));
+            scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
+            //SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\cube.obj");
+            scene.Elements.Add(new Primitive(new Plane(), new ReflectiveMaterial()));
             scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
-            scene.Elements.Add(new Primitive(new Plane(Transformation.RotateZ(90)*Transformation.Translation(-600, 0, 0)), new MatteMaterial()));
-            scene.Elements.Add(new Primitive(new Plane(Transformation.RotateZ(90)*Transformation.Translation(600, 0, 0)), new MatteMaterial()));
+            scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
+             scene.Elements.Add(
+                 new Primitive(new Plane(Transformation.RotateZ(90)*Transformation.Translation(-600, 0, 0)),
+                     new MatteMaterial()));
+             scene.Elements.Add(new Primitive(
+                 new Plane(Transformation.RotateZ(90)*Transformation.Translation(600, 0, 0)), new MatteMaterial()));
             Render();
         }
 
@@ -72,7 +77,7 @@ namespace rt
                     return new Triangle(new Vector3[3] {p1, p2, p3});
                 })
                 .ToList()
-                .ForEach(p => scene.Elements.Add(new Primitive(p, new MatteMaterial())));
+                .ForEach(p => scene.Elements.Add(new Primitive(p, new ReflectiveMaterial())));
         }
     }
 

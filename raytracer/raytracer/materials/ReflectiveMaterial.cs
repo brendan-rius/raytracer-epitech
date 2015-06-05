@@ -8,8 +8,7 @@ namespace raytracer.materials
 
         public ReflectiveMaterial(SampledSpectrum spectrum = null, Fresnel fresnel = null)
         {
-            _specular = new SpecularReflection(fresnel ?? new FresnelConductor(1.4f, 1f),
-                spectrum ?? SampledSpectrum.Random());
+            _specular = new SpecularReflection(1, spectrum ?? SampledSpectrum.Random());
         }
 
         public override BSDF GetBSDF(ref Intersection intersection)

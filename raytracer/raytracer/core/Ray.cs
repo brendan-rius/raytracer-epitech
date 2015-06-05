@@ -75,15 +75,5 @@ namespace raytracer.core
                 Origin.Y + Direction.Y*t,
                 Origin.Z + Direction.Z*t);
         }
-
-        /// <summary>
-        ///     Create a child ray, with a grater depth level
-        /// </summary>
-        /// <returns></returns>
-        public Ray GenerateChild(Vector3 direction, Vector3 origin, float start = DefaultStartValue,
-            float end = DefaultEndValue)
-        {
-            return new Ray(direction, origin, start, end, Depth + 1);
-        }
     }
 }

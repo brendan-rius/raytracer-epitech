@@ -868,5 +868,15 @@ namespace raytracer.core
         {
             return new SampledSpectrum();
         }
+
+        public float Average()
+        {
+            return _samples.Average();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Samples: {0}, Average: {1}", _nsamples, Average());
+        }
     }
 }

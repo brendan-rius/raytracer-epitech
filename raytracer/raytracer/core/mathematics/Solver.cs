@@ -1,4 +1,5 @@
 ﻿using System;
+using OpenTK;
 
 namespace raytracer.core.mathematics
 {
@@ -30,6 +31,11 @@ namespace raytracer.core.mathematics
         public static float Lerp(float t, float start, float end)
         {
             return (1 - t)*start + t*end;
+        }
+
+        public static Vector4 Lerp(Vector4 t, float start, float end)
+        {
+            return (new Vector4(1, 1, 1, 1) - t) * start + t * end;
         }
     }
 }

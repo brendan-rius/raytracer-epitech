@@ -9,7 +9,7 @@ namespace raytracer.core.mathematics
         ///     Represent the different types a function can be
         /// </summary>
         [Flags]
-        public enum BxDFType : byte
+        public enum BxDFType : uint
         {
             /// <summary>
             ///     The function if reflective
@@ -19,7 +19,37 @@ namespace raytracer.core.mathematics
             /// <summary>
             ///     The function if transmitive
             /// </summary>
-            Transmission = (1 << 1)
+            Transmission = (1 << 1),
+
+            /// <summary>
+            ///     The reflection/transmission is specular
+            /// </summary>
+            Specular = (1 << 2),
+
+            /// <summary>
+            ///     The reflection/transmission is diffuse
+            /// </summary>
+            Diffuse = (1 << 3),
+
+            /// <summary>
+            ///     The reflection/transmission is diffuse or specular
+            /// </summary>
+            AllTypes = Diffuse | Specular,
+
+            /// <summary>
+            ///     The reflection is diffuse or specular
+            /// </summary>
+            AllReflection = Reflection | AllTypes,
+
+            /// <summary>
+            ///     The transmission is diffuse or specular
+            /// </summary>
+            AllTransmission = Transmission | AllTypes,
+
+            /// <summary>
+            ///     All
+            /// </summary>
+            All = AllReflection | AllTransmission
         }
 
         /// <summary>
@@ -51,9 +81,9 @@ namespace raytracer.core.mathematics
         /// <param name="leaving">the leaving vector</param>
         /// <param name="incoming">the incoming vector</param>
         /// <returns>te distribution of light</returns>
-        public virtual SampledSpectrum Sample(ref Vector3 leaving, out Vector3 incoming)
+        public virtual SampledSpectrum Sample(Vector3 leaving, out Vector3 incoming)
         {
-            incoming = new Vector3(0, 0, 1);
+            incoming = new Vector3(0, 1, 0);
             if (leaving.Z < 0f)
                 incoming.Z *= -1;
             return F(leaving, incoming);

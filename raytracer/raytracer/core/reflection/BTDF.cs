@@ -25,18 +25,21 @@ namespace raytracer.core
 
         public override SampledSpectrum F(Vector3 incoming, Vector3 leaving)
         {
-            return _sourceBRDF != null
-                ? _sourceBRDF.F(OtherHemisphere(incoming), leaving)
-                : SampledSpectrum.Random();
+            if (_sourceBRDF != null)
+            {
+                var incomingInOtherHemisphere = OtherHemisphere(ref incoming);
+                return _sourceBRDF.F(incomingInOtherHemisphere, leaving);
+            }
+            return SampledSpectrum.Random();
         }
 
-        public override SampledSpectrum Sample(ref Vector3 leaving, out Vector3 incoming)
+        public override SampledSpectrum Sample(Vector3 leaving, out Vector3 incoming)
         {
             incoming = new Vector3(0, 0, 0);
             return SampledSpectrum.Black();
         }
 
-        public static Vector3 OtherHemisphere(Vector3 v)
+        public static Vector3 OtherHemisphere(ref Vector3 v)
         {
             return new Vector3(v.X, v.Y, -v.Z);
         }

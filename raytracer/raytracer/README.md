@@ -14,3 +14,7 @@
 
   - Pas de dispersion (réflection de Fresnel non dépendante de la longueur d'onde)
   - Lumière polarisée aléatoirement
+
+  ### TODOS
+
+   - Utiliser LengthFast sur les facteurs
