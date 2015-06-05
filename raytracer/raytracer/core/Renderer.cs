@@ -62,7 +62,7 @@ namespace raytracer.core
         ///     Render the scene.
         ///     <returns>the duration of rendering (in milliseconds)</returns>
         /// </summary>
-        public virtual long Render()
+        public long Render()
         {
             var sw = new Stopwatch();
             sw.Start();

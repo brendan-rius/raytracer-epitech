@@ -70,5 +70,10 @@ namespace raytracer.samplers
                 }
             }
         }
+
+        public override float TotalSamples()
+        {
+            return Screen.Height*Screen.Width*NumberOfSamples;
+        }
     }
 }
