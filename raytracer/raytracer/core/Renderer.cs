@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +22,8 @@ namespace raytracer.core
         /// <param name="scene">the scene to render</param>
         /// <param name="sampler">the sampler</param>
         /// <param name="camera">the camera</param>
+        /// <param name="film">the film to write to</param>
+        /// <param name="integrator">the surface integrator</param>
         public Renderer(Scene scene, Sampler sampler, Camera camera, Film film, Integrator integrator)
         {
             Film = film;
@@ -66,8 +67,7 @@ namespace raytracer.core
             var sw = new Stopwatch();
             sw.Start();
             var samples = Sampler.Samples();
-            foreach (var sample in samples)
-                Film.AddSample(sample, Li(sample));
+            Parallel.ForEach(samples, sample => Film.AddSample(sample, Li(sample)));
             sw.Stop();
             return sw.ElapsedMilliseconds;
         }
@@ -88,62 +88,6 @@ namespace raytracer.core
             else
                 spectrum = Scene.Lights.Aggregate(spectrum, (current, light) => current + light.Le(ray));
             return spectrum;
-        }
-    }
-
-    /// <summary>
-    ///     A threaded renderer use multiple threads to speed up rendering
-    /// </summary>
-    public class ThreadedRenderer : Renderer
-    {
-        /// <summary>
-        ///     The number of tasks to process
-        /// </summary>
-        protected const uint NTasks = 64;
-
-        /// <summary>
-        ///     The list of sub-samplers
-        /// </summary>
-        private readonly List<ThreadedSampler> _samplers;
-
-        /// <summary>
-        ///     Create a threaded renderer
-        /// </summary>
-        /// <param name="scene">the scene to render</param>
-        /// <param name="sampler">the multithreaded sampler to use</param>
-        /// <param name="camera">the camera</param>
-        /// <param name="film">the film</param>
-        /// <param name="integrator">the integrator</param>
-        /// <param name="nthreads">the number of threads to use</param>
-        public ThreadedRenderer(Scene scene, ThreadedSampler sampler, Camera camera, Film film, Integrator integrator)
-            : base(scene, sampler, camera, film, integrator)
-        {
-            _samplers = sampler.GetSamplers(NTasks);
-        }
-
-        /// <summary>
-        ///     Render all the samples from a sampler
-        /// </summary>
-        /// <param name="sampler">the sampler</param>
-        protected void RenderSampler(ThreadedSampler sampler)
-        {
-            var samples = sampler.Samples();
-            foreach (var sample in samples)
-                Film.AddSample(sample, Li(sample));
-        }
-
-        /// <summary>
-        ///     Render all the scene asynchronously
-        /// </summary>
-        /// <returns></returns>
-        public async Task<long> RenderAsync()
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            var tasks = _samplers.Select(sampler => Task.Run(() => { RenderSampler(sampler); })).ToList();
-            await Task.WhenAll(tasks);
-            sw.Stop();
-            return sw.ElapsedMilliseconds;
         }
     }
 }

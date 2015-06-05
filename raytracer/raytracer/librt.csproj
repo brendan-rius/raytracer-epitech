@@ -82,6 +82,7 @@
     <None Include="assets\cube.obj" />
     <None Include="assets\dia.obj" />
     <None Include="assets\torus.obj" />
+    <None Include="assets\diamond.obj" />
     <None Include="packages.config" />
     <None Include="README.md" />
   </ItemGroup>
