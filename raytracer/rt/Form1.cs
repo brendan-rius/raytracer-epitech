@@ -15,6 +15,7 @@ using raytracer.materials;
 using raytracer.samplers;
 using raytracer.shapes;
 using Screen = raytracer.core.Screen;
+using System.Threading.Tasks;
 
 namespace rt
 {
@@ -24,7 +25,7 @@ namespace rt
         private const uint NSamples = 1;
         private readonly Scene _scene;
         private readonly MyFilm _film;
-        private readonly ThreadedRenderer _renderer;
+        private readonly Renderer _renderer;
 
         public RayTracer()
         {
@@ -34,7 +35,7 @@ namespace rt
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
                 Transformation.Translation(0, 0, -1000));
-            _renderer = new ThreadedRenderer(_scene,
+            _renderer = new Renderer(_scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
             _scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
@@ -50,7 +51,7 @@ namespace rt
 
         public async void Render()
         {
-            var elapsed = await _renderer.RenderAsync();
+            var elapsed = await Task.Run(() => _renderer.Render());
             StatusText.ForeColor = System.Drawing.Color.FromArgb((int)0x40, (int)0x40, (int)0x40);
             StatusText.Text = "Rendered in " + elapsed / 1000 + " seconds.";
             _film.Display(RenderPicture);
