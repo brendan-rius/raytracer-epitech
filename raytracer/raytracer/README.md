@@ -9,6 +9,10 @@
  - Interface graphique
  - Portabilité
  - Différents matériaux
+ - Réflection
+ - Réfraction physiquement plausible
+ - Couleur distribution spectrale
+ - Sensibilité de l'oeil humain
 
  ### Failles
 
@@ -17,4 +21,4 @@
 
   ### TODOS
 
-   - Utiliser LengthFast sur les facteurs
+   - Utiliser LengthFast sur les vecteurs

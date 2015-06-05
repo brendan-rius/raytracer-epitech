@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK;
 using raytracer.cameras;
@@ -22,7 +23,7 @@ namespace rt
     {
         private const uint NSamples = 1;
         private readonly MyFilm _film;
-        private readonly ThreadedRenderer _renderer;
+        private readonly Renderer _renderer;
 
         public Form1()
         {
@@ -32,25 +33,26 @@ namespace rt
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
                 Transformation.Translation(0, 0, -1000));
-            _renderer = new ThreadedRenderer(scene,
+            _renderer = new Renderer(scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
             scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
-            SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\torus.obj");
-            scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, 300, 0)), new MatteMaterial()));
-            scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
+            SimpleObjParser(scene,
+                @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\cube.obj");
             scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
-             scene.Elements.Add(
-                 new Primitive(new Plane(Transformation.RotateZ(90)*Transformation.Translation(-600, 0, 0)),
-                     new MatteMaterial()));
-             scene.Elements.Add(new Primitive(
-                 new Plane(Transformation.RotateZ(90)*Transformation.Translation(600, 0, 0)), new MatteMaterial()));
+            scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
+            scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, 300, 0)), new MatteMaterial()));
+            scene.Elements.Add(
+                new Primitive(new Plane(Transformation.RotateZ(90)*Transformation.Translation(-600, 0, 0)),
+                    new MatteMaterial()));
+            scene.Elements.Add(new Primitive(
+                new Plane(Transformation.RotateZ(90)*Transformation.Translation(600, 0, 0)), new MatteMaterial()));
             Render();
         }
 
         public async void Render()
         {
-            var elapsed = await _renderer.RenderAsync();
+            var elapsed = await Task.Run<float>(() => _renderer.Render());
             label1.Text = "Rendered in " + elapsed + " milliseconds";
             _film.Display(pictureBox1);
         }
@@ -74,10 +76,10 @@ namespace rt
                     var p1 = verts.ElementAt(int.Parse(nums[0]) - 1);
                     var p2 = verts.ElementAt(int.Parse(nums[1]) - 1);
                     var p3 = verts.ElementAt(int.Parse(nums[2]) - 1);
-                    return new Triangle(new Vector3[3] {p1, p2, p3});
+                    return new Triangle(new[] {p1, p2, p3});
                 })
                 .ToList();
-            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new GlassMaterial(1f, 1.2f)));
+            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new GlassMaterial(1f, 1.1f)));
         }
     }
 
