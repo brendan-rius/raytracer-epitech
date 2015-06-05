@@ -59,6 +59,7 @@
     <Compile Include="core\reflection\SpecularReflection.cs" />
     <Compile Include="core\StaticRandom.cs" />
     <Compile Include="core\VisibilityTester.cs" />
+    <Compile Include="filters\filters.cs" />
     <Compile Include="integrators\WhittedIntegrator.cs" />
     <Compile Include="lights\PointLight.cs" />
     <Compile Include="materials\GlassMaterial.cs" />
@@ -94,6 +95,7 @@
       <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
