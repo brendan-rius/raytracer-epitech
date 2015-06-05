@@ -36,14 +36,15 @@
             this.LoadButton = new System.Windows.Forms.Button();
             this.PathText = new System.Windows.Forms.Label();
             this.RenderButton = new System.Windows.Forms.Button();
-            this.FiltersContrastMore = new System.Windows.Forms.RadioButton();
-            this.FiltersBorderMore = new System.Windows.Forms.RadioButton();
-            this.FiltersBlur = new System.Windows.Forms.RadioButton();
-            this.FiltersBorderDetect = new System.Windows.Forms.RadioButton();
-            this.FiltersBorderDetectMore = new System.Windows.Forms.RadioButton();
-            this.FiltersPush = new System.Windows.Forms.RadioButton();
-            this.FiltersSharpen = new System.Windows.Forms.RadioButton();
             this.FiltersTitle = new System.Windows.Forms.Label();
+            this.FiltersContrastMore = new System.Windows.Forms.Button();
+            this.FiltersBorderEnhancement = new System.Windows.Forms.Button();
+            this.FiltersBlur = new System.Windows.Forms.Button();
+            this.FiltersBorderDetect = new System.Windows.Forms.Button();
+            this.FiltersBorderDetectMore = new System.Windows.Forms.Button();
+            this.FiltersPush = new System.Windows.Forms.Button();
+            this.FiltersSharpeness = new System.Windows.Forms.Button();
+            this.ButtonExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.RenderPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             // 
             this.StatusText.Font = new System.Drawing.Font("Cicle Gordita", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatusText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
-            this.StatusText.Location = new System.Drawing.Point(0, 880);
+            this.StatusText.Location = new System.Drawing.Point(0, 852);
             this.StatusText.Name = "StatusText";
             this.StatusText.Size = new System.Drawing.Size(1920, 48);
             this.StatusText.TabIndex = 1;
@@ -69,7 +70,7 @@
             // 
             // ProgressBar
             // 
-            this.ProgressBar.Location = new System.Drawing.Point(16, 960);
+            this.ProgressBar.Location = new System.Drawing.Point(16, 932);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(1888, 48);
             this.ProgressBar.TabIndex = 2;
@@ -116,111 +117,6 @@
             this.RenderButton.UseVisualStyleBackColor = true;
             this.RenderButton.Click += new System.EventHandler(this.RenderButton_Click);
             // 
-            // FiltersContrastMore
-            // 
-            this.FiltersContrastMore.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersContrastMore.Enabled = false;
-            this.FiltersContrastMore.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltersContrastMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.FiltersContrastMore.Location = new System.Drawing.Point(54, 229);
-            this.FiltersContrastMore.Name = "FiltersContrastMore";
-            this.FiltersContrastMore.Size = new System.Drawing.Size(778, 64);
-            this.FiltersContrastMore.TabIndex = 6;
-            this.FiltersContrastMore.TabStop = true;
-            this.FiltersContrastMore.Text = "Contrast more";
-            this.FiltersContrastMore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FiltersContrastMore.UseVisualStyleBackColor = false;
-            // 
-            // FiltersBorderMore
-            // 
-            this.FiltersBorderMore.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersBorderMore.Enabled = false;
-            this.FiltersBorderMore.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltersBorderMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.FiltersBorderMore.Location = new System.Drawing.Point(54, 299);
-            this.FiltersBorderMore.Name = "FiltersBorderMore";
-            this.FiltersBorderMore.Size = new System.Drawing.Size(778, 64);
-            this.FiltersBorderMore.TabIndex = 7;
-            this.FiltersBorderMore.TabStop = true;
-            this.FiltersBorderMore.Text = "Border enhancement";
-            this.FiltersBorderMore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FiltersBorderMore.UseVisualStyleBackColor = false;
-            // 
-            // FiltersBlur
-            // 
-            this.FiltersBlur.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersBlur.Enabled = false;
-            this.FiltersBlur.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltersBlur.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.FiltersBlur.Location = new System.Drawing.Point(54, 369);
-            this.FiltersBlur.Name = "FiltersBlur";
-            this.FiltersBlur.Size = new System.Drawing.Size(778, 64);
-            this.FiltersBlur.TabIndex = 8;
-            this.FiltersBlur.TabStop = true;
-            this.FiltersBlur.Text = "Blur";
-            this.FiltersBlur.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FiltersBlur.UseVisualStyleBackColor = false;
-            // 
-            // FiltersBorderDetect
-            // 
-            this.FiltersBorderDetect.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersBorderDetect.Enabled = false;
-            this.FiltersBorderDetect.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltersBorderDetect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.FiltersBorderDetect.Location = new System.Drawing.Point(54, 439);
-            this.FiltersBorderDetect.Name = "FiltersBorderDetect";
-            this.FiltersBorderDetect.Size = new System.Drawing.Size(778, 64);
-            this.FiltersBorderDetect.TabIndex = 9;
-            this.FiltersBorderDetect.TabStop = true;
-            this.FiltersBorderDetect.Text = "Border detect";
-            this.FiltersBorderDetect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FiltersBorderDetect.UseVisualStyleBackColor = false;
-            // 
-            // FiltersBorderDetectMore
-            // 
-            this.FiltersBorderDetectMore.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersBorderDetectMore.Enabled = false;
-            this.FiltersBorderDetectMore.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltersBorderDetectMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.FiltersBorderDetectMore.Location = new System.Drawing.Point(54, 509);
-            this.FiltersBorderDetectMore.Name = "FiltersBorderDetectMore";
-            this.FiltersBorderDetectMore.Size = new System.Drawing.Size(778, 64);
-            this.FiltersBorderDetectMore.TabIndex = 10;
-            this.FiltersBorderDetectMore.TabStop = true;
-            this.FiltersBorderDetectMore.Text = "Border detect more";
-            this.FiltersBorderDetectMore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FiltersBorderDetectMore.UseVisualStyleBackColor = false;
-            // 
-            // FiltersPush
-            // 
-            this.FiltersPush.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersPush.Enabled = false;
-            this.FiltersPush.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltersPush.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.FiltersPush.Location = new System.Drawing.Point(54, 579);
-            this.FiltersPush.Name = "FiltersPush";
-            this.FiltersPush.Size = new System.Drawing.Size(778, 64);
-            this.FiltersPush.TabIndex = 11;
-            this.FiltersPush.TabStop = true;
-            this.FiltersPush.Text = "Push";
-            this.FiltersPush.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FiltersPush.UseVisualStyleBackColor = false;
-            // 
-            // FiltersSharpen
-            // 
-            this.FiltersSharpen.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersSharpen.Enabled = false;
-            this.FiltersSharpen.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltersSharpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.FiltersSharpen.Location = new System.Drawing.Point(54, 649);
-            this.FiltersSharpen.Name = "FiltersSharpen";
-            this.FiltersSharpen.Size = new System.Drawing.Size(778, 64);
-            this.FiltersSharpen.TabIndex = 12;
-            this.FiltersSharpen.TabStop = true;
-            this.FiltersSharpen.Text = "Sharpeness";
-            this.FiltersSharpen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.FiltersSharpen.UseVisualStyleBackColor = false;
-            // 
             // FiltersTitle
             // 
             this.FiltersTitle.BackColor = System.Drawing.Color.Transparent;
@@ -233,20 +129,118 @@
             this.FiltersTitle.Text = "- Filters -";
             this.FiltersTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // FiltersContrastMore
+            // 
+            this.FiltersContrastMore.Enabled = false;
+            this.FiltersContrastMore.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersContrastMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.FiltersContrastMore.Location = new System.Drawing.Point(54, 229);
+            this.FiltersContrastMore.Name = "FiltersContrastMore";
+            this.FiltersContrastMore.Size = new System.Drawing.Size(778, 64);
+            this.FiltersContrastMore.TabIndex = 14;
+            this.FiltersContrastMore.Text = "Contrast more";
+            this.FiltersContrastMore.UseVisualStyleBackColor = true;
+            this.FiltersContrastMore.Click += new System.EventHandler(this.FiltersContrastMore_Click);
+            // 
+            // FiltersBorderEnhancement
+            // 
+            this.FiltersBorderEnhancement.Enabled = false;
+            this.FiltersBorderEnhancement.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBorderEnhancement.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.FiltersBorderEnhancement.Location = new System.Drawing.Point(54, 299);
+            this.FiltersBorderEnhancement.Name = "FiltersBorderEnhancement";
+            this.FiltersBorderEnhancement.Size = new System.Drawing.Size(778, 64);
+            this.FiltersBorderEnhancement.TabIndex = 15;
+            this.FiltersBorderEnhancement.Text = "Border enhancement";
+            this.FiltersBorderEnhancement.UseVisualStyleBackColor = true;
+            // 
+            // FiltersBlur
+            // 
+            this.FiltersBlur.Enabled = false;
+            this.FiltersBlur.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBlur.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.FiltersBlur.Location = new System.Drawing.Point(54, 369);
+            this.FiltersBlur.Name = "FiltersBlur";
+            this.FiltersBlur.Size = new System.Drawing.Size(778, 64);
+            this.FiltersBlur.TabIndex = 16;
+            this.FiltersBlur.Text = "Blur";
+            this.FiltersBlur.UseVisualStyleBackColor = true;
+            // 
+            // FiltersBorderDetect
+            // 
+            this.FiltersBorderDetect.Enabled = false;
+            this.FiltersBorderDetect.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBorderDetect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.FiltersBorderDetect.Location = new System.Drawing.Point(54, 439);
+            this.FiltersBorderDetect.Name = "FiltersBorderDetect";
+            this.FiltersBorderDetect.Size = new System.Drawing.Size(778, 64);
+            this.FiltersBorderDetect.TabIndex = 17;
+            this.FiltersBorderDetect.Text = "Border detect";
+            this.FiltersBorderDetect.UseVisualStyleBackColor = true;
+            // 
+            // FiltersBorderDetectMore
+            // 
+            this.FiltersBorderDetectMore.Enabled = false;
+            this.FiltersBorderDetectMore.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBorderDetectMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.FiltersBorderDetectMore.Location = new System.Drawing.Point(54, 509);
+            this.FiltersBorderDetectMore.Name = "FiltersBorderDetectMore";
+            this.FiltersBorderDetectMore.Size = new System.Drawing.Size(778, 64);
+            this.FiltersBorderDetectMore.TabIndex = 18;
+            this.FiltersBorderDetectMore.Text = "Border detect more";
+            this.FiltersBorderDetectMore.UseVisualStyleBackColor = true;
+            // 
+            // FiltersPush
+            // 
+            this.FiltersPush.Enabled = false;
+            this.FiltersPush.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersPush.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.FiltersPush.Location = new System.Drawing.Point(54, 579);
+            this.FiltersPush.Name = "FiltersPush";
+            this.FiltersPush.Size = new System.Drawing.Size(778, 64);
+            this.FiltersPush.TabIndex = 19;
+            this.FiltersPush.Text = "Push";
+            this.FiltersPush.UseVisualStyleBackColor = true;
+            // 
+            // FiltersSharpeness
+            // 
+            this.FiltersSharpeness.Enabled = false;
+            this.FiltersSharpeness.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersSharpeness.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.FiltersSharpeness.Location = new System.Drawing.Point(54, 649);
+            this.FiltersSharpeness.Name = "FiltersSharpeness";
+            this.FiltersSharpeness.Size = new System.Drawing.Size(778, 64);
+            this.FiltersSharpeness.TabIndex = 20;
+            this.FiltersSharpeness.Text = "Sharpeness";
+            this.FiltersSharpeness.UseVisualStyleBackColor = true;
+            // 
+            // ButtonExit
+            // 
+            this.ButtonExit.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.ButtonExit.Location = new System.Drawing.Point(16, 1000);
+            this.ButtonExit.Name = "ButtonExit";
+            this.ButtonExit.Size = new System.Drawing.Size(196, 64);
+            this.ButtonExit.TabIndex = 21;
+            this.ButtonExit.Text = "Exit";
+            this.ButtonExit.UseVisualStyleBackColor = true;
+            this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
+            // 
             // RayTracer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
-            this.Controls.Add(this.FiltersTitle);
-            this.Controls.Add(this.FiltersSharpen);
+            this.Controls.Add(this.ButtonExit);
+            this.Controls.Add(this.FiltersSharpeness);
             this.Controls.Add(this.FiltersPush);
             this.Controls.Add(this.FiltersBorderDetectMore);
             this.Controls.Add(this.FiltersBorderDetect);
             this.Controls.Add(this.FiltersBlur);
-            this.Controls.Add(this.FiltersBorderMore);
+            this.Controls.Add(this.FiltersBorderEnhancement);
             this.Controls.Add(this.FiltersContrastMore);
+            this.Controls.Add(this.FiltersTitle);
             this.Controls.Add(this.RenderButton);
             this.Controls.Add(this.PathText);
             this.Controls.Add(this.LoadButton);
@@ -276,14 +270,15 @@
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.Label PathText;
         private System.Windows.Forms.Button RenderButton;
-        private System.Windows.Forms.RadioButton FiltersContrastMore;
-        private System.Windows.Forms.RadioButton FiltersBorderMore;
-        private System.Windows.Forms.RadioButton FiltersBlur;
-        private System.Windows.Forms.RadioButton FiltersBorderDetect;
-        private System.Windows.Forms.RadioButton FiltersBorderDetectMore;
-        private System.Windows.Forms.RadioButton FiltersPush;
-        private System.Windows.Forms.RadioButton FiltersSharpen;
         private System.Windows.Forms.Label FiltersTitle;
+        private System.Windows.Forms.Button FiltersContrastMore;
+        private System.Windows.Forms.Button FiltersBorderEnhancement;
+        private System.Windows.Forms.Button FiltersBlur;
+        private System.Windows.Forms.Button FiltersBorderDetect;
+        private System.Windows.Forms.Button FiltersBorderDetectMore;
+        private System.Windows.Forms.Button FiltersPush;
+        private System.Windows.Forms.Button FiltersSharpeness;
+        private System.Windows.Forms.Button ButtonExit;
     }
 }
 

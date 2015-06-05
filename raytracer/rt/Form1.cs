@@ -21,6 +21,7 @@ namespace rt
 {
     public partial class RayTracer : Form
     {
+        private bool _filtersState;
         private string _file;
         private const uint NSamples = 1;
         private readonly Scene _scene;
@@ -29,6 +30,7 @@ namespace rt
 
         public RayTracer()
         {
+            _filtersState = false;
             InitializeComponent();
             _scene = new Scene();
             var screen = new Screen(1024, 768);
@@ -53,12 +55,14 @@ namespace rt
         {
             var elapsed = await Task.Run(() => _renderer.Render());
             StatusText.ForeColor = System.Drawing.Color.FromArgb((int)0x40, (int)0x40, (int)0x40);
-            StatusText.Text = "Rendered in " + elapsed / 1000 + " seconds.";
+            StatusText.Text = "Rendered in " + (elapsed / 1000f).ToString("F3") + " seconds.";
             _film.Display(RenderPicture);
             PathText.ForeColor = System.Drawing.Color.FromArgb((int)0xFF, (int)0x61, (int)0x61);
             PathText.Text = "No file selected.";
             _file = null;
             LoadButton.Enabled = true;
+            if (_filtersState == false)
+                SwitchFiltersState();
         }
 
         public void SimpleObjParser(Scene scene, string filename)
@@ -177,6 +181,8 @@ namespace rt
 
         private void RenderButton_Click(object sender, EventArgs e)
         {
+            if (_filtersState == true)
+                SwitchFiltersState();
             LoadButton.Enabled = false;
             RenderButton.Enabled = false;
             if (RenderPicture.Image != null)
@@ -185,6 +191,31 @@ namespace rt
             StatusText.Text = "Rendering in progress...";
             SimpleObjParser(_scene, _file);
             Render();
+        }
+
+        private void SwitchFiltersState()
+        {
+            _filtersState = !_filtersState;
+            FiltersContrastMore.Enabled = _filtersState;
+            FiltersBorderEnhancement.Enabled = _filtersState;
+            FiltersBlur.Enabled = _filtersState;
+            FiltersBorderDetect.Enabled = _filtersState;
+            FiltersBorderDetectMore.Enabled = _filtersState;
+            FiltersPush.Enabled = _filtersState;
+            FiltersSharpeness.Enabled = _filtersState;
+        }
+
+        private void ButtonExit_Click(object sender, EventArgs e)
+        {
+            if (System.Windows.Forms.Application.MessageLoop)
+                System.Windows.Forms.Application.Exit();
+            else
+                System.Environment.Exit(1);
+        }
+
+        private void FiltersContrastMore_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
