@@ -10,7 +10,7 @@ namespace raytracer.core
     /// <summary>
     /// A bounding box implementation.
     /// </summary>
-    class BBox
+    public class BBox
     {
         /// <summary>
         /// Mininum point of the bounding box.
