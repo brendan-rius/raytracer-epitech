@@ -19,7 +19,8 @@ namespace raytracer.core
             _intersection = intersection;
             _nn = _intersection.NormalVector;
             _sn = _intersection.PointDifferentialOverU.Normalized();
-            Vector3.Cross(ref _nn, ref _sn, out _tn);        }
+            Vector3.Cross(ref _nn, ref _sn, out _tn);
+        }
 
         protected Vector3 WorldToLocal(ref Vector3 v)
         {

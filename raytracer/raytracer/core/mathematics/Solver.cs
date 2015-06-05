@@ -35,7 +35,7 @@ namespace raytracer.core.mathematics
 
         public static Vector4 Lerp(Vector4 t, float start, float end)
         {
-            return (new Vector4(1, 1, 1, 1) - t) * start + t * end;
+            return (new Vector4(1, 1, 1, 1) - t)*start + t*end;
         }
     }
 }

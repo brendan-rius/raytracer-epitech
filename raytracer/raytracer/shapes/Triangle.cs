@@ -13,11 +13,6 @@ namespace raytracer.shapes
         private readonly Vector3 _planeNormal;
 
         /// <summary>
-        ///     Stores the three triangle vertices.
-        /// </summary>
-        public Vector3[] Vertices { get; private set; }
-
-        /// <summary>
         ///     Creates a new Triangle from 3 vertices
         /// </summary>
         /// <param name="vertices"></param>
@@ -33,6 +28,11 @@ namespace raytracer.shapes
             Vector3.Cross(ref dp1, ref dp2, out normal);
             Vector3.Normalize(ref normal, out _planeNormal);
         }
+
+        /// <summary>
+        ///     Stores the three triangle vertices.
+        /// </summary>
+        public Vector3[] Vertices { get; private set; }
 
         /// <summary>
         ///     Returns whether a ray intersects with the triangle.
@@ -103,12 +103,12 @@ namespace raytracer.shapes
         }
 
         /// <summary>
-        /// Returns the area of the triangle.
+        ///     Returns the area of the triangle.
         /// </summary>
         /// <returns></returns>
         public float Area()
         {
-            return 0.5f * Vector3.Cross(Vertices[1] - Vertices[0], Vertices[2] - Vertices[0]).Length;
+            return 0.5f*Vector3.Cross(Vertices[1] - Vertices[0], Vertices[2] - Vertices[0]).Length;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace raytracer.cameras
 
         private readonly float _screenLeft;
         private readonly float _screenUp;
+
         public SimpleCamera(Screen screen, Transformation objectToWorld) : base(screen, objectToWorld)
         {
             _screenLeft = -Screen.Width/2f;
