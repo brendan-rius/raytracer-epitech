@@ -215,7 +215,9 @@ namespace rt
 
         private void FiltersContrastMore_Click(object sender, EventArgs e)
         {
-
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new Sharpen(new MyImage(Flagus), new MyImage(result));
+            RenderPicture.Image = result;
         }
     }
 }
