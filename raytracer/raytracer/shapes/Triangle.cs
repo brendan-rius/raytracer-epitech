@@ -15,7 +15,7 @@ namespace raytracer.shapes
         /// <summary>
         ///     Stores the three triangle vertices.
         /// </summary>
-        private readonly Vector3[] _vertices;
+        public Vector3[] Vertices { get; private set; }
 
         /// <summary>
         ///     Creates a new Triangle from 3 vertices
@@ -25,7 +25,7 @@ namespace raytracer.shapes
         {
             if (vertices.Length != 3)
                 throw new Exception();
-            _vertices = vertices;
+            Vertices = vertices;
 
             Vector3 normal, dp1, dp2;
             Vector3.Subtract(ref vertices[0], ref vertices[2], out dp1);
@@ -43,8 +43,8 @@ namespace raytracer.shapes
         {
             Vector3 e1, e2, s1;
             float divisor, invDivisor;
-            Vector3.Subtract(ref _vertices[1], ref _vertices[0], out e1);
-            Vector3.Subtract(ref _vertices[2], ref _vertices[0], out e2);
+            Vector3.Subtract(ref Vertices[1], ref Vertices[0], out e1);
+            Vector3.Subtract(ref Vertices[2], ref Vertices[0], out e2);
             Vector3.Cross(ref ray.Direction, ref e2, out s1);
             Vector3.Dot(ref s1, ref e1, out divisor);
             if (divisor == 0)
@@ -52,7 +52,7 @@ namespace raytracer.shapes
             invDivisor = 1/divisor;
 
             Vector3 s, s2;
-            Vector3.Subtract(ref ray.Origin, ref _vertices[0], out s);
+            Vector3.Subtract(ref ray.Origin, ref Vertices[0], out s);
             var b1 = Vector3.Dot(s, s1)*invDivisor;
             if (b1 < 0 || b1 > 1)
                 return false;
@@ -74,8 +74,8 @@ namespace raytracer.shapes
         {
             Vector3 e1, e2, s1;
             float divisor, invDivisor;
-            Vector3.Subtract(ref _vertices[1], ref _vertices[0], out e1);
-            Vector3.Subtract(ref _vertices[2], ref _vertices[0], out e2);
+            Vector3.Subtract(ref Vertices[1], ref Vertices[0], out e1);
+            Vector3.Subtract(ref Vertices[2], ref Vertices[0], out e2);
             Vector3.Cross(ref ray.Direction, ref e2, out s1);
             Vector3.Dot(ref s1, ref e1, out divisor);
             if (divisor == 0)
@@ -83,7 +83,7 @@ namespace raytracer.shapes
             invDivisor = 1/divisor;
 
             Vector3 s, s2;
-            Vector3.Subtract(ref ray.Origin, ref _vertices[0], out s);
+            Vector3.Subtract(ref ray.Origin, ref Vertices[0], out s);
             var b1 = Vector3.Dot(s, s1)*invDivisor;
             if (b1 < 0 || b1 > 1)
                 return false;
@@ -100,6 +100,15 @@ namespace raytracer.shapes
             Transformation.CoordinateSystem(ref intersection.NormalVector, out intersection.PointDifferentialOverU,
                 out intersection.PointDifferentialOverV);
             return true;
+        }
+
+        /// <summary>
+        /// Returns the area of the triangle.
+        /// </summary>
+        /// <returns></returns>
+        public float Area()
+        {
+            return 0.5f * Vector3.Cross(Vertices[1] - Vertices[0], Vertices[2] - Vertices[0]).Length;
         }
     }
 }

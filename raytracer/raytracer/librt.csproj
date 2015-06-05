@@ -36,19 +36,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
+    <Compile Include="core\BBox.cs" />
+    <Compile Include="core\Camera.cs" />
     <Compile Include="core\reflection\BRDF.cs" />
     <Compile Include="core\reflection\BSDF.cs" />
     <Compile Include="core\reflection\BTDF.cs" />
-    <Compile Include="core\Camera.cs" />
     <Compile Include="core\reflection\Fresnel.cs" />
     <Compile Include="core\Integrator.cs" />
     <Compile Include="core\mathematics\IIntersectable.cs" />
     <Compile Include="core\mathematics\Intersection.cs" />
     <Compile Include="core\Film.cs" />
-    <Compile Include="core\reflection\LambertianReflection.cs" />
+    <Compile Include="core\KdTreeAccel.cs" />
     <Compile Include="core\Light.cs" />
     <Compile Include="core\Material.cs" />
     <Compile Include="core\reflection\BxDF.cs" />
+    <Compile Include="core\reflection\LambertianReflection.cs" />
     <Compile Include="core\reflection\OrenNayar.cs" />
     <Compile Include="core\Shape.cs" />
     <Compile Include="core\mathematics\Solver.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="samplers\GridSampler.cs" />
     <Compile Include="core\Scene.cs" />
     <Compile Include="shapes\Triangle.cs" />
+    <Compile Include="shapes\TriangleMesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\bite.obj" />
