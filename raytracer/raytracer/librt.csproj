@@ -36,8 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
+    <Compile Include="core\Aggregate.cs" />
     <Compile Include="core\BBox.cs" />
     <Compile Include="core\Camera.cs" />
+    <Compile Include="core\GridAccel.cs" />
     <Compile Include="core\reflection\BRDF.cs" />
     <Compile Include="core\reflection\BSDF.cs" />
     <Compile Include="core\reflection\BTDF.cs" />

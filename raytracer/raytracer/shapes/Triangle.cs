@@ -64,6 +64,11 @@ namespace raytracer.shapes
             return !(t < ray.Start) && !(t > ray.End);
         }
 
+        public override BBox WorldBound()
+        {
+            return BBox.Union(new BBox(Vertices[0], Vertices[1]), Vertices[2]);
+        }
+
         /// <summary>
         ///     Returns whether a ray instersects with the triangle and fill the intersection structure if it does.
         /// </summary>

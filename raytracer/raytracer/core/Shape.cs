@@ -1,4 +1,6 @@
-﻿using raytracer.core.mathematics;
+﻿using System;
+using System.Collections.Generic;
+using raytracer.core.mathematics;
 
 namespace raytracer.core
 {
@@ -27,5 +29,26 @@ namespace raytracer.core
 
         public abstract bool TryToIntersect(Ray ray, ref Intersection intersection);
         public abstract bool Intersect(Ray ray);
+
+        /// <summary>
+        /// Whether a ray can intersect with this shape.
+        /// If false is returned, user must call Refine method.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanIntersect()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Refines the Shape into intersectable shapes.
+        /// </summary>
+        /// <param name="refined"></param>
+        public virtual void Refine(List<Shape> refined)
+        {
+            throw new NotImplementedException();
+        }
+
+        public abstract BBox WorldBound();
     }
 }

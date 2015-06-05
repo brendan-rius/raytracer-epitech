@@ -9,9 +9,9 @@ namespace raytracer.shapes
 {
     class TriangleMesh : Shape
     {
-        private BBox _box;
+        private readonly BBox _box;
 
-        private List<Triangle> _triangles;
+        private readonly List<Triangle> _triangles;
 
         TriangleMesh(List<Triangle> triangles)
         {
@@ -29,17 +29,17 @@ namespace raytracer.shapes
             }
         }
 
-        public BBox BoundingBox()
+        public override void Refine(List<Shape> refined)
+        {
+            refined.AddRange(_triangles.ToList());
+        }
+
+        public override BBox WorldBound()
         {
             return _box;
         }
 
-        public List<Shape> Refine()
-        {
-            return _triangles.Cast<Shape>().ToList();
-        }
-
-        public bool CanIntersect(Ray ray)
+        public override bool CanIntersect()
         {
             return false;
         }

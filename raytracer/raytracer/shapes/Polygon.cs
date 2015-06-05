@@ -115,5 +115,10 @@ namespace raytracer.shapes
             var point = ray.PointAtTime(t);
             return PointInPolygon(ref point);
         }
+
+        public override BBox WorldBound()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

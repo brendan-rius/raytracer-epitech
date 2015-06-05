@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
+using OpenTK.Graphics.ES30;
 
 namespace raytracer.core
 {
     /// <summary>
     /// A bounding box implementation.
     /// </summary>
-    class BBox
+    public class BBox
     {
         /// <summary>
         /// Mininum point of the bounding box.
@@ -48,6 +45,18 @@ namespace raytracer.core
             ret.PMax.X = Math.Max(box.PMax.X, point.X);
             ret.PMax.Y = Math.Max(box.PMax.Y, point.Y);
             ret.PMax.Z = Math.Max(box.PMax.Z, point.Z);
+            return ret;
+        }
+
+        public static BBox Union(BBox box, BBox box2)
+        {
+            BBox ret = box;
+            ret.PMin.X = Math.Min(box.PMin.X, box2.PMin.X);
+            ret.PMin.Y = Math.Min(box.PMin.Y, box2.PMin.Y);
+            ret.PMin.Z = Math.Min(box.PMin.Z, box2.PMin.Z);
+            ret.PMax.X = Math.Max(box.PMax.X, box2.PMax.X);
+            ret.PMax.Y = Math.Max(box.PMax.Y, box2.PMax.Y);
+            ret.PMax.Z = Math.Max(box.PMax.Z, box2.PMax.Z);
             return ret;
         }
 
@@ -123,6 +132,55 @@ namespace raytracer.core
                 return 1;
             else
                 return 2;
+        }
+
+        public bool IntersectP(Ray ray, ref float hitt0, ref float hitt1)
+        {
+            float t0 = ray.Start, t1 = ray.End;
+            float invRayDir, tNear, tFar;
+
+            invRayDir = 1/ray.Direction.X;
+            tNear = (PMin.X - ray.Origin.X)*invRayDir;
+            tFar = (PMax.X - ray.Origin.X)*invRayDir;
+            if (tNear > tFar)
+            {
+                float tmp = tNear;
+                tNear = tFar;
+                tFar = tmp;
+            }
+            t0 = tNear > t0 ? tNear : t0;
+            t1 = tFar < t1 ? tFar : t1;
+            if (t0 > t1) return false;
+
+            invRayDir = 1 / ray.Direction.Y;
+            tNear = (PMin.Y - ray.Origin.Y) * invRayDir;
+            tFar = (PMax.Y - ray.Origin.Y) * invRayDir;
+            if (tNear > tFar)
+            {
+                float tmp = tNear;
+                tNear = tFar;
+                tFar = tmp;
+            }
+            t0 = tNear > t0 ? tNear : t0;
+            t1 = tFar < t1 ? tFar : t1;
+            if (t0 > t1) return false;
+
+            invRayDir = 1 / ray.Direction.Z;
+            tNear = (PMin.Z - ray.Origin.Z) * invRayDir;
+            tFar = (PMax.Z - ray.Origin.Z) * invRayDir;
+            if (tNear > tFar)
+            {
+                float tmp = tNear;
+                tNear = tFar;
+                tFar = tmp;
+            }
+            t0 = tNear > t0 ? tNear : t0;
+            t1 = tFar < t1 ? tFar : t1;
+            if (t0 > t1) return false;
+
+            hitt0 = t0;
+            hitt1 = t1;
+            return true;
         }
     }
 }

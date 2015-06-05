@@ -34,5 +34,10 @@ namespace raytracer.shapes
             var t = -rayInObjectWorld.Origin.Y/rayInObjectWorld.Direction.Y;
             return !(t < rayInObjectWorld.Start) && !(t > rayInObjectWorld.End);
         }
+
+        public override BBox WorldBound()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

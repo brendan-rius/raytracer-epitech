@@ -1,4 +1,8 @@
-﻿namespace raytracer.core
+﻿using System.Collections.Generic;
+using System.Linq;
+using raytracer.materials;
+
+namespace raytracer.core
 {
     /// <summary>
     ///     A primitive is an object in the scene.
@@ -48,6 +52,32 @@
         public BSDF GetBSDF(ref Intersection intersection)
         {
             return Material.GetBSDF(ref intersection);
+        }
+
+        /// <summary>
+        /// Returns Whether a ray can intersect with the primitive.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanIntersect()
+        {
+            return Shape.CanIntersect();
+        }
+
+        /// <summary>
+        /// Refine the primitive.
+        /// </summary>
+        /// <param name="primitives"></param>
+        public void Refine(List<Primitive> primitives)
+        {
+            var shapes = new List<Shape>();
+
+            Shape.Refine(shapes);
+            primitives.AddRange(shapes.Select(s => new Primitive(s, new MatteMaterial())).ToList());
+        }
+
+        public BBox WorldBound()
+        {
+            return Shape.WorldBound();
         }
     }
 }
