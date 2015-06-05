@@ -21,7 +21,7 @@ namespace raytracer.core
             var angle = Math.Abs(Vector3.Dot(incoming.Normalized(), i.NormalVector));
             if (f.IsBlack() || angle == 0f)
                 return SampledSpectrum.Black();
-            var reflectedRay = new Ray(incoming.Normalized(), i.Point, 0.3f, Ray.DefaultEndValue, ray.Depth + 1);
+            var reflectedRay = new Ray(incoming.Normalized(), i.Point, 0.1f, Ray.DefaultEndValue, ray.Depth + 1);
             var li = renderer.Li(sample, reflectedRay);
             return f*li*angle;
         }
@@ -34,7 +34,7 @@ namespace raytracer.core
             var angle = Math.Abs(Vector3.Dot(incoming.Normalized(), i.NormalVector));
             if (f.IsBlack() || angle == 0f)
                 return SampledSpectrum.Black();
-            var reflectedRay = new Ray(incoming.Normalized(), i.Point, 0.3f, Ray.DefaultEndValue, ray.Depth + 1);
+            var reflectedRay = new Ray(incoming.Normalized(), i.Point, 0.1f, Ray.DefaultEndValue, ray.Depth + 1);
             var li = renderer.Li(sample, reflectedRay);
             return f*li*angle;
         }

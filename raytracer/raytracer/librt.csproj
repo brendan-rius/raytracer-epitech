@@ -80,6 +80,7 @@
   <ItemGroup>
     <None Include="assets\bite.obj" />
     <None Include="assets\cube.obj" />
+    <None Include="assets\dia.obj" />
     <None Include="assets\torus.obj" />
     <None Include="packages.config" />
     <None Include="README.md" />

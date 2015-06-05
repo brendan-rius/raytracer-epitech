@@ -35,8 +35,8 @@ namespace raytracer.integrators
             }
             if (ray.Depth + 1 < MaxDepth)
             {
-                spectrum += SpecularReflect(ray, renderer, sample, bsdfAtPoint, ref i);
                 spectrum += SpecularTransmit(ray, renderer, sample, bsdfAtPoint, ref i);
+                spectrum += SpecularReflect(ray, renderer, sample, bsdfAtPoint, ref i);
             }
             return spectrum;
         }

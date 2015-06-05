@@ -36,8 +36,8 @@ namespace rt
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
             scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
-            SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\torus.obj");
-            scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, 300, 0)), new MatteMaterial()));
+            SimpleObjParser(scene, @"C:\Users\ouvran_a\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\dia.obj");
+            scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
             scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
             scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
              scene.Elements.Add(
@@ -77,7 +77,7 @@ namespace rt
                     return new Triangle(new Vector3[3] {p1, p2, p3});
                 })
                 .ToList();
-            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new GlassMaterial(1f, 1.2f)));
+            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new GlassMaterial(1.04f, 1.15f)));
         }
     }
 
