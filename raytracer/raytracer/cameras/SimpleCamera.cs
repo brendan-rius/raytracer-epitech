@@ -9,17 +9,22 @@ namespace raytracer.cameras
         /// <summary>
         ///     The focal distance of the camera
         /// </summary>
-        public const float FocalDistance = -400;
+        public const float FocalDistance = 400;
+
+        private readonly float _screenLeft;
+        private readonly float _screenUp;
 
         public SimpleCamera(Screen screen, Transformation objectToWorld) : base(screen, objectToWorld)
         {
+            _screenLeft = -Screen.Width/2f;
+            _screenUp = Screen.Height/2f;
         }
 
         public override Ray GenerateRay(Sample sample)
         {
-            return ObjectToWorld.TransformRay(new Ray(
-                new Vector3(-Screen.Width/2f + sample.X, Screen.Height/2f - sample.Y, FocalDistance).Normalized(),
-                Vector3.Zero));
+            var ray = new Ray(new Vector3(_screenLeft + sample.X, _screenUp - sample.Y, FocalDistance).Normalized(),
+                Vector3.Zero);
+            return ObjectToWorld.TransformRay(ray);
         }
     }
 }

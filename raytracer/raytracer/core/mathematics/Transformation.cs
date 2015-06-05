@@ -100,7 +100,7 @@ namespace raytracer.core.mathematics
         /// <returns></returns>
         public static Transformation Translation(Vector3 vector)
         {
-            return new Transformation(Matrix4.CreateTranslation(vector));
+            return new Transformation(Matrix4.CreateTranslation(vector.X, vector.Y, vector.Z));
         }
 
         /// <summary>
@@ -191,33 +191,33 @@ namespace raytracer.core.mathematics
         }
 
         /// <summary>
-        ///     Rotation around X axis
+        ///     Clockwise rotation around X axis
         /// </summary>
         /// <param name="x">the rotation angle in degrees</param>
         /// <returns>the transformation</returns>
         public static Transformation RotateX(float x)
         {
-            return new Transformation(Matrix4.CreateRotationX(MathHelper.DegreesToRadians(x)));
+            return new Transformation(Matrix4.CreateRotationX(MathHelper.DegreesToRadians(-x)));
         }
 
         /// <summary>
-        ///     Rotation around Y axis
+        ///     Clockwise rotation around Y axis
         /// </summary>
         /// <param name="y">the rotation angle in degrees</param>
         /// <returns>the transformation</returns>
         public static Transformation RotateY(float y)
         {
-            return new Transformation(Matrix4.CreateRotationY(MathHelper.DegreesToRadians(y)));
+            return new Transformation(Matrix4.CreateRotationY(MathHelper.DegreesToRadians(-y)));
         }
 
         /// <summary>
-        ///     Rotation around Z axis
+        ///     Clockwise rotation around Z axis
         /// </summary>
         /// <param name="z">the rotation angle in degrees</param>
         /// <returns>the transformation</returns>
         public static Transformation RotateZ(float z)
         {
-            return new Transformation(Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(z)));
+            return new Transformation(Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(-z)));
         }
 
         /// <summary>

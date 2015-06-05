@@ -24,6 +24,8 @@ namespace raytracer.shapes
             intersection.NormalVector =
                 WorldToObjectTransformation.InverseTransformation.TransformNormal(normal).Normalized();
             intersection.Distance = (ray.Origin - intersection.Point).Length;
+            intersection.PointDifferentialOverU = new Vector3(1, 0, 0);
+            intersection.PointDifferentialOverV = new Vector3(0, 0, 1);
             return true;
         }
 

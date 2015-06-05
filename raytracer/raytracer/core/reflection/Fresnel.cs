@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace raytracer.core
 {
@@ -17,20 +16,18 @@ namespace raytracer.core
         {
             var parallel = ((st*cosi) - (si*cost))/((st*cosi) + (si*cost));
             var perpendicular = ((si*cosi) - (st*cost))/((si*cosi) + (st*cost));
-            if (parallel.HasNaNs() || perpendicular.HasNaNs())
-                Debug.WriteLine("");
             return parallel*parallel + perpendicular*perpendicular;
         }
 
         /// <summary>
-        /// Return the amount of light reflected at the surface
+        ///     Return the amount of light reflected at the surface
         /// </summary>
         /// <param name="cosi">the cosine of the incident angle</param>
         /// <returns></returns>
         public abstract SampledSpectrum Evaluate(float cosi);
     }
 
-    public class FresnelConductor : Fresnel
+    public class FresnelDielectric : Fresnel
     {
         /// <summary>
         ///     The index of refraction of the first medium
@@ -48,7 +45,7 @@ namespace raytracer.core
         /// </summary>
         /// <param name="indexOfRefraction1">the index of refraction on the first side of the surface</param>
         /// <param name="indexOfRefraction2">the index of refraction on the second side of the surface</param>
-        public FresnelConductor(float indexOfRefraction1, float indexOfRefraction2)
+        public FresnelDielectric(float indexOfRefraction1, float indexOfRefraction2)
         {
             IndexOfRefraction1 = indexOfRefraction1;
             IndexOfRefraction2 = indexOfRefraction2;
@@ -78,7 +75,8 @@ namespace raytracer.core
              * Here, sin(i) is computed using the fact that sin²(t) + cos²(a) = 1, so sin(a) = sqrt(1 - cos²(a)) */
             var sint = indexOfRefractionIncident/indexOfRefractionOther*Math.Sqrt(1 - cosi*cosi);
             var cost = (float) Math.Sqrt(Math.Max(0, 1 - sint*sint));
-            var reflected = DielectricFresnel(Math.Abs(cosi), cost, new SampledSpectrum(indexOfRefractionIncident), new SampledSpectrum(indexOfRefractionOther));
+            var reflected = DielectricFresnel(Math.Abs(cosi), cost, new SampledSpectrum(indexOfRefractionIncident),
+                new SampledSpectrum(indexOfRefractionOther));
             return reflected;
         }
     }

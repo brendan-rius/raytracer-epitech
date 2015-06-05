@@ -35,7 +35,7 @@ namespace raytracer.core
         /// </summary>
         public Primitive Primitive { get; set; }
 
-        public BSDF GetBSDF(Ray ray)
+        public BSDF GetBSDF()
         {
             return Primitive.GetBSDF(ref this);
         }
