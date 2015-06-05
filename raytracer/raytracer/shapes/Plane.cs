@@ -6,8 +6,11 @@ namespace raytracer.shapes
 {
     public class Plane : Shape
     {
+        private BBox _bbox;
+
         public Plane(Transformation worldToObjectTransformation = null) : base(worldToObjectTransformation)
         {
+            _bbox = new BBox(new Vector3(float.NegativeInfinity), new Vector3(float.PositiveInfinity));
         }
 
         public override bool TryToIntersect(Ray ray, ref Intersection intersection)
@@ -39,7 +42,7 @@ namespace raytracer.shapes
 
         public override BBox WorldBound()
         {
-            throw new System.NotImplementedException();
+            return _bbox;
         }
     }
 }

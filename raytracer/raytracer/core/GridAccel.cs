@@ -135,7 +135,7 @@ namespace raytracer.core
                 nextCrossingT[0] = rayT + (VoxelToPos(pos[0], 0) - gridIntersect.X) / ray.Direction.X;
                 deltaT[0] = -_width[0] / ray.Direction.X;
                 step[0] = -1;
-                _out[0] = -_nVoxels[0];
+                _out[0] = -1;
             }
 
             pos[1] = PosToVoxel(gridIntersect, 1);
@@ -151,7 +151,7 @@ namespace raytracer.core
                 nextCrossingT[1] = rayT + (VoxelToPos(pos[1], 1) - gridIntersect.Y) / ray.Direction.Y;
                 deltaT[1] = -_width[1] / ray.Direction.Y;
                 step[1] = -1;
-                _out[1] = -_nVoxels[1];
+                _out[1] = -1;
             }
 
             pos[2] = PosToVoxel(gridIntersect, 2);
@@ -167,7 +167,7 @@ namespace raytracer.core
                 nextCrossingT[2] = rayT + (VoxelToPos(pos[2], 2) - gridIntersect.Z) / ray.Direction.Z;
                 deltaT[2] = -_width[2] / ray.Direction.Z;
                 step[2] = -1;
-                _out[2] = -_nVoxels[2];
+                _out[2] = -1;
             }
 
             while (true)
@@ -195,12 +195,12 @@ namespace raytracer.core
 
         public override bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
-            float rayT = 0, _t = 0;
+            float rayT = 0, t = 0;
             if (_bbox.Inside(ray.PointAtTime(ray.Start)))
             {
                 rayT = ray.Start;
             }
-            else if (!_bbox.IntersectP(ray, ref rayT, ref _t))
+            else if (!_bbox.IntersectP(ray, ref rayT, ref t))
             {
                 return false;
             }
@@ -221,7 +221,7 @@ namespace raytracer.core
                 nextCrossingT[0] = rayT + (VoxelToPos(pos[0], 0) - gridIntersect.X) / ray.Direction.X;
                 deltaT[0] = -_width[0] / ray.Direction.X;
                 step[0] = -1;
-                _out[0] = -_nVoxels[0];
+                _out[0] = -1;
             }
 
             pos[1] = PosToVoxel(gridIntersect, 1);
@@ -237,7 +237,7 @@ namespace raytracer.core
                 nextCrossingT[1] = rayT + (VoxelToPos(pos[1], 1) - gridIntersect.Y) / ray.Direction.Y;
                 deltaT[1] = -_width[1] / ray.Direction.Y;
                 step[1] = -1;
-                _out[1] = -_nVoxels[1];
+                _out[1] = -1;
             }
 
             pos[2] = PosToVoxel(gridIntersect, 2);
@@ -253,13 +253,14 @@ namespace raytracer.core
                 nextCrossingT[2] = rayT + (VoxelToPos(pos[2], 2) - gridIntersect.Z) / ray.Direction.Z;
                 deltaT[2] = -_width[2] / ray.Direction.Z;
                 step[2] = -1;
-                _out[2] = -_nVoxels[2];
+                _out[2] = -1;
             }
 
             var hitSomething = false;
             while (true)
             {
-                var voxel = _voxels[Offset(pos[0], pos[1], pos[2])];
+                var offset = Offset(pos[0], pos[1], pos[2]);
+                var voxel = _voxels[offset];
                 if (voxel != null)
                 {
                     hitSomething |= voxel.TryToIntersect(ray, ref intersection);
@@ -301,7 +302,7 @@ namespace raytracer.core
                     break;
             }
             var v = (int)(axisValue*_invWidth[axis]);
-            return v < 0 ? 0 : v > (_nVoxels[axis] - 1) ? (_nVoxels[axis] - 1) : v;
+            return Clamp(v, 0, _nVoxels[axis] - 1);
         }
 
         private float VoxelToPos(int point, int axis)
@@ -315,6 +316,11 @@ namespace raytracer.core
                 default:
                     return _bbox.PMin.Z + point*_width[axis];
             }
+        }
+
+        private static int Clamp(int value, int min, int max)
+        {
+            return (value < min) ? min : (value > max) ? max : value;            
         }
     }
 

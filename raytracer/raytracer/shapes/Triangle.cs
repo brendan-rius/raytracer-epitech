@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using OpenTK;
 using raytracer.core;
 using raytracer.core.mathematics;
@@ -47,7 +48,7 @@ namespace raytracer.shapes
             Vector3.Subtract(ref Vertices[2], ref Vertices[0], out e2);
             Vector3.Cross(ref ray.Direction, ref e2, out s1);
             Vector3.Dot(ref s1, ref e1, out divisor);
-            if (divisor == 0)
+            if (divisor == 0f)
                 return false;
             invDivisor = 1/divisor;
 
@@ -83,7 +84,7 @@ namespace raytracer.shapes
             Vector3.Subtract(ref Vertices[2], ref Vertices[0], out e2);
             Vector3.Cross(ref ray.Direction, ref e2, out s1);
             Vector3.Dot(ref s1, ref e1, out divisor);
-            if (divisor == 0)
+            if (divisor == 0f)
                 return false;
             invDivisor = 1/divisor;
 

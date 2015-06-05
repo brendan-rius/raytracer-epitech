@@ -10,6 +10,7 @@ namespace raytracer.core
     {
         private List<Primitive> _elements = new List<Primitive>();
         private List<Light> _lights = new List<Light>();
+        private Aggregate _aggregator;
 
         /// <summary>
         ///     The elements of the scene
@@ -29,13 +30,18 @@ namespace raytracer.core
             set { _lights = value; }
         }
 
+        public void Initialize()
+        {
+            _aggregator = new GridAccel(_elements);
+        }
+
         public bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
             intersection.Distance = float.PositiveInfinity;
-            foreach (var element in Elements)
+            foreach (var primitive in _elements)
             {
                 var tmp = new Intersection();
-                if (!element.TryToIntersect(ray, ref tmp)) continue;
+                if (!primitive.TryToIntersect(ray, ref tmp)) continue;
                 if (tmp.Distance < intersection.Distance)
                     intersection = tmp;
             }
