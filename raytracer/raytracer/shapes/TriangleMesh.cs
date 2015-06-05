@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace raytracer.shapes
 {
-    class TriangleMesh : Shape
+    public class TriangleMesh : Shape
     {
         private BBox _box;
 
