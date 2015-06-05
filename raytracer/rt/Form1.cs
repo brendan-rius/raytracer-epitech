@@ -66,7 +66,7 @@ namespace rt
                             float.Parse(nums[1], CultureInfo.InvariantCulture),
                             float.Parse(nums[2], CultureInfo.InvariantCulture)))
                 .ToList();
-            lines.Where(l => Regex.IsMatch(l, @"^f(\s\d+(\/+\d+)?){3,3}$"))
+            var triangles = lines.Where(l => Regex.IsMatch(l, @"^f(\s\d+(\/+\d+)?){3,3}$"))
                 .Select(l => Regex.Split(l, @"\s+", RegexOptions.None).Skip(1).ToArray())
                 .Select(i => i.Select(a => Regex.Match(a, @"\d+", RegexOptions.None).Value).ToArray())
                 .Select(nums =>
@@ -77,7 +77,7 @@ namespace rt
                     return new Triangle(new Vector3[3] {p1, p2, p3});
                 })
                 .ToList()
-                .ForEach(p => scene.Elements.Add(new Primitive(p, new ReflectiveMaterial())));
+            var tm = new TriangleMesh(triangles);
         }
     }
 

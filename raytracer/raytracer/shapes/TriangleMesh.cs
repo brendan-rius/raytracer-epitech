@@ -10,7 +10,7 @@ namespace raytracer.shapes
         private readonly BBox _box;
         private readonly List<Triangle> _triangles;
 
-        private TriangleMesh(List<Triangle> triangles)
+        public TriangleMesh(List<Triangle> triangles)
         {
             if (triangles.Count == 0)
                 throw new Exception();
