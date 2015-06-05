@@ -31,13 +31,13 @@ namespace rt
             var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 200, -1000));
+                Transformation.Translation(0, 0, -1000));
             _renderer = new ThreadedRenderer(scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
             scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
-            //SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\cube.obj");
-            scene.Elements.Add(new Primitive(new Plane(), new ReflectiveMaterial()));
+            SimpleObjParser(scene, @"C:\Users\rius_b\Source\Repos\raytracer-epitech\raytracer\raytracer\assets\torus.obj");
+            scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, 300, 0)), new MatteMaterial()));
             scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
             scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
              scene.Elements.Add(
@@ -76,8 +76,8 @@ namespace rt
                     var p3 = verts.ElementAt(int.Parse(nums[2]) - 1);
                     return new Triangle(new Vector3[3] {p1, p2, p3});
                 })
-                .ToList()
-            var tm = new TriangleMesh(triangles);
+                .ToList();
+            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new GlassMaterial(1f, 1.2f)));
         }
     }
 

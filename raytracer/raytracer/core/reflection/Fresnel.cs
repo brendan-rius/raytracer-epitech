@@ -17,8 +17,6 @@ namespace raytracer.core
         {
             var parallel = ((st*cosi) - (si*cost))/((st*cosi) + (si*cost));
             var perpendicular = ((si*cosi) - (st*cost))/((si*cosi) + (st*cost));
-            if (parallel.HasNaNs() || perpendicular.HasNaNs())
-                Debug.WriteLine("");
             return parallel*parallel + perpendicular*perpendicular;
         }
 

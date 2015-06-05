@@ -38,9 +38,7 @@
     <Compile Include="cameras\SimpleCamera.cs" />
     <Compile Include="core\BBox.cs" />
     <Compile Include="core\Camera.cs" />
-    <Compile Include="core\reflection\BRDF.cs" />
     <Compile Include="core\reflection\BSDF.cs" />
-    <Compile Include="core\reflection\BTDF.cs" />
     <Compile Include="core\reflection\Fresnel.cs" />
     <Compile Include="core\Integrator.cs" />
     <Compile Include="core\mathematics\IIntersectable.cs" />
@@ -51,7 +49,7 @@
     <Compile Include="core\Material.cs" />
     <Compile Include="core\reflection\BxDF.cs" />
     <Compile Include="core\reflection\LambertianReflection.cs" />
-    <Compile Include="core\reflection\OrenNayar.cs" />
+    <Compile Include="core\reflection\SpecularTransmission.cs" />
     <Compile Include="core\Shape.cs" />
     <Compile Include="core\mathematics\Solver.cs" />
     <Compile Include="core\mathematics\Transformation.cs" />
@@ -63,8 +61,10 @@
     <Compile Include="core\VisibilityTester.cs" />
     <Compile Include="integrators\WhittedIntegrator.cs" />
     <Compile Include="lights\PointLight.cs" />
+    <Compile Include="materials\GlassMaterial.cs" />
     <Compile Include="materials\MatteMaterial.cs" />
     <Compile Include="materials\ReflectiveMaterial.cs" />
+    <Compile Include="materials\TestMaterial.cs" />
     <Compile Include="shapes\Plane.cs" />
     <Compile Include="shapes\Polygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

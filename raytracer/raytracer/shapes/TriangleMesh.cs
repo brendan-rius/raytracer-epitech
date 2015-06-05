@@ -43,12 +43,20 @@ namespace raytracer.shapes
 
         public override bool Intersect(Ray ray)
         {
-            return true;
+            return _triangles.Any(triangle => triangle.Intersect(ray));
         }
 
         public override bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
-            return true;
+            intersection.Distance = float.PositiveInfinity;
+            foreach (var triangle in _triangles)
+            {
+                var tmp = new Intersection();
+                if (!triangle.TryToIntersect(ray, ref tmp)) continue;
+                if (tmp.Distance < intersection.Distance)
+                    intersection = tmp;
+            }
+            return intersection.Distance != float.PositiveInfinity;
         }
     }
 }
