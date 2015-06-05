@@ -42,15 +42,15 @@ namespace raytracer.core.reflection
             var sinIncidentSquared = SinThetaSquared(ref leaving);
             var eta = ei/et;
             var sinTransmittedSquared = eta*eta*sinIncidentSquared;
-            var cosTransmitted = (float)Math.Sqrt(1 - sinTransmittedSquared);
+            var cosTransmitted = (float) Math.Sqrt(1 - sinTransmittedSquared);
             if (entering)
                 cosTransmitted = -cosTransmitted;
             var sinTOversinI = eta;
-            incoming = new Vector3(sinTOversinI * -leaving.X, sinTOversinI * -leaving.Y, cosTransmitted);
+            incoming = new Vector3(sinTOversinI*-leaving.X, sinTOversinI*-leaving.Y, cosTransmitted);
             if (sinTransmittedSquared >= 1)
                 return SampledSpectrum.Black();
             var f = _fresnel.Evaluate(CosTheta(ref leaving));
-            return (new SampledSpectrum(1) - f) * _s / AbsCosTheta(ref incoming) * (et * et) / (ei * ei);
+            return (new SampledSpectrum(1) - f)*_s/AbsCosTheta(ref incoming)*(et*et)/(ei*ei);
         }
     }
 }

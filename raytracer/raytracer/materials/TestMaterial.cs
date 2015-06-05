@@ -10,7 +10,7 @@ namespace raytracer.materials
         public TestMaterial(float? reflectiveness = null, SampledSpectrum spectrum = null)
         {
             _reflectiveness = reflectiveness ?? StaticRandom.NextFloat();
-            _spectrum = spectrum ?? SampledSpectrum.Random() * 0.3f;
+            _spectrum = spectrum ?? SampledSpectrum.Random()*0.3f;
         }
 
         public override BSDF GetBSDF(ref Intersection intersection)

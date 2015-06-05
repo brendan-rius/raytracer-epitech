@@ -25,6 +25,7 @@ namespace raytracer.core
             var li = renderer.Li(sample, reflectedRay);
             return f*li*angle;
         }
+
         public SampledSpectrum SpecularTransmit(Ray ray, Renderer renderer, Sample sample, BSDF bsdf, ref Intersection i)
         {
             var leaving = -ray.Direction;
@@ -35,7 +36,7 @@ namespace raytracer.core
                 return SampledSpectrum.Black();
             var reflectedRay = new Ray(incoming.Normalized(), i.Point, 0.3f, Ray.DefaultEndValue, ray.Depth + 1);
             var li = renderer.Li(sample, reflectedRay);
-            return f * li * angle;
+            return f*li*angle;
         }
     }
 }
