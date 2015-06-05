@@ -16,11 +16,13 @@ using raytracer.samplers;
 using raytracer.shapes;
 using Screen = raytracer.core.Screen;
 using System.Threading.Tasks;
+using raytracer.filters;
 
 namespace rt
 {
     public partial class RayTracer : Form
     {
+        private Bitmap _origin;
         private bool _filtersState;
         private string _file;
         private const uint NSamples = 1;
@@ -57,6 +59,7 @@ namespace rt
             StatusText.ForeColor = System.Drawing.Color.FromArgb((int)0x40, (int)0x40, (int)0x40);
             StatusText.Text = "Rendered in " + (elapsed / 1000f).ToString("F3") + " seconds.";
             _film.Display(RenderPicture);
+            _origin = new Bitmap(RenderPicture.Image);
             PathText.ForeColor = System.Drawing.Color.FromArgb((int)0xFF, (int)0x61, (int)0x61);
             PathText.Text = "No file selected.";
             _file = null;
@@ -155,6 +158,50 @@ namespace rt
             }
         }
 
+        public class MyImage : IImage
+        {
+            private Bitmap _bitmap;
+
+            public MyImage(Bitmap _image)
+            {
+                _bitmap = _image;
+            }
+
+            public Int32 GetPixel(uint x, uint y)
+            {
+                return _bitmap.GetPixel((int)x, (int)y).ToArgb();
+            }
+
+            public void PutPixel(uint x, uint y, int color)
+            {
+                _bitmap.SetPixel((int)x, (int)y, Color.FromArgb(color));
+            }
+
+            public uint XLimit
+            {
+                get
+                {
+                    return (uint)_bitmap.Width;
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public uint YLimit
+            {
+                get
+                {
+                    return (uint)_bitmap.Height;
+                }
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult File = openFileDialog1.ShowDialog();
@@ -215,9 +262,114 @@ namespace rt
 
         private void FiltersContrastMore_Click(object sender, EventArgs e)
         {
+            _filtersState = true;
+            LoadButton.Enabled = false;
+            RenderButton.Enabled = false;
+            SwitchFiltersState();
             Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new Sharpen(new MyImage(Flagus), new MyImage(result));
+            var filter = new ContrastMore(new MyImage(_origin), new MyImage(result));
             RenderPicture.Image = result;
+            SwitchFiltersState();
+            FiltersContrastMore.Enabled = false;
+            LoadButton.Enabled = true;
+            if (_file != null)
+                RenderButton.Enabled = true;
+        }
+
+        private void FiltersBorderEnhancement_Click(object sender, EventArgs e)
+        {
+            _filtersState = true;
+            LoadButton.Enabled = false;
+            RenderButton.Enabled = false;
+            SwitchFiltersState();
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new BorderMore(new MyImage(_origin), new MyImage(result));
+            RenderPicture.Image = result;
+            SwitchFiltersState();
+            FiltersBorderEnhancement.Enabled = false;
+            LoadButton.Enabled = true;
+            if (_file != null)
+                RenderButton.Enabled = true;
+        }
+
+        private void FiltersBlur_Click(object sender, EventArgs e)
+        {
+            _filtersState = true;
+            LoadButton.Enabled = false;
+            RenderButton.Enabled = false;
+            SwitchFiltersState();
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new Blur(new MyImage(_origin), new MyImage(result));
+            RenderPicture.Image = result;
+            SwitchFiltersState();
+            FiltersBlur.Enabled = false;
+            LoadButton.Enabled = true;
+            if (_file != null)
+                RenderButton.Enabled = true;
+        }
+
+        private void FiltersBorderDetect_Click(object sender, EventArgs e)
+        {
+            _filtersState = true;
+            LoadButton.Enabled = false;
+            RenderButton.Enabled = false;
+            SwitchFiltersState();
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new BorderDetect(new MyImage(_origin), new MyImage(result));
+            RenderPicture.Image = result;
+            SwitchFiltersState();
+            FiltersBorderDetect.Enabled = false;
+            LoadButton.Enabled = true;
+            if (_file != null)
+                RenderButton.Enabled = true;
+        }
+
+        private void FiltersBorderDetectMore_Click(object sender, EventArgs e)
+        {
+            _filtersState = true;
+            LoadButton.Enabled = false;
+            RenderButton.Enabled = false;
+            SwitchFiltersState();
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new BorderDetectMore(new MyImage(_origin), new MyImage(result));
+            RenderPicture.Image = result;
+            SwitchFiltersState();
+            FiltersBorderDetectMore.Enabled = false;
+            LoadButton.Enabled = true;
+            if (_file != null)
+                RenderButton.Enabled = true;
+        }
+
+        private void FiltersPush_Click(object sender, EventArgs e)
+        {
+            _filtersState = true;
+            LoadButton.Enabled = false;
+            RenderButton.Enabled = false;
+            SwitchFiltersState();
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new Push(new MyImage(_origin), new MyImage(result));
+            RenderPicture.Image = result;
+            SwitchFiltersState();
+            FiltersPush.Enabled = false;
+            LoadButton.Enabled = true;
+            if (_file != null)
+                RenderButton.Enabled = true;
+        }
+
+        private void FiltersSharpeness_Click(object sender, EventArgs e)
+        {
+            _filtersState = true;
+            LoadButton.Enabled = false;
+            RenderButton.Enabled = false;
+            SwitchFiltersState();
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new Sharpen(new MyImage(_origin), new MyImage(result));
+            RenderPicture.Image = result;
+            SwitchFiltersState();
+            FiltersSharpeness.Enabled = false;
+            LoadButton.Enabled = true;
+            if (_file != null)
+                RenderButton.Enabled = true;
         }
     }
 }

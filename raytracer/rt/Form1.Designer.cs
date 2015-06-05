@@ -153,6 +153,7 @@
             this.FiltersBorderEnhancement.TabIndex = 15;
             this.FiltersBorderEnhancement.Text = "Border enhancement";
             this.FiltersBorderEnhancement.UseVisualStyleBackColor = true;
+            this.FiltersBorderEnhancement.Click += new System.EventHandler(this.FiltersBorderEnhancement_Click);
             // 
             // FiltersBlur
             // 
@@ -165,6 +166,7 @@
             this.FiltersBlur.TabIndex = 16;
             this.FiltersBlur.Text = "Blur";
             this.FiltersBlur.UseVisualStyleBackColor = true;
+            this.FiltersBlur.Click += new System.EventHandler(this.FiltersBlur_Click);
             // 
             // FiltersBorderDetect
             // 
@@ -177,6 +179,7 @@
             this.FiltersBorderDetect.TabIndex = 17;
             this.FiltersBorderDetect.Text = "Border detect";
             this.FiltersBorderDetect.UseVisualStyleBackColor = true;
+            this.FiltersBorderDetect.Click += new System.EventHandler(this.FiltersBorderDetect_Click);
             // 
             // FiltersBorderDetectMore
             // 
@@ -189,6 +192,7 @@
             this.FiltersBorderDetectMore.TabIndex = 18;
             this.FiltersBorderDetectMore.Text = "Border detect more";
             this.FiltersBorderDetectMore.UseVisualStyleBackColor = true;
+            this.FiltersBorderDetectMore.Click += new System.EventHandler(this.FiltersBorderDetectMore_Click);
             // 
             // FiltersPush
             // 
@@ -201,6 +205,7 @@
             this.FiltersPush.TabIndex = 19;
             this.FiltersPush.Text = "Push";
             this.FiltersPush.UseVisualStyleBackColor = true;
+            this.FiltersPush.Click += new System.EventHandler(this.FiltersPush_Click);
             // 
             // FiltersSharpeness
             // 
@@ -213,6 +218,7 @@
             this.FiltersSharpeness.TabIndex = 20;
             this.FiltersSharpeness.Text = "Sharpeness";
             this.FiltersSharpeness.UseVisualStyleBackColor = true;
+            this.FiltersSharpeness.Click += new System.EventHandler(this.FiltersSharpeness_Click);
             // 
             // ButtonExit
             // 

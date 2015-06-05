@@ -188,7 +188,6 @@ namespace raytracer.filters
         /// <param name="map">The map interface.</param>
         private void    FillMatrix(uint x, uint y, Int32[,] matrix, IImage map)
         {
-            Int32 pixel;
             if (y > 0)
             {
                 matrix[0, 0] = (x > 0 ? map.GetPixel(x - 1, y - 1) : 0);
