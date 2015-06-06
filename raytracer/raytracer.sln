@@ -5,20 +5,9 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rt", "rt\rt.csproj", "{439AEA5C-3772-4CDB-A412-A932417E20D8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5B5C73DD-4CB4-445F-AA3E-1DB92B2E1614}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "librtTests", "librtTests\librtTests.csproj", "{28D46C47-2339-4C67-977A-ECF53BC6B1AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "librt", "librt3\librt.csproj", "{0D2553F3-EF72-4017-B255-ECBF2ACF5A1C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "models", "models", "{E4869ADB-B468-448C-8ED9-E297B46C0E3E}"
-	ProjectSection(SolutionItems) = preProject
-		raytracer\assets\bite.obj = raytracer\assets\bite.obj
-		raytracer\assets\cube.obj = raytracer\assets\cube.obj
-		raytracer\assets\dia.obj = raytracer\assets\dia.obj
-		raytracer\assets\diamond.obj = raytracer\assets\diamond.obj
-		raytracer\assets\torus.obj = raytracer\assets\torus.obj
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,8 +30,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{E4869ADB-B468-448C-8ED9-E297B46C0E3E} = {5B5C73DD-4CB4-445F-AA3E-1DB92B2E1614}
 	EndGlobalSection
 EndGlobal

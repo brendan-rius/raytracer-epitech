@@ -38,19 +38,19 @@ namespace rt
             var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 0, -1000));
+                Transformation.Translation(0, 200, -1000));
             _renderer = new Renderer(_scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
-            _scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
-            _scene.Elements.Add(
-                new Primitive(new Plane(Transformation.RotateZ(90) * Transformation.Translation(-600, 0, 0)),
-                    new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(
-                new Plane(Transformation.RotateZ(90) * Transformation.Translation(600, 0, 0)), new MatteMaterial()));
+            _scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -600)));
+            //_scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
+            //_scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
+            //_scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, 300, 0)), new MatteMaterial()));
+            //_scene.Elements.Add(
+            //    new Primitive(new Plane(Transformation.RotateZ(90) * Transformation.Translation(-600, 0, 0)),
+            //        new MatteMaterial()));
+            //_scene.Elements.Add(new Primitive(
+            //    new Plane(Transformation.RotateZ(90) * Transformation.Translation(600, 0, 0)), new MatteMaterial()));
         }
 
         public async void Render()
@@ -90,7 +90,7 @@ namespace rt
                     return new Triangle(new Vector3[3] { p1, p2, p3 });
                 })
                 .ToList();
-            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new ReflectiveMaterial()));
+            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new MatteMaterial()));
         }
 
         internal class SampledColor
