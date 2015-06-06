@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using OpenTK.Platform.Windows;
 
 namespace raytracer.core
 {
@@ -38,19 +40,12 @@ namespace raytracer.core
         public bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
             intersection.Distance = float.PositiveInfinity;
-            foreach (var primitive in _elements)
-            {
-                var tmp = new Intersection();
-                if (!primitive.TryToIntersect(ray, ref tmp)) continue;
-                if (tmp.Distance < intersection.Distance)
-                    intersection = tmp;
-            }
-            return intersection.Distance != float.PositiveInfinity;
+            return _aggregator.TryToIntersect(ray, ref intersection);
         }
 
         public bool Intersect(Ray ray)
         {
-            return Elements.Any(element => element.Intersect(ray));
+            return _aggregator.Intersect(ray);
         }
     }
 }

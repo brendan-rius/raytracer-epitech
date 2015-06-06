@@ -14,6 +14,13 @@ namespace raytracer.shapes
         private readonly Vector3 _planeNormal;
 
         /// <summary>
+        ///     Stores the three triangle vertices.
+        /// </summary>
+        private readonly Vector3[] _vertices;
+
+        private readonly BBox _bbox;
+
+        /// <summary>
         ///     Creates a new Triangle from 3 vertices
         /// </summary>
         /// <param name="vertices"></param>
@@ -21,7 +28,8 @@ namespace raytracer.shapes
         {
             if (vertices.Length != 3)
                 throw new Exception();
-            Vertices = vertices;
+            _vertices = vertices;
+            _bbox = BBox.Union(new BBox(_vertices[0], _vertices[1]), _vertices[2]);
 
             Vector3 normal, dp1, dp2;
             Vector3.Subtract(ref vertices[0], ref vertices[2], out dp1);
@@ -29,11 +37,6 @@ namespace raytracer.shapes
             Vector3.Cross(ref dp1, ref dp2, out normal);
             Vector3.Normalize(ref normal, out _planeNormal);
         }
-
-        /// <summary>
-        ///     Stores the three triangle vertices.
-        /// </summary>
-        public Vector3[] Vertices { get; private set; }
 
         /// <summary>
         ///     Returns whether a ray intersects with the triangle.
@@ -44,8 +47,8 @@ namespace raytracer.shapes
         {
             Vector3 e1, e2, s1;
             float divisor, invDivisor;
-            Vector3.Subtract(ref Vertices[1], ref Vertices[0], out e1);
-            Vector3.Subtract(ref Vertices[2], ref Vertices[0], out e2);
+            Vector3.Subtract(ref _vertices[1], ref _vertices[0], out e1);
+            Vector3.Subtract(ref _vertices[2], ref _vertices[0], out e2);
             Vector3.Cross(ref ray.Direction, ref e2, out s1);
             Vector3.Dot(ref s1, ref e1, out divisor);
             if (divisor == 0f)
@@ -53,7 +56,7 @@ namespace raytracer.shapes
             invDivisor = 1/divisor;
 
             Vector3 s, s2;
-            Vector3.Subtract(ref ray.Origin, ref Vertices[0], out s);
+            Vector3.Subtract(ref ray.Origin, ref _vertices[0], out s);
             var b1 = Vector3.Dot(s, s1)*invDivisor;
             if (b1 < 0 || b1 > 1)
                 return false;
@@ -63,11 +66,6 @@ namespace raytracer.shapes
                 return false;
             var t = Vector3.Dot(e2, s2)*invDivisor;
             return !(t < ray.Start) && !(t > ray.End);
-        }
-
-        public override BBox WorldBound()
-        {
-            return BBox.Union(new BBox(Vertices[0], Vertices[1]), Vertices[2]);
         }
 
         /// <summary>
@@ -80,8 +78,8 @@ namespace raytracer.shapes
         {
             Vector3 e1, e2, s1;
             float divisor, invDivisor;
-            Vector3.Subtract(ref Vertices[1], ref Vertices[0], out e1);
-            Vector3.Subtract(ref Vertices[2], ref Vertices[0], out e2);
+            Vector3.Subtract(ref _vertices[1], ref _vertices[0], out e1);
+            Vector3.Subtract(ref _vertices[2], ref _vertices[0], out e2);
             Vector3.Cross(ref ray.Direction, ref e2, out s1);
             Vector3.Dot(ref s1, ref e1, out divisor);
             if (divisor == 0f)
@@ -89,7 +87,7 @@ namespace raytracer.shapes
             invDivisor = 1/divisor;
 
             Vector3 s, s2;
-            Vector3.Subtract(ref ray.Origin, ref Vertices[0], out s);
+            Vector3.Subtract(ref ray.Origin, ref _vertices[0], out s);
             var b1 = Vector3.Dot(s, s1)*invDivisor;
             if (b1 < 0 || b1 > 1)
                 return false;
@@ -108,13 +106,18 @@ namespace raytracer.shapes
             return true;
         }
 
+        public override BBox WorldBound()
+        {
+            return _bbox;
+        }
+
         /// <summary>
         ///     Returns the area of the triangle.
         /// </summary>
         /// <returns></returns>
         public float Area()
         {
-            return 0.5f*Vector3.Cross(Vertices[1] - Vertices[0], Vertices[2] - Vertices[0]).Length;
+            return 0.5f*Vector3.Cross(_vertices[1] - _vertices[0], _vertices[2] - _vertices[0]).Length;
         }
     }
 }

@@ -72,7 +72,7 @@ namespace raytracer.core
             var shapes = new List<Shape>();
 
             Shape.Refine(shapes);
-            primitives.AddRange(shapes.Select(s => new Primitive(s, new MatteMaterial())).ToList());
+            primitives.AddRange(shapes.Select(s => new Primitive(s, Material)).ToList());
         }
 
         public BBox WorldBound()

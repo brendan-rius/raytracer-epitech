@@ -10,7 +10,7 @@ namespace raytracer.shapes
 
         public Plane(Transformation worldToObjectTransformation = null) : base(worldToObjectTransformation)
         {
-            _bbox = new BBox(new Vector3(float.NegativeInfinity), new Vector3(float.PositiveInfinity));
+            _bbox = new BBox(new Vector3(float.MinValue), new Vector3(float.MaxValue));
         }
 
         public override bool TryToIntersect(Ray ray, ref Intersection intersection)
