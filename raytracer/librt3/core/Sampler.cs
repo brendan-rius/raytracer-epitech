@@ -35,7 +35,7 @@ namespace raytracer.core
         ///     Return the number total of samples the sampler will generate.
         /// </summary>
         /// <returns></returns>
-        public virtual float TotalSamples()
+        public virtual uint TotalSamples()
         {
             return Screen.Height*Screen.Width;
         }
