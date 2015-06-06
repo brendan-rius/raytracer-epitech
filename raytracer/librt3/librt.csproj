@@ -45,10 +45,12 @@
   <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="core\Aggregate.cs" />
     <Compile Include="core\BBox.cs" />
     <Compile Include="core\Camera.cs" />
     <Compile Include="core\CoefficientSpectrum.cs" />
     <Compile Include="core\Film.cs" />
+    <Compile Include="core\GridAccel.cs" />
     <Compile Include="core\Integrator.cs" />
     <Compile Include="core\KdTreeAccel.cs" />
     <Compile Include="core\Light.cs" />

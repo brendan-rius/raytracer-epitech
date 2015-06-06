@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -38,28 +39,24 @@ namespace rt
             var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 0, -1000));
+                Transformation.Translation(400, 400, -1000));
             _renderer = new Renderer(_scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
             _scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
-            _scene.Elements.Add(
-                new Primitive(new Plane(Transformation.RotateZ(90) * Transformation.Translation(-600, 0, 0)),
-                    new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(
-                new Plane(Transformation.RotateZ(90) * Transformation.Translation(600, 0, 0)), new MatteMaterial()));
+            _scene.Lights.Add(new PointLight(Transformation.Translation(300, 200, -600)));
+            _scene.Lights.Add(new PointLight(Transformation.Translation(500, 000, -300)));
         }
 
         public async void Render()
         {
+            _scene.Initialize();
             var elapsed = await Task.Run(() => _renderer.Render());
             StatusText.ForeColor = System.Drawing.Color.FromArgb((int)0x40, (int)0x40, (int)0x40);
             StatusText.Text = "Rendered in " + (elapsed / 1000f).ToString("F3") + " seconds.";
             _film.Display(RenderPicture);
             _origin = new Bitmap(RenderPicture.Image);
+            _origin.Save(@"C:\Users\person_l\Desktop\" + DateTime.Now.Millisecond + ".png", ImageFormat.Png);
             PathText.ForeColor = System.Drawing.Color.FromArgb((int)0xFF, (int)0x61, (int)0x61);
             PathText.Text = "No file selected.";
             _file = null;
@@ -90,7 +87,7 @@ namespace rt
                     return new Triangle(new Vector3[3] { p1, p2, p3 });
                 })
                 .ToList();
-            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new ReflectiveMaterial()));
+            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new MatteMaterial()));
         }
 
         internal class SampledColor
