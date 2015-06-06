@@ -15,48 +15,36 @@ namespace raytracer.shapes
             if (triangles.Count == 0)
                 throw new Exception();
             _triangles = triangles;
-            _box = new BBox(triangles.ElementAt(0).Vertices[0], triangles.ElementAt(0).Vertices[1]);
-            _box = BBox.Union(_box, triangles.ElementAt(0).Vertices[2]);
+            _box = triangles.ElementAt(0).WorldBound();
             foreach (var t in triangles.Skip(1))
             {
-                foreach (var v in t.Vertices)
-                {
-                    _box = BBox.Union(_box, v);
-                }
+                _box = BBox.Union(_box, t.WorldBound());
             }
         }
 
-        public BBox BoundingBox()
+        public override void Refine(List<Shape> refined)
+        {
+            refined.AddRange(_triangles);
+        }
+
+        public override BBox WorldBound()
         {
             return _box;
         }
 
-        public List<Shape> Refine()
-        {
-            return _triangles.Cast<Shape>().ToList();
-        }
-
-        public bool CanIntersect(Ray ray)
+        public override bool CanIntersect()
         {
             return false;
         }
 
         public override bool Intersect(Ray ray)
         {
-            return _triangles.Any(triangle => triangle.Intersect(ray));
+            throw new NotImplementedException();
         }
 
         public override bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
-            intersection.Distance = float.PositiveInfinity;
-            foreach (var triangle in _triangles)
-            {
-                var tmp = new Intersection();
-                if (!triangle.TryToIntersect(ray, ref tmp)) continue;
-                if (tmp.Distance < intersection.Distance)
-                    intersection = tmp;
-            }
-            return intersection.Distance != float.PositiveInfinity;
+            throw new NotImplementedException();
         }
     }
 }

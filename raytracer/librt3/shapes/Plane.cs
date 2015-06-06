@@ -6,8 +6,11 @@ namespace raytracer.shapes
 {
     public class Plane : Shape
     {
+        private BBox _bbox;
+
         public Plane(Transformation worldToObjectTransformation = null) : base(worldToObjectTransformation)
         {
+            _bbox = new BBox(new Vector3(float.MinValue), new Vector3(float.MaxValue));
         }
 
         public override bool TryToIntersect(Ray ray, ref Intersection intersection)
@@ -35,6 +38,11 @@ namespace raytracer.shapes
             if (rayInObjectWorld.Direction.Y == 0f) return false;
             var t = -rayInObjectWorld.Origin.Y/rayInObjectWorld.Direction.Y;
             return !(t < rayInObjectWorld.Start) && !(t > rayInObjectWorld.End);
+        }
+
+        public override BBox WorldBound()
+        {
+            return _bbox;
         }
     }
 }

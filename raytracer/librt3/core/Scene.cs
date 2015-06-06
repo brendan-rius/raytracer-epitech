@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using OpenTK.Platform.Windows;
 
 namespace raytracer.core
 {
@@ -10,6 +12,7 @@ namespace raytracer.core
     {
         private List<Primitive> _elements = new List<Primitive>();
         private List<Light> _lights = new List<Light>();
+        private Aggregate _aggregator;
 
         /// <summary>
         ///     The elements of the scene
@@ -29,22 +32,20 @@ namespace raytracer.core
             set { _lights = value; }
         }
 
+        public void Initialize()
+        {
+            _aggregator = new GridAccel(_elements);
+        }
+
         public bool TryToIntersect(Ray ray, ref Intersection intersection)
         {
             intersection.Distance = float.PositiveInfinity;
-            foreach (var element in Elements)
-            {
-                var tmp = new Intersection();
-                if (!element.TryToIntersect(ray, ref tmp)) continue;
-                if (tmp.Distance < intersection.Distance)
-                    intersection = tmp;
-            }
-            return intersection.Distance != float.PositiveInfinity;
+            return _aggregator.TryToIntersect(ray, ref intersection);
         }
 
         public bool Intersect(Ray ray)
         {
-            return Elements.Any(element => element.Intersect(ray));
+            return _aggregator.Intersect(ray);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace raytracer.core
         /// <returns></returns>
         public virtual SampledSpectrum Le(Ray ray)
         {
-            return SampledSpectrum.Black();
+            return new SampledSpectrum(1);
         }
     }
 }

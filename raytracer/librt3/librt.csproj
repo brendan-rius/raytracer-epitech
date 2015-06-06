@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>librt3</RootNamespace>
     <AssemblyName>librt3</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,10 +45,12 @@
   <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="core\Aggregate.cs" />
     <Compile Include="core\BBox.cs" />
     <Compile Include="core\Camera.cs" />
     <Compile Include="core\CoefficientSpectrum.cs" />
     <Compile Include="core\Film.cs" />
+    <Compile Include="core\GridAccel.cs" />
     <Compile Include="core\Integrator.cs" />
     <Compile Include="core\KdTreeAccel.cs" />
     <Compile Include="core\Light.cs" />
