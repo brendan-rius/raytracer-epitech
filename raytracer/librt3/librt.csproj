@@ -2,19 +2,16 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EFA60FE0-FF47-410D-99B7-D8AB90FB1FB0}</ProjectGuid>
+    <ProjectGuid>{0D2553F3-EF72-4017-B255-ECBF2ACF5A1C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>raytracer</RootNamespace>
-    <AssemblyName>librt</AssemblyName>
-    <DefaultLanguage>fr-FR</DefaultLanguage>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <RootNamespace>librt3</RootNamespace>
+    <AssemblyName>librt3</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\librt.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,68 +31,66 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="cameras\SimpleCamera.cs" />
-    <Compile Include="core\Aggregate.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="core\BBox.cs" />
     <Compile Include="core\Camera.cs" />
-    <Compile Include="core\GridAccel.cs" />
-    <Compile Include="core\reflection\BSDF.cs" />
-    <Compile Include="core\reflection\Fresnel.cs" />
-    <Compile Include="core\Integrator.cs" />
-    <Compile Include="core\mathematics\IIntersectable.cs" />
-    <Compile Include="core\mathematics\Intersection.cs" />
+    <Compile Include="core\CoefficientSpectrum.cs" />
     <Compile Include="core\Film.cs" />
+    <Compile Include="core\Integrator.cs" />
     <Compile Include="core\KdTreeAccel.cs" />
     <Compile Include="core\Light.cs" />
     <Compile Include="core\Material.cs" />
-    <Compile Include="core\reflection\BxDF.cs" />
-    <Compile Include="core\reflection\LambertianReflection.cs" />
-    <Compile Include="core\reflection\SpecularTransmission.cs" />
-    <Compile Include="core\Shape.cs" />
+    <Compile Include="core\mathematics\IIntersectable.cs" />
+    <Compile Include="core\mathematics\Intersection.cs" />
     <Compile Include="core\mathematics\Solver.cs" />
     <Compile Include="core\mathematics\Transformation.cs" />
-    <Compile Include="core\CoefficientSpectrum.cs" />
     <Compile Include="core\Primitive.cs" />
-    <Compile Include="core\SampledSpectrum.cs" />
+    <Compile Include="core\Ray.cs" />
+    <Compile Include="core\reflection\BSDF.cs" />
+    <Compile Include="core\reflection\BxDF.cs" />
+    <Compile Include="core\reflection\Fresnel.cs" />
+    <Compile Include="core\reflection\LambertianReflection.cs" />
     <Compile Include="core\reflection\SpecularReflection.cs" />
+    <Compile Include="core\reflection\SpecularTransmission.cs" />
+    <Compile Include="core\Renderer.cs" />
+    <Compile Include="core\Sample.cs" />
+    <Compile Include="core\SampledSpectrum.cs" />
+    <Compile Include="core\Sampler.cs" />
+    <Compile Include="core\Scene.cs" />
+    <Compile Include="core\Shape.cs" />
     <Compile Include="core\StaticRandom.cs" />
     <Compile Include="core\VisibilityTester.cs" />
+    <Compile Include="filters\filters.cs" />
     <Compile Include="integrators\WhittedIntegrator.cs" />
     <Compile Include="lights\PointLight.cs" />
     <Compile Include="materials\GlassMaterial.cs" />
     <Compile Include="materials\MatteMaterial.cs" />
     <Compile Include="materials\ReflectiveMaterial.cs" />
     <Compile Include="materials\TestMaterial.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="samplers\GridSampler.cs" />
     <Compile Include="shapes\Plane.cs" />
     <Compile Include="shapes\Polygon.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="core\Ray.cs" />
-    <Compile Include="core\Renderer.cs" />
-    <Compile Include="core\Sample.cs" />
-    <Compile Include="core\Sampler.cs" />
-    <Compile Include="samplers\GridSampler.cs" />
-    <Compile Include="core\Scene.cs" />
     <Compile Include="shapes\Triangle.cs" />
     <Compile Include="shapes\TriangleMesh.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\bite.obj" />
-    <None Include="assets\cube.obj" />
-    <None Include="assets\dia.obj" />
-    <None Include="assets\torus.obj" />
-    <None Include="assets\diamond.obj" />
     <None Include="packages.config" />
-    <None Include="README.md" />
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="OpenTK">
-      <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
