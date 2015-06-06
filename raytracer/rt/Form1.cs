@@ -56,7 +56,6 @@ namespace rt
             StatusText.Text = "Rendered in " + (elapsed / 1000f).ToString("F3") + " seconds.";
             _film.Display(RenderPicture);
             _origin = new Bitmap(RenderPicture.Image);
-            _origin.Save(@"C:\Users\person_l\Desktop\" + DateTime.Now.Millisecond + ".png", ImageFormat.Png);
             PathText.ForeColor = System.Drawing.Color.FromArgb((int)0xFF, (int)0x61, (int)0x61);
             PathText.Text = "No file selected.";
             _file = null;
