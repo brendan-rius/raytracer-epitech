@@ -63,7 +63,7 @@ namespace rt.ObjParser
 
         public Material ExportToMaterial()
         {
-            return new ClementiteMaterial(Ka, Kd, Ks, (uint)Ns, (uint)Illum);
+            return new ClementiteMaterial(Ka, Kd, Ks, (uint)Ns, d, (uint)Illum);
         }
     }
 }
