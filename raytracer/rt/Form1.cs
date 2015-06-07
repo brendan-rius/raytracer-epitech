@@ -17,6 +17,8 @@ using raytracer.materials;
 using raytracer.samplers;
 using raytracer.shapes;
 using Screen = raytracer.core.Screen;
+using rt.ObjParser;
+using System.Diagnostics;
 
 namespace rt
 {
@@ -41,7 +43,7 @@ namespace rt
                 Transformation.Translation(400, 400, -1000));
             _renderer = new Renderer(_scene,
                 new JitterGridSampler(screen, NSamples), camera, _film,
-                new DirectLightingIntegrator());
+                new DirectLightingIntegrator(DirectLightingIntegrator.LightSamplingStrategy.Single));
             _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 650, -500), 50, SampledSpectrum.White()*10));
             _scene.Lights.Add(new PointLight(Transformation.Translation(100, 650, -500),
                 SampledSpectrum.White()));
@@ -63,29 +65,14 @@ namespace rt
                 SwitchFiltersState();
         }
 
-        public void SimpleObjParser(Scene scene, string filename)
+        public long SimpleObjParser(Scene scene, string filename)
         {
-            var lines = File.ReadAllLines(filename);
-            var verts = lines.Where(l => Regex.IsMatch(l, @"^v(\s+-?\d+\.?\d+([eE][-+]?\d+)?){3,3}$"))
-                .Select(l => Regex.Split(l, @"\s+", RegexOptions.None).Skip(1).ToArray())
-                .Select(
-                    nums =>
-                        new Vector3(float.Parse(nums[0], CultureInfo.InvariantCulture),
-                            float.Parse(nums[1], CultureInfo.InvariantCulture),
-                            float.Parse(nums[2], CultureInfo.InvariantCulture)))
-                .ToList();
-            var triangles = lines.Where(l => Regex.IsMatch(l, @"^f(\s\d+(\/+\d+)?){3,3}$"))
-                .Select(l => Regex.Split(l, @"\s+", RegexOptions.None).Skip(1).ToArray())
-                .Select(i => i.Select(a => Regex.Match(a, @"\d+", RegexOptions.None).Value).ToArray())
-                .Select(nums =>
-                {
-                    var p1 = verts.ElementAt(int.Parse(nums[0]) - 1);
-                    var p2 = verts.ElementAt(int.Parse(nums[1]) - 1);
-                    var p3 = verts.ElementAt(int.Parse(nums[2]) - 1);
-                    return new Triangle(new Vector3[3] {p1, p2, p3});
-                })
-                .ToList();
-            scene.Elements.Add(new Primitive(new TriangleMesh(triangles), new MatteMaterial()));
+            var sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            ParsingObj parser = new ParsingObj(filename);
+            parser.AddToScene(scene);
+            sw.Stop();
+            return sw.ElapsedMilliseconds;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -122,7 +109,8 @@ namespace rt
                 RenderPicture.Image = null;
             StatusText.ForeColor = Color.FromArgb(0x2E, 0xCC, 0x71);
             StatusText.Text = "Rendering in progress...";
-            SimpleObjParser(_scene, _file);
+            long elapsed = SimpleObjParser(_scene, _file);
+            label1.Text = "Parsing en " + elapsed + " ms";
             Render();
         }
 
@@ -353,6 +341,11 @@ namespace rt
                 get { return (uint) _bitmap.Height; }
                 set { throw new NotImplementedException(); }
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

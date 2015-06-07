@@ -1,5 +1,4 @@
-﻿using System;
-using OpenTK;
+﻿using OpenTK;
 using raytracer.core;
 
 namespace raytracer.materials
@@ -7,7 +6,12 @@ namespace raytracer.materials
     public class ClementiteMaterial : Material
     {
         /// <summary>
-        ///     The type /* todo: enum */
+        ///     The "transparency"
+        /// </summary>
+        private float _d;
+
+        /// <summary>
+        ///     The type of illumation
         /// </summary>
         private uint _illum;
 
@@ -31,16 +35,16 @@ namespace raytracer.materials
         /// </summary>
         private uint _ns;
 
-        public ClementiteMaterial(Vector3 ka, Vector3 kd, Vector3 ks, uint ns, uint illum)
+        public ClementiteMaterial(Vector3 ka, Vector3 kd, Vector3 ks, uint ns, float d, uint illum)
         {
             _ka = ka;
             _kd = kd;
             _ks = ks;
             _ns = ns;
             _illum = illum;
+            _d = d;
         }
 
-        /* TODO: change */
         public override BSDF GetBSDF(ref Intersection intersection)
         {
             var bsdf = new BSDF(ref intersection);
