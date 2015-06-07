@@ -30,6 +30,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
       <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
@@ -71,6 +90,7 @@
     <Compile Include="core\reflection\BxDF.cs" />
     <Compile Include="core\reflection\Fresnel.cs" />
     <Compile Include="core\reflection\LambertianReflection.cs" />
+    <Compile Include="core\reflection\OrenNayar.cs" />
     <Compile Include="core\reflection\SpecularReflection.cs" />
     <Compile Include="core\reflection\SpecularTransmission.cs" />
     <Compile Include="core\Renderer.cs" />
@@ -87,10 +107,13 @@
     <Compile Include="core\UVMapping2D.cs" />
     <Compile Include="core\VisibilityTester.cs" />
     <Compile Include="filters\filters.cs" />
+    <Compile Include="integrators\DirectLightingIntegrator.cs" />
     <Compile Include="integrators\WhittedIntegrator.cs" />
+    <Compile Include="lights\DiskLight.cs" />
     <Compile Include="lights\PointLight.cs" />
     <Compile Include="materials\GlassMaterial.cs" />
     <Compile Include="materials\MatteMaterial.cs" />
+    <Compile Include="materials\ClementiteMaterial.cs" />
     <Compile Include="materials\ReflectiveMaterial.cs" />
     <Compile Include="materials\TestMaterial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

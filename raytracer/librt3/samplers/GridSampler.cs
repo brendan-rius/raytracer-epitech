@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using OpenTK;
 using raytracer.core;
+using raytracer.core.mathematics;
 
 namespace raytracer.samplers
 {
@@ -65,7 +68,8 @@ namespace raytracer.samplers
                 {
                     for (var i = 0; i < NumberOfSamples; ++i)
                     {
-                        yield return new Sample(x + StaticRandom.NextFloat(), y + StaticRandom.NextFloat());
+                        yield return new Sample(MathHelper.Clamp(x + StaticRandom.NextFloat(), 0, Screen.Width - 1),
+                            MathHelper.Clamp(y + StaticRandom.NextFloat(), 0, Screen.Height - 1));
                     }
                 }
             }
