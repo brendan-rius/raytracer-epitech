@@ -7,18 +7,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK;
-using raytracer.cameras;
-using raytracer.core;
-using raytracer.core.mathematics;
-using raytracer.filters;
-using raytracer.integrators;
-using raytracer.lights;
-using raytracer.materials;
-using raytracer.samplers;
-using raytracer.shapes;
-using Screen = raytracer.core.Screen;
+using raytracer;
 using rt.ObjParser;
 using System.Diagnostics;
+using raytracer.core;
+using raytracer.samplers;
+using raytracer.lights;
+using raytracer.core.mathematics;
+using raytracer.integrators;
+using raytracer.cameras;
+using raytracer.filters;
 
 namespace rt
 {
@@ -37,7 +35,7 @@ namespace rt
             _filtersState = false;
             InitializeComponent();
             _scene = new Scene();
-            var screen = new Screen(1024, 768);
+            var screen = new raytracer.core.Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
                 Transformation.Translation(0, 0, -1000));
@@ -276,7 +274,7 @@ namespace rt
 
         internal class MyFilm : Film
         {
-            public MyFilm(Screen screen, uint nsamples)
+            public MyFilm(raytracer.core.Screen screen, uint nsamples)
                 : base(screen)
             {
                 Flag = new Bitmap((int) screen.Width, (int) screen.Height);
