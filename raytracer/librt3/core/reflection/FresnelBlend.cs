@@ -5,7 +5,7 @@ using raytracer.core.mathematics;
 
 namespace librt3.core.reflection
 {
-    internal class FresnelBlend : BxDF
+    public class FresnelBlend : BxDF
     {
         private MicrofacetDistribution _distribution;
         private SampledSpectrum _rd;

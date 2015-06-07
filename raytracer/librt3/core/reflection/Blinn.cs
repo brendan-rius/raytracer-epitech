@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace librt3.core.reflection
 {
-    internal class Blinn : MicrofacetDistribution
+    public class Blinn : MicrofacetDistribution
     {
         private readonly float _exponent;
 

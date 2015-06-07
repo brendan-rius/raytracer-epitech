@@ -5,7 +5,7 @@ using raytracer.core.mathematics;
 
 namespace librt3.core.reflection
 {
-    internal class Microfacet : BxDF
+    public class Microfacet : BxDF
     {
         private readonly MicrofacetDistribution _distribution;
         private readonly Fresnel _fresnel;

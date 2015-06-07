@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace librt3.core.reflection
 {
-    internal class Anisotropic : MicrofacetDistribution
+    public class Anisotropic : MicrofacetDistribution
     {
         private readonly float _ex;
         private readonly float _ey;

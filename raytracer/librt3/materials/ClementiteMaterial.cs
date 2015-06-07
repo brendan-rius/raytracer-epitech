@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using librt3.core.reflection;
+using OpenTK;
 using raytracer.core;
 
 namespace raytracer.materials
@@ -48,6 +49,7 @@ namespace raytracer.materials
         public override BSDF GetBSDF(ref Intersection intersection)
         {
             var bsdf = new BSDF(ref intersection);
+            bsdf.AddBxDF(new Microfacet(_ks, null, _ns));
             bsdf.AddBxDF(new LambertianReflection(SampledSpectrum.Random()));
             return bsdf;
         }
