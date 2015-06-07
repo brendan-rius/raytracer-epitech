@@ -18,6 +18,8 @@ namespace rt.ObjParser
         private List<Vector3> _vertexList = new List<Vector3>(); 
         private Dictionary<string, FacesGroup> _facesGroup = new Dictionary<string, FacesGroup>();
         private Dictionary<string, MaterialsGroup> _materialsProperty = new Dictionary<string, MaterialsGroup>();
+        private Scene _scene;
+        private string p;
         
         /// <summary>
         /// ParsingObj constructor
@@ -36,6 +38,13 @@ namespace rt.ObjParser
             }
             _getVertexList();
             _getGroups();
+        }
+
+        public ParsingObj(Scene _scene, string p)
+        {
+            // TODO: Complete member initialization
+            this._scene = _scene;
+            this.p = p;
         }
 
         public void AddToScene(Scene scene)

@@ -22,7 +22,7 @@ namespace rt
 {
     public partial class RayTracer : Form
     {
-        private const uint NSamples = 1;
+        private const uint NSamples = 8;
         private readonly MyFilm _film;
         private readonly Renderer _renderer;
         private readonly Scene _scene;
@@ -41,8 +41,8 @@ namespace rt
                 Transformation.Translation(0, 0, -1000));
             _renderer = new Renderer(_scene,
                 new JitterGridSampler(screen, NSamples), camera, _film,
-                new DirectLightingIntegrator(DirectLightingIntegrator.LightSamplingStrategy.Single));
-            _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 650, -500), 50, SampledSpectrum.White()*10));
+                new DirectLightingIntegrator(DirectLightingIntegrator.LightSamplingStrategy.Multiple));
+            _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 650, -500), 200, SampledSpectrum.White()*10));
             _scene.Lights.Add(new PointLight(Transformation.Translation(100, 650, -500),
                 SampledSpectrum.White()));
         }
@@ -63,17 +63,20 @@ namespace rt
                 SwitchFiltersState();
         }
 
-        public long SimpleObjParser(Scene scene, string filename)
+        public void SimpleObjParser(Scene scene, string filename)
         {
-            var sw = new System.Diagnostics.Stopwatch();
-            sw.Start();
-            ParsingObj parser = new ParsingObj(filename);
-            parser.AddToScene(scene);
-            sw.Stop();
-            return sw.ElapsedMilliseconds;
+            try
+            {
+                ParsingObj parser = new ParsingObj(filename);
+                parser.AddToScene(scene);
+            }
+            catch (Exception e)
+            {
+                StatusText.Text = e.Message;
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void LoadButton_Click(object sender, EventArgs e)
         {
             var File = openFileDialog1.ShowDialog();
             if (File == DialogResult.OK)
@@ -107,8 +110,7 @@ namespace rt
                 RenderPicture.Image = null;
             StatusText.ForeColor = Color.FromArgb(0x2E, 0xCC, 0x71);
             StatusText.Text = "Rendering in progress...";
-            long elapsed = SimpleObjParser(_scene, _file);
-            label1.Text = "Parsing en " + elapsed + " ms";
+            SimpleObjParser(_scene, _file);
             Render();
         }
 

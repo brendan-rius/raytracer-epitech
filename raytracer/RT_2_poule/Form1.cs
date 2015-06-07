@@ -24,6 +24,7 @@ using raytracer.shapes;
 using Screen = raytracer.core.Screen;
 using System.Text.RegularExpressions;
 using System.Threading;
+using rt.ObjParser;
 
 namespace RT_2_poule
 {
@@ -36,9 +37,9 @@ namespace RT_2_poule
         private Camera _camera;
         private Screen _screen;
         private MyFilm _film;
-        private Regex _pointLight;
-        private Regex _diskLight;
-        private Regex _obj;
+        private Regex _pointLightReg;
+        private Regex _diskLightReg;
+        private Regex _objReg;
         private Regex _cameraReg;
 
         public Form1()
@@ -54,13 +55,14 @@ namespace RT_2_poule
                     Transformation.RotateY(0),
                     Transformation.RotateZ(0)
                 ));
-            _pointLightReg = new Regex(@"/^(PL( (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (1|0)\.(\d)*$))/gm",
+            InitNewScene();
+            _pointLightReg = new Regex(@"^(PL( (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (1|0)\.(\d)*$))",
                 RegexOptions.Compiled);
-            _diskLightReg = new Regex(@"/^(DL( (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (1|0)\.(\d)* (\d*\.)?(\d)*$))/gm",
+            _diskLightReg = new Regex(@"^(DL( (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (1|0)\.(\d)* (\d*\.)?(\d)*$))",
                 RegexOptions.Compiled);
-            _objReg = new Regex(@"/^(O( [A-Z]:(\\([a-zA-Z]*[^*/\\.\[\]:;|=,])*)*\.obj$))/gm",
+            _objReg = new Regex(@"^(O( [A-Z]:(\\([a-zA-Z]*[^*/\\.\[\]:;|=,])*)*\.obj$))",
                 RegexOptions.Compiled);
-            _cameraReg = new Regex(@"/^(C( (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)*$))/gm",
+            _cameraReg = new Regex(@"^(C( (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)* (-?|\+?)(\d)*$))",
                 RegexOptions.Compiled);
         }
 
@@ -159,14 +161,10 @@ namespace RT_2_poule
         /// </summary>
         private void ParsePoule(Scene scene, string filename)
         {
-            var lines = File.ReadAllLines(filename);
+            string[] lines = File.ReadAllLines(filename);
             foreach (string str in lines)
             {
-                Match PointLightMatch = _pointLight.Match(str);
-                Match DiskLightMatch = _diskLight.Match(str);
-                Match CameraMatch = _cameraReg.Match(str);
-                Match ObjMatch = _obj.Match(str);
-                if (PointLightMatch.Success == true)
+                if (_pointLightReg.Match(str).Success)
                 {
                     string[] array = str.Split(' ');
                     scene.Lights.Add(new PointLight(Transformation.Translation(
@@ -175,7 +173,7 @@ namespace RT_2_poule
                         float.Parse(array[3], CultureInfo.InvariantCulture.NumberFormat))));
                     // luminance ???
                 }
-                else if (DiskLightMatch.Success == true)
+                else if (_diskLightReg.Match(str).Success)
                 {
                     string[] array = str.Split(' ');
                     // -> DISK LIGHT
@@ -185,7 +183,7 @@ namespace RT_2_poule
                         float.Parse(array[3], CultureInfo.InvariantCulture.NumberFormat))));
                     // luminance ???
                 }
-                else if (CameraMatch.Success == true)
+                else if (_cameraReg.Match(str).Success)
                 {
                     string[] array = str.Split(' ');
                     _camera = new SimpleCamera(_screen,
@@ -200,13 +198,14 @@ namespace RT_2_poule
                             Transformation.RotateZ(float.Parse(array[6], CultureInfo.InvariantCulture.NumberFormat))
                         ));
                 }
-                else if (ObjMatch.Success == true)
+                else if (_objReg.Match(str).Success == true)
                 {
                     string[] array = str.Split(' ');
                     try
                     {
-                        ParsingObj parser = new ParsingObj(_scene, array[1]);
-                        scene.Elements.Add(parser);
+                        string path = array[1].Replace(@"\\", @"\");
+                        ParsingObj parser = new ParsingObj(path);
+                        parser.AddToScene(scene);
                     }
                     catch (Exception e)
                     {
@@ -261,8 +260,6 @@ namespace RT_2_poule
         /// <param name="e"></param>
         private void RenderScene_Click(object sender, EventArgs e)
         {
-            var rt = new RayTracer();
-            InitNewScene();
             RenderPicture.Image = null;
             LoadFile.Enabled = false;
             RenderScene.Enabled = false;
@@ -285,11 +282,5 @@ namespace RT_2_poule
                 RenderPicture.Image.Save(file, ImageFormat.Png);
             }
         }
-
-        public Regex _diskLightReg { get; set; }
-
-        public Regex _pointLightReg { get; set; }
-
-        public Regex _objReg { get; set; }
     }
 }

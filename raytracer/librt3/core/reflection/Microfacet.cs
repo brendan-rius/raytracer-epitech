@@ -23,7 +23,7 @@ namespace librt3.core.reflection
         {
             var cosThetaO = AbsCosTheta(ref leaving);
             var cosThetaI = AbsCosTheta(ref incoming);
-            if (cosThetaI == 0 || cosThetaO == 0) return SampledSpectrum.Black();
+            if (cosThetaI == 0 || cosThetaO == 0) return new SampledSpectrum(0);
             var wh = Vector3.Add(incoming, leaving).Normalized();
             var cosThetaH = Vector3.Dot(incoming, leaving);
             var f = _fresnel.Evaluate(cosThetaH);
