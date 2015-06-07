@@ -76,6 +76,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ObjParser\FacesGroup.cs" />
+    <Compile Include="ObjParser\MaterialsGroup.cs" />
+    <Compile Include="ObjParser\ParsingMtl.cs" />
+    <Compile Include="ObjParser\ParsingObj.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
