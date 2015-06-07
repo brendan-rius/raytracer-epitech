@@ -61,9 +61,14 @@ namespace rt.ObjParser
             Ns = nb;
         }
 
+        public void AddD(float nb)
+        {
+            d = nb;
+        }
+
         public Material ExportToMaterial()
         {
-            return new ClementiteMaterial(Ka, Kd, Ks, (uint)Ns, (uint)Illum);
+            return new ClementiteMaterial(Ka, Kd, Ks, (uint)Ns, d, (uint)Illum);
         }
     }
 }
