@@ -102,6 +102,7 @@
     <Compile Include="lights\PointLight.cs" />
     <Compile Include="materials\GlassMaterial.cs" />
     <Compile Include="materials\MatteMaterial.cs" />
+    <Compile Include="materials\ClementiteMaterial.cs" />
     <Compile Include="materials\ReflectiveMaterial.cs" />
     <Compile Include="materials\TestMaterial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
