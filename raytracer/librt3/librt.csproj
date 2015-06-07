@@ -93,6 +93,8 @@
     <Compile Include="core\BBox.cs" />
     <Compile Include="core\Camera.cs" />
     <Compile Include="core\CoefficientSpectrum.cs" />
+    <Compile Include="core\ConstantTexture.cs" />
+    <Compile Include="core\DifferentialGeometry.cs" />
     <Compile Include="core\Film.cs" />
     <Compile Include="core\GridAccel.cs" />
     <Compile Include="core\Integrator.cs" />
@@ -103,8 +105,12 @@
     <Compile Include="core\mathematics\Intersection.cs" />
     <Compile Include="core\mathematics\Solver.cs" />
     <Compile Include="core\mathematics\Transformation.cs" />
+    <Compile Include="core\MixTexture.cs" />
+    <Compile Include="core\Operators.cs" />
+    <Compile Include="core\PlanarMapping2D.cs" />
     <Compile Include="core\Primitive.cs" />
     <Compile Include="core\Ray.cs" />
+    <Compile Include="core\RayDifferential.cs" />
     <Compile Include="core\reflection\BSDF.cs" />
     <Compile Include="core\reflection\BxDF.cs" />
     <Compile Include="core\reflection\Fresnel.cs" />
@@ -116,9 +122,14 @@
     <Compile Include="core\Sample.cs" />
     <Compile Include="core\SampledSpectrum.cs" />
     <Compile Include="core\Sampler.cs" />
+    <Compile Include="core\ScaleTexture.cs" />
     <Compile Include="core\Scene.cs" />
     <Compile Include="core\Shape.cs" />
+    <Compile Include="core\SphericalMapping2D.cs" />
     <Compile Include="core\StaticRandom.cs" />
+    <Compile Include="core\Texture.cs" />
+    <Compile Include="core\TextureMapping2D.cs" />
+    <Compile Include="core\UVMapping2D.cs" />
     <Compile Include="core\VisibilityTester.cs" />
     <Compile Include="filters\filters.cs" />
     <Compile Include="integrators\DirectLightingIntegrator.cs" />

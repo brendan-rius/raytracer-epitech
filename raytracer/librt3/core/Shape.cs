@@ -9,6 +9,8 @@ namespace raytracer.core
     /// </summary>
     public abstract class Shape : IIntersectable
     {
+        public readonly bool ReverseOrientation, TransformSwapsHandedness;
+
         /// <summary>
         ///     Create a geometric element and set its transformation
         /// </summary>
@@ -16,9 +18,11 @@ namespace raytracer.core
         ///     the transformation used to make an object in world space be an
         ///     object in element's space
         /// </param>
-        protected Shape(Transformation worldToObjectTransformation = null)
+        protected Shape(Transformation worldToObjectTransformation = null, bool reverseOrientation = false)
         {
             WorldToObjectTransformation = worldToObjectTransformation ?? Transformation.Identity;
+            TransformSwapsHandedness = WorldToObjectTransformation.InverseTransformation.SwapHandedness();
+            ReverseOrientation = reverseOrientation;
         }
 
         /// <summary>

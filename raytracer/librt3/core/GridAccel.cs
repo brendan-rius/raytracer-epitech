@@ -82,28 +82,22 @@ namespace raytracer.core
         {
             var delta = _bbox.PMax - _bbox.PMin;
             var maxAxis = _bbox.MaximumExtent();
-            var deltaAxis = maxAxis == 0 ? delta.X : (maxAxis == 1 ? delta.Y : delta.Z);
+            var deltaAxis = delta[maxAxis];
             var invMaxWidth = 1f / deltaAxis;
             var cubeRoot = 3f * (float)Math.Pow(pCount, 1f / 3);
             var voxelsPerUnitDist = cubeRoot * invMaxWidth;
 
-            _nVoxels[0] = (int)Math.Round(delta.X * voxelsPerUnitDist);
-            _nVoxels[0] = Clamp(_nVoxels[0], 1, 64);
+            for (var i = 0; i < 3; i++)
+            {
+                _nVoxels[i] = (int)Math.Round(delta[i] * voxelsPerUnitDist);
+                _nVoxels[i] = Clamp(_nVoxels[i], 1, 64);
+            }
 
-            _nVoxels[1] = (int)Math.Round(delta.Y * voxelsPerUnitDist);
-            _nVoxels[1] = Clamp(_nVoxels[1], 1, 64);
-
-            _nVoxels[2] = (int)Math.Round(delta.Z * voxelsPerUnitDist);
-            _nVoxels[2] = Clamp(_nVoxels[2], 1, 64);
-
-            _width[0] = delta.X / _nVoxels[0];
-            _invWidth[0] = (_width[0] == 0) ? 0 : (1 / _width[0]);
-
-            _width[1] = delta.Y / _nVoxels[1];
-            _invWidth[1] = (_width[1] == 0) ? 0 : (1 / _width[1]);
-
-            _width[2] = delta.Z / _nVoxels[2];
-            _invWidth[2] = (_width[2] == 0) ? 0 : (1 / _width[2]);
+            for (var i = 0; i < 3; i++)
+            {
+                _width[i] = delta[i] / _nVoxels[i];
+                _invWidth[i] = (_width[i] == 0) ? 0 : (1 / _width[i]);                
+            }
         }
 
         public override bool Intersect(Ray ray)
@@ -117,52 +111,23 @@ namespace raytracer.core
             float[] nextCrossingT = new float[3], deltaT = new float[3];
             int[] step = new int[3], _out = new int[3], pos = new int[3];
 
-            pos[0] = PosToVoxel(gridIntersect, 0);
-            pos[1] = PosToVoxel(gridIntersect, 1);
-            pos[2] = PosToVoxel(gridIntersect, 2);
-            if (ray.Direction.X >= 0)
+            for (var i = 0; i < 3; i++)
             {
-                nextCrossingT[0] = rayT + (VoxelToPos(pos[0] + 1, 0) - gridIntersect.X) / ray.Direction.X;
-                deltaT[0] = _width[0] / ray.Direction.X;
-                step[0] = 1;
-                _out[0] = _nVoxels[0];
-            }
-            else
-            {
-                nextCrossingT[0] = rayT + (VoxelToPos(pos[0], 0) - gridIntersect.X) / ray.Direction.X;
-                deltaT[0] = -_width[0] / ray.Direction.X;
-                step[0] = -1;
-                _out[0] = -1;
-            }
-
-            if (ray.Direction.Y >= 0)
-            {
-                nextCrossingT[1] = rayT + (VoxelToPos(pos[1] + 1, 1) - gridIntersect.Y) / ray.Direction.Y;
-                deltaT[1] = _width[1] / ray.Direction.Y;
-                step[1] = 1;
-                _out[1] = _nVoxels[1];
-            }
-            else
-            {
-                nextCrossingT[1] = rayT + (VoxelToPos(pos[1], 1) - gridIntersect.Y) / ray.Direction.Y;
-                deltaT[1] = -_width[1] / ray.Direction.Y;
-                step[1] = -1;
-                _out[1] = -1;
-            }
-
-            if (ray.Direction.Z >= 0)
-            {
-                nextCrossingT[2] = rayT + (VoxelToPos(pos[2] + 1, 2) - gridIntersect.Z) / ray.Direction.Z;
-                deltaT[2] = _width[2] / ray.Direction.Z;
-                step[2] = 1;
-                _out[2] = _nVoxels[2];
-            }
-            else
-            {
-                nextCrossingT[2] = rayT + (VoxelToPos(pos[2], 2) - gridIntersect.Z) / ray.Direction.Z;
-                deltaT[2] = -_width[2] / ray.Direction.Z;
-                step[2] = -1;
-                _out[2] = -1;
+                pos[i] = PosToVoxel(gridIntersect, i);
+                if (ray.Direction[i] >= 0)
+                {
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i] + 1, i) - gridIntersect[i]) / ray.Direction[i];
+                    deltaT[i] = _width[i] / ray.Direction[i];
+                    step[i] = 1;
+                    _out[i] = _nVoxels[i];
+                }
+                else
+                {
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i], i) - gridIntersect[i]) / ray.Direction[i];
+                    deltaT[i] = -_width[i] / ray.Direction[i];
+                    step[i] = -1;
+                    _out[i] = -1;
+                }
             }
 
             for (; ; )
@@ -198,52 +163,23 @@ namespace raytracer.core
             float[] nextCrossingT = new float[3], deltaT = new float[3];
             int[] step = new int[3], _out = new int[3], pos = new int[3];
 
-            pos[0] = PosToVoxel(gridIntersect, 0);
-            pos[1] = PosToVoxel(gridIntersect, 1);
-            pos[2] = PosToVoxel(gridIntersect, 2);
-            if (ray.Direction.X >= 0)
+            for (var i = 0; i < 3; i++)
             {
-                nextCrossingT[0] = rayT + (VoxelToPos(pos[0] + 1, 0) - gridIntersect.X)/ray.Direction.X;
-                deltaT[0] = _width[0]/ray.Direction.X;
-                step[0] = 1;
-                _out[0] = _nVoxels[0];
-            }
-            else
-            {
-                nextCrossingT[0] = rayT + (VoxelToPos(pos[0], 0) - gridIntersect.X)/ray.Direction.X;
-                deltaT[0] = -_width[0]/ray.Direction.X;
-                step[0] = -1;
-                _out[0] = -1;
-            }
-
-            if (ray.Direction.Y >= 0)
-            {
-                nextCrossingT[1] = rayT + (VoxelToPos(pos[1] + 1, 1) - gridIntersect.Y) / ray.Direction.Y;
-                deltaT[1] = _width[1] / ray.Direction.Y;
-                step[1] = 1;
-                _out[1] = _nVoxels[1];
-            }
-            else
-            {
-                nextCrossingT[1] = rayT + (VoxelToPos(pos[1], 1) - gridIntersect.Y) / ray.Direction.Y;
-                deltaT[1] = -_width[1] / ray.Direction.Y;
-                step[1] = -1;
-                _out[1] = -1;
-            }
-
-            if (ray.Direction.Z >= 0)
-            {
-                nextCrossingT[2] = rayT + (VoxelToPos(pos[2] + 1, 2) - gridIntersect.Z) / ray.Direction.Z;
-                deltaT[2] = _width[2] / ray.Direction.Z;
-                step[2] = 1;
-                _out[2] = _nVoxels[2];
-            }
-            else
-            {
-                nextCrossingT[2] = rayT + (VoxelToPos(pos[2], 2) - gridIntersect.Z) / ray.Direction.Z;
-                deltaT[2] = -_width[2] / ray.Direction.Z;
-                step[2] = -1;
-                _out[2] = -1;
+                pos[i] = PosToVoxel(gridIntersect, i);
+                if (ray.Direction[i] >= 0)
+                {
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i] + 1, i) - gridIntersect[i]) / ray.Direction[i];
+                    deltaT[i] = _width[i] / ray.Direction[i];
+                    step[i] = 1;
+                    _out[i] = _nVoxels[i];
+                }
+                else
+                {
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i], i) - gridIntersect[i]) / ray.Direction[i];
+                    deltaT[i] = -_width[i] / ray.Direction[i];
+                    step[i] = -1;
+                    _out[i] = -1;
+                }
             }
 
             var hitSomething = false;
@@ -275,35 +211,13 @@ namespace raytracer.core
 
         private int PosToVoxel(Vector3 point, int axis)
         {
-            float axisValue;
-
-            switch (axis)
-            {
-                case 0:
-                    axisValue = point.X - _bbox.PMin.X;
-                    break;
-                case 1:
-                    axisValue = point.Y - _bbox.PMin.Y;
-                    break;
-                default:
-                    axisValue = point.Z - _bbox.PMin.Z;
-                    break;
-            }
-            var v = (int)(axisValue*_invWidth[axis]);
+            var v = (int)((point[axis] - _bbox.PMin[axis]) * _invWidth[axis]);
             return Clamp(v, 0, _nVoxels[axis] - 1);
         }
 
         private float VoxelToPos(int point, int axis)
         {
-            switch (axis)
-            {
-                case 0:
-                    return _bbox.PMin.X + point*_width[axis];
-                case 1:
-                    return _bbox.PMin.Y + point*_width[axis];
-                default:
-                    return _bbox.PMin.Z + point*_width[axis];
-            }
+            return _bbox.PMin[axis] + point * _width[axis];
         }
 
         private static int Clamp(int value, int min, int max)
