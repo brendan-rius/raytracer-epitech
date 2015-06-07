@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using OpenTK;
 
 namespace raytracer.core.mathematics
@@ -30,6 +31,11 @@ namespace raytracer.core.mathematics
             ///     The reflection/transmission is diffuse
             /// </summary>
             Diffuse = (1 << 3),
+
+            /// <summary>
+            ///     The reflection/transmission is glossy
+            /// </summary>
+            Glossy = (1 << 4),
 
             /// <summary>
             ///     The reflection/transmission is diffuse or specular
@@ -124,6 +130,13 @@ namespace raytracer.core.mathematics
         {
             var sintheta = SinTheta(ref v);
             return sintheta == 0f ? 0f : v.Y/sintheta;
+        }
+
+        protected static float AbsDot(ref Vector3 v1, ref Vector3 v2)
+        {
+            float dot;
+            Vector3.Dot(ref v1, ref v2, out dot);
+            return (Math.Abs(dot));
         }
     }
 }

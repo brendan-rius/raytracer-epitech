@@ -8,9 +8,9 @@ namespace librt3.core.reflection
 {
     public class OrenNayar : BxDF
     {
-        private float _a;
-        private float _b;
-        private SampledSpectrum _spectrum;
+        private readonly float _a;
+        private readonly float _b;
+        private readonly SampledSpectrum _spectrum;
 
         public OrenNayar(SampledSpectrum spectrum, float sigma) : base(BxDFType.Reflection | BxDFType.Diffuse)
         {
