@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{439AEA5C-3772-4CDB-A412-A932417E20D8}</ProjectGuid>
+    <ProjectGuid>{35AC5D00-22D9-4C2F-AA86-19B6FB073834}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rt</RootNamespace>
-    <AssemblyName>rt</AssemblyName>
+    <RootNamespace>RT_2_poule</RootNamespace>
+    <AssemblyName>RT_2_poule</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -86,6 +86,10 @@
     <ProjectReference Include="..\raytracer\librt.csproj">
       <Project>{efa60fe0-ff47-410d-99b7-d8ab90fb1fb0}</Project>
       <Name>librt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\rt\rt.csproj">
+      <Project>{439aea5c-3772-4cdb-a412-a932417e20d8}</Project>
+      <Name>rt</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

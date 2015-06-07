@@ -14,52 +14,60 @@ using raytracer.lights;
 using raytracer.materials;
 using raytracer.samplers;
 using raytracer.shapes;
+using raytracer.filters;
 using Screen = raytracer.core.Screen;
 using System.Threading.Tasks;
-using raytracer.filters;
 
 namespace rt
 {
     public partial class RayTracer : Form
     {
-        private Bitmap _origin;
-        private bool _filtersState;
+        private bool _filtersState = false;
         private string _file;
         private const uint NSamples = 1;
-        private readonly Scene _scene;
-        private readonly MyFilm _film;
-        private readonly Renderer _renderer;
+        private Bitmap _picture;
+        private Renderer _renderer;
+        private Scene _scene;
+        private Screen _screen;
+        private MyFilm _film;
 
         public RayTracer()
         {
-            _filtersState = false;
             InitializeComponent();
-            _scene = new Scene();
-            var screen = new Screen(1024, 768);
-            _film = new MyFilm(screen, NSamples);
-            Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 0, -1000));
-            _renderer = new Renderer(_scene,
-                new GridSampler(screen), camera, _film,
-                new WhittedIntegrator());
-            _scene.Lights.Add(new PointLight(Transformation.Translation(0, 200, -500)));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, -300, 0)), new MatteMaterial()));
-            _scene.Elements.Add(
-                new Primitive(new Plane(Transformation.RotateZ(90) * Transformation.Translation(-600, 0, 0)),
-                    new MatteMaterial()));
-            _scene.Elements.Add(new Primitive(
-                new Plane(Transformation.RotateZ(90) * Transformation.Translation(600, 0, 0)), new MatteMaterial()));
         }
 
-        public async void Render()
+        /// <summary>
+        ///     This function is called to create a new scene to render.
+        /// </summary>
+        private void InitNewScene()
+        {
+            _screen = new Screen(1024, 768);
+            _film = new MyFilm(_screen, NSamples);
+            _scene = new Scene();
+            Camera camera = new SimpleCamera(_screen,
+                Transformation.Compose(
+                    Transformation.Translation((float) PositionX.Value, (float) PositionY.Value, (float) PositionZ.Value),
+                    Transformation.RotateX((float) RotationX.Value % 360f),
+                    Transformation.RotateY((float) RotationY.Value % 360f),
+                    Transformation.RotateZ((float) RotationZ.Value % 360f)
+                ));
+            _renderer = new Renderer(_scene, new GridSampler(_screen), camera, _film, new WhittedIntegrator());
+            _scene.Lights.Add(new PointLight(Transformation.Translation(0, 0, -500)));
+            _scene.Elements.Add(new Primitive(new Plane(Transformation.RotateX(90)), new MatteMaterial()));
+            _scene.Elements.Add(new Primitive(new Plane(Transformation.Translation(0, 300, 0)), new MatteMaterial()));
+            _scene.Elements.Add(new Primitive(new Plane(Transformation.RotateZ(90) * Transformation.Translation(-600, 0, 0)),
+                new MatteMaterial()));
+            _scene.Elements.Add(new Primitive(new Plane(Transformation.RotateZ(90) * Transformation.Translation(600, 0, 0)),
+                new MatteMaterial()));
+        }
+
+        private async void Render()
         {
             var elapsed = await Task.Run(() => _renderer.Render());
             StatusText.ForeColor = System.Drawing.Color.FromArgb((int)0x40, (int)0x40, (int)0x40);
             StatusText.Text = "Rendered in " + (elapsed / 1000f).ToString("F3") + " seconds.";
             _film.Display(RenderPicture);
-            _origin = new Bitmap(RenderPicture.Image);
+            _picture = new Bitmap(RenderPicture.Image);
             PathText.ForeColor = System.Drawing.Color.FromArgb((int)0xFF, (int)0x61, (int)0x61);
             PathText.Text = "No file selected.";
             _file = null;
@@ -202,13 +210,30 @@ namespace rt
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        ///     This function is called when the 'exit' button is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonExit_Click(object sender, EventArgs e)
+        {
+            if (System.Windows.Forms.Application.MessageLoop)
+                System.Windows.Forms.Application.Exit();
+            else
+                System.Environment.Exit(1);
+        }
+
+        /// <summary>
+        ///     This function is called when the 'load' button is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoadButton_Click(object sender, EventArgs e)
         {
             DialogResult File = openFileDialog1.ShowDialog();
             if (File == DialogResult.OK)
             {
                 _file = openFileDialog1.FileName;
-                string extension = Path.GetExtension(_file);
                 if (!_file.EndsWith(".obj"))
                 {
                     RenderButton.Enabled = false;
@@ -218,29 +243,37 @@ namespace rt
                     StatusText.Text = "Please select a valid filename (.obj).";
                     return ;
                 }
+                RenderButton.Enabled = true;
                 PathText.ForeColor = System.Drawing.Color.FromArgb((int)0x40, (int)0x40, (int)0x40);
                 PathText.Text = _file;
                 StatusText.ForeColor = System.Drawing.Color.FromArgb((int)0x2E, (int)0xCC, (int)0x71);
                 StatusText.Text = "Ready to render the scene.";
-                RenderButton.Enabled = true;
             }
         }
 
+        /// <summary>
+        ///     This function is called when the 'render' button is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RenderButton_Click(object sender, EventArgs e)
         {
             if (_filtersState == true)
                 SwitchFiltersState();
             LoadButton.Enabled = false;
             RenderButton.Enabled = false;
-            if (RenderPicture.Image != null)
-                RenderPicture.Image = null;
+            RenderPicture.Image = null;
             StatusText.ForeColor = System.Drawing.Color.FromArgb((int)0x2E, (int)0xCC, (int)0x71);
             StatusText.Text = "Rendering in progress...";
+            InitNewScene();
             SimpleObjParser(_scene, _file);
             Render();
         }
 
-        private void SwitchFiltersState()
+        /// <summary>
+        ///     This function is used to switch filters buttons state.
+        /// </summary>
+        public void SwitchFiltersState()
         {
             _filtersState = !_filtersState;
             FiltersContrastMore.Enabled = _filtersState;
@@ -252,124 +285,105 @@ namespace rt
             FiltersSharpeness.Enabled = _filtersState;
         }
 
-        private void ButtonExit_Click(object sender, EventArgs e)
-        {
-            if (System.Windows.Forms.Application.MessageLoop)
-                System.Windows.Forms.Application.Exit();
-            else
-                System.Environment.Exit(1);
-        }
-
-        private void FiltersContrastMore_Click(object sender, EventArgs e)
+        /// <summary>
+        ///     This function is called before appliying any filter.
+        /// </summary>
+        private void FiltersStart()
         {
             _filtersState = true;
             LoadButton.Enabled = false;
             RenderButton.Enabled = false;
             SwitchFiltersState();
-            Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new ContrastMore(new MyImage(_origin), new MyImage(result));
-            RenderPicture.Image = result;
+        }
+
+        /// <summary>
+        ///     This function is called after a filter has been applied.
+        /// </summary>
+        private void FiltersEnd()
+        {
             SwitchFiltersState();
-            FiltersContrastMore.Enabled = false;
             LoadButton.Enabled = true;
             if (_file != null)
                 RenderButton.Enabled = true;
+        }
+
+        /*
+        ** FILTERS START
+        ** These functions are called to apply filters on rendered .obj files.
+        */
+        private void FiltersContrastMore_Click(object sender, EventArgs e)
+        {
+            FiltersStart();
+            Bitmap result = new Bitmap(RenderPicture.Image);
+            var filter = new ContrastMore(new MyImage(_picture), new MyImage(result));
+            RenderPicture.Image = result;
+            FiltersEnd();
+            FiltersContrastMore.Enabled = false;
         }
 
         private void FiltersBorderEnhancement_Click(object sender, EventArgs e)
         {
-            _filtersState = true;
-            LoadButton.Enabled = false;
-            RenderButton.Enabled = false;
-            SwitchFiltersState();
+            FiltersStart();
             Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new BorderMore(new MyImage(_origin), new MyImage(result));
+            var filter = new BorderMore(new MyImage(_picture), new MyImage(result));
             RenderPicture.Image = result;
-            SwitchFiltersState();
+            FiltersEnd();
             FiltersBorderEnhancement.Enabled = false;
-            LoadButton.Enabled = true;
-            if (_file != null)
-                RenderButton.Enabled = true;
         }
 
         private void FiltersBlur_Click(object sender, EventArgs e)
         {
-            _filtersState = true;
-            LoadButton.Enabled = false;
-            RenderButton.Enabled = false;
-            SwitchFiltersState();
+            FiltersStart();
             Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new Blur(new MyImage(_origin), new MyImage(result));
+            var filter = new Blur(new MyImage(_picture), new MyImage(result));
             RenderPicture.Image = result;
-            SwitchFiltersState();
+            FiltersEnd();
             FiltersBlur.Enabled = false;
-            LoadButton.Enabled = true;
-            if (_file != null)
-                RenderButton.Enabled = true;
         }
 
         private void FiltersBorderDetect_Click(object sender, EventArgs e)
         {
-            _filtersState = true;
-            LoadButton.Enabled = false;
-            RenderButton.Enabled = false;
-            SwitchFiltersState();
+            FiltersStart();
             Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new BorderDetect(new MyImage(_origin), new MyImage(result));
+            var filter = new BorderDetect(new MyImage(_picture), new MyImage(result));
             RenderPicture.Image = result;
-            SwitchFiltersState();
+            FiltersEnd();
             FiltersBorderDetect.Enabled = false;
-            LoadButton.Enabled = true;
-            if (_file != null)
-                RenderButton.Enabled = true;
-        }
+
+       }
 
         private void FiltersBorderDetectMore_Click(object sender, EventArgs e)
         {
-            _filtersState = true;
-            LoadButton.Enabled = false;
-            RenderButton.Enabled = false;
-            SwitchFiltersState();
+            FiltersStart();
             Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new BorderDetectMore(new MyImage(_origin), new MyImage(result));
+            var filter = new BorderDetectMore(new MyImage(_picture), new MyImage(result));
             RenderPicture.Image = result;
-            SwitchFiltersState();
+            FiltersEnd();
             FiltersBorderDetectMore.Enabled = false;
-            LoadButton.Enabled = true;
-            if (_file != null)
-                RenderButton.Enabled = true;
         }
 
         private void FiltersPush_Click(object sender, EventArgs e)
         {
-            _filtersState = true;
-            LoadButton.Enabled = false;
-            RenderButton.Enabled = false;
-            SwitchFiltersState();
+            FiltersStart();
             Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new Push(new MyImage(_origin), new MyImage(result));
+            var filter = new Push(new MyImage(_picture), new MyImage(result));
             RenderPicture.Image = result;
-            SwitchFiltersState();
+            FiltersEnd();
             FiltersPush.Enabled = false;
-            LoadButton.Enabled = true;
-            if (_file != null)
-                RenderButton.Enabled = true;
         }
 
         private void FiltersSharpeness_Click(object sender, EventArgs e)
         {
-            _filtersState = true;
-            LoadButton.Enabled = false;
-            RenderButton.Enabled = false;
-            SwitchFiltersState();
+            FiltersStart();
             Bitmap result = new Bitmap(RenderPicture.Image);
-            var filter = new Sharpen(new MyImage(_origin), new MyImage(result));
+            var filter = new Sharpen(new MyImage(_picture), new MyImage(result));
             RenderPicture.Image = result;
-            SwitchFiltersState();
+            FiltersEnd();
             FiltersSharpeness.Enabled = false;
-            LoadButton.Enabled = true;
-            if (_file != null)
-                RenderButton.Enabled = true;
         }
+
+        /*
+        ** FILTERS END.
+        */
     }
 }
