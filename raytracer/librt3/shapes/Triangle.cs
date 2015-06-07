@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using OpenTK;
 using raytracer.core;
 using raytracer.core.mathematics;
@@ -8,6 +7,8 @@ namespace raytracer.shapes
 {
     public class Triangle : Shape
     {
+        private readonly BBox _bbox;
+
         /// <summary>
         ///     Stores the triangle's plane normalized normal vector.
         /// </summary>
@@ -17,8 +18,6 @@ namespace raytracer.shapes
         ///     Stores the three triangle vertices.
         /// </summary>
         private readonly Vector3[] _vertices;
-
-        private readonly BBox _bbox;
 
         /// <summary>
         ///     Creates a new Triangle from 3 vertices

@@ -1,29 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using OpenTK;
 
 namespace raytracer.core
 {
     /// <summary>
-    /// Stupid Simple Accelerator.
+    ///     Stupid Simple Accelerator.
     /// </summary>
     public class GridAccel : Aggregate
     {
         private readonly BBox _bbox;
-
-        private readonly List<Primitive> _primitives;
-
-        private readonly int[] _nVoxels;
-        private readonly float[] _width;
+        private readonly int[] _cmpToAxis = {2, 1, 2, 1, 2, 2, 0, 0};
         private readonly float[] _invWidth;
+        private readonly int[] _nVoxels;
+        private readonly List<Primitive> _primitives;
         private readonly Voxel[] _voxels;
+        private readonly float[] _width;
 
-        private readonly int[] _cmpToAxis = { 2, 1, 2, 1, 2, 2, 0, 0 };
-        
         /// <summary>
-        /// Creates a GridAccel
+        ///     Creates a GridAccel
         /// </summary>
         /// <param name="p"></param>
         public GridAccel(IEnumerable<Primitive> p)
@@ -83,20 +79,20 @@ namespace raytracer.core
             var delta = _bbox.PMax - _bbox.PMin;
             var maxAxis = _bbox.MaximumExtent();
             var deltaAxis = delta[maxAxis];
-            var invMaxWidth = 1f / deltaAxis;
-            var cubeRoot = 3f * (float)Math.Pow(pCount, 1f / 3);
-            var voxelsPerUnitDist = cubeRoot * invMaxWidth;
+            var invMaxWidth = 1f/deltaAxis;
+            var cubeRoot = 3f*(float) Math.Pow(pCount, 1f/3);
+            var voxelsPerUnitDist = cubeRoot*invMaxWidth;
 
             for (var i = 0; i < 3; i++)
             {
-                _nVoxels[i] = (int)Math.Round(delta[i] * voxelsPerUnitDist);
+                _nVoxels[i] = (int) Math.Round(delta[i]*voxelsPerUnitDist);
                 _nVoxels[i] = Clamp(_nVoxels[i], 1, 64);
             }
 
             for (var i = 0; i < 3; i++)
             {
-                _width[i] = delta[i] / _nVoxels[i];
-                _invWidth[i] = (_width[i] == 0) ? 0 : (1 / _width[i]);                
+                _width[i] = delta[i]/_nVoxels[i];
+                _invWidth[i] = (_width[i] == 0) ? 0 : (1/_width[i]);
             }
         }
 
@@ -116,21 +112,21 @@ namespace raytracer.core
                 pos[i] = PosToVoxel(gridIntersect, i);
                 if (ray.Direction[i] >= 0)
                 {
-                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i] + 1, i) - gridIntersect[i]) / ray.Direction[i];
-                    deltaT[i] = _width[i] / ray.Direction[i];
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i] + 1, i) - gridIntersect[i])/ray.Direction[i];
+                    deltaT[i] = _width[i]/ray.Direction[i];
                     step[i] = 1;
                     _out[i] = _nVoxels[i];
                 }
                 else
                 {
-                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i], i) - gridIntersect[i]) / ray.Direction[i];
-                    deltaT[i] = -_width[i] / ray.Direction[i];
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i], i) - gridIntersect[i])/ray.Direction[i];
+                    deltaT[i] = -_width[i]/ray.Direction[i];
                     step[i] = -1;
                     _out[i] = -1;
                 }
             }
 
-            for (; ; )
+            for (;;)
             {
                 var voxel = _voxels[Offset(pos[0], pos[1], pos[2])];
                 if (voxel != null)
@@ -168,22 +164,22 @@ namespace raytracer.core
                 pos[i] = PosToVoxel(gridIntersect, i);
                 if (ray.Direction[i] >= 0)
                 {
-                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i] + 1, i) - gridIntersect[i]) / ray.Direction[i];
-                    deltaT[i] = _width[i] / ray.Direction[i];
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i] + 1, i) - gridIntersect[i])/ray.Direction[i];
+                    deltaT[i] = _width[i]/ray.Direction[i];
                     step[i] = 1;
                     _out[i] = _nVoxels[i];
                 }
                 else
                 {
-                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i], i) - gridIntersect[i]) / ray.Direction[i];
-                    deltaT[i] = -_width[i] / ray.Direction[i];
+                    nextCrossingT[i] = rayT + (VoxelToPos(pos[i], i) - gridIntersect[i])/ray.Direction[i];
+                    deltaT[i] = -_width[i]/ray.Direction[i];
                     step[i] = -1;
                     _out[i] = -1;
                 }
             }
 
             var hitSomething = false;
-            for (; ; )
+            for (;;)
             {
                 var voxel = _voxels[Offset(pos[0], pos[1], pos[2])];
                 if (voxel != null)
@@ -211,13 +207,13 @@ namespace raytracer.core
 
         private int PosToVoxel(Vector3 point, int axis)
         {
-            var v = (int)((point[axis] - _bbox.PMin[axis]) * _invWidth[axis]);
+            var v = (int) ((point[axis] - _bbox.PMin[axis])*_invWidth[axis]);
             return Clamp(v, 0, _nVoxels[axis] - 1);
         }
 
         private float VoxelToPos(int point, int axis)
         {
-            return _bbox.PMin[axis] + point * _width[axis];
+            return _bbox.PMin[axis] + point*_width[axis];
         }
 
         private static int Clamp(int value, int min, int max)

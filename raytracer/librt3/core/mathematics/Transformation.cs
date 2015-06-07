@@ -278,14 +278,14 @@ namespace raytracer.core.mathematics
         public bool SwapHandedness()
         {
             var det = ((TransformationMatrix[0, 0]*
-                          (TransformationMatrix[1, 1]*TransformationMatrix[2, 2] -
-                           TransformationMatrix[1, 2]*TransformationMatrix[2, 1])) -
-                         (TransformationMatrix[0, 1]*
-                          (TransformationMatrix[1, 0]*TransformationMatrix[2, 2] -
-                           TransformationMatrix[1, 2]*TransformationMatrix[2, 0])) +
-                         (TransformationMatrix[0, 2]*
-                          (TransformationMatrix[1, 0]*TransformationMatrix[2, 1] -
-                           TransformationMatrix[1, 1]*TransformationMatrix[2, 0])));
+                        (TransformationMatrix[1, 1]*TransformationMatrix[2, 2] -
+                         TransformationMatrix[1, 2]*TransformationMatrix[2, 1])) -
+                       (TransformationMatrix[0, 1]*
+                        (TransformationMatrix[1, 0]*TransformationMatrix[2, 2] -
+                         TransformationMatrix[1, 2]*TransformationMatrix[2, 0])) +
+                       (TransformationMatrix[0, 2]*
+                        (TransformationMatrix[1, 0]*TransformationMatrix[2, 1] -
+                         TransformationMatrix[1, 1]*TransformationMatrix[2, 0])));
             return det < 0f;
         }
     }

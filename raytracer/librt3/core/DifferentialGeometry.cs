@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 using raytracer.core;
 using raytracer.core.mathematics;
@@ -11,21 +7,14 @@ namespace librt3.core
 {
     public class DifferentialGeometry
     {
-        public float U, V;
-
-        public float dudx, dvdx, dudy, dvdy;
-
-        public Vector3 Dpdu, Dpdv;
-
-        public Vector3 Dpdx, Dpdy;
-
-        public Vector3 Dndu, Dndv;
-
-        public Vector3 Point;
-
-        public Vector3 Normal;
-
         public readonly Shape Shape;
+        public Vector3 Dndu, Dndv;
+        public Vector3 Dpdu, Dpdv;
+        public Vector3 Dpdx, Dpdy;
+        public float dudx, dvdx, dudy, dvdy;
+        public Vector3 Normal;
+        public Vector3 Point;
+        public float U, V;
 
         public DifferentialGeometry()
         {
@@ -62,7 +51,7 @@ namespace librt3.core
                 var d = -Vector3.Dot(Normal, Point);
                 var rxv = new Vector3(ray.RxOrigin.X, ray.RxOrigin.Y, ray.RxOrigin.Z);
                 var tx = -(Vector3.Dot(Normal, rxv) + d)/Vector3.Dot(Normal, ray.RxDirection);
-                var px = ray.RxOrigin + tx * ray.RxDirection;
+                var px = ray.RxOrigin + tx*ray.RxDirection;
                 var ryv = new Vector3(ray.RyOrigin.X, ray.RyOrigin.Y, ray.RyOrigin.Z);
                 var ty = -(Vector3.Dot(Normal, ryv) + d)/Vector3.Dot(Normal, ray.RyDirection);
                 var py = ray.RyOrigin + ty*ray.RyDirection;

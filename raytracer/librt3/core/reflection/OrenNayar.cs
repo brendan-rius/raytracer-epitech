@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using OpenTK;
 using raytracer.core;
 using raytracer.core.mathematics;
@@ -44,9 +43,9 @@ namespace librt3.core.reflection
             else
             {
                 sinalpha = sinthetai;
-                tanbeta = sinthetao/AbsCosTheta(ref leaving);   
+                tanbeta = sinthetao/AbsCosTheta(ref leaving);
             }
-            return _spectrum * (float)(1 / Math.PI) * (_a + _b * maxcos * sinalpha * tanbeta);
+            return _spectrum*(float) (1/Math.PI)*(_a + _b*maxcos*sinalpha*tanbeta);
         }
     }
 }

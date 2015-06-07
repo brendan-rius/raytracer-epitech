@@ -6,7 +6,7 @@ namespace raytracer.shapes
 {
     public class Plane : Shape
     {
-        private BBox _bbox;
+        private readonly BBox _bbox;
 
         public Plane(Transformation worldToObjectTransformation = null) : base(worldToObjectTransformation)
         {

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using raytracer.materials;
 
 namespace raytracer.core
 {
@@ -55,7 +54,7 @@ namespace raytracer.core
         }
 
         /// <summary>
-        /// Returns Whether a ray can intersect with the primitive.
+        ///     Returns Whether a ray can intersect with the primitive.
         /// </summary>
         /// <returns></returns>
         public bool CanIntersect()
@@ -64,7 +63,7 @@ namespace raytracer.core
         }
 
         /// <summary>
-        /// Refine the primitive.
+        ///     Refine the primitive.
         /// </summary>
         /// <param name="primitives"></param>
         public void Refine(List<Primitive> primitives)

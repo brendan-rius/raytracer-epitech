@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace librt3.core
 {
-    static class Operators
+    internal static class Operators
     {
         public static T Add<T>(T x, T y)
         {
@@ -29,51 +25,48 @@ namespace librt3.core
             return OperatorCache<T>.Subtract(x, y);
         }
 
-        static class OperatorCache<T>
+        private static class OperatorCache<T>
         {
+            public static readonly Func<T, T, T> Multiply;
+            public static readonly Func<T, T, T> Subtract;
+            public static readonly Func<T, T, T> Add;
+
             static OperatorCache()
             {
-                Multiply = MakeBinaryOperator(type: ExpressionType.Multiply);
-                Subtract = MakeBinaryOperator(type: ExpressionType.Subtract);
-                Add = MakeBinaryOperator(type: ExpressionType.Add);
+                Multiply = MakeBinaryOperator(ExpressionType.Multiply);
+                Subtract = MakeBinaryOperator(ExpressionType.Subtract);
+                Add = MakeBinaryOperator(ExpressionType.Add);
             }
 
-            static Func<T, T, T> MakeBinaryOperator(ExpressionType type)
+            private static Func<T, T, T> MakeBinaryOperator(ExpressionType type)
             {
-                var x = Expression.Parameter(typeof(T), "x");
-                var y = Expression.Parameter(typeof(T), "y");
+                var x = Expression.Parameter(typeof (T), "x");
+                var y = Expression.Parameter(typeof (T), "y");
                 var body = Expression.MakeBinary(type, x, y);
                 var expr = Expression.Lambda<Func<T, T, T>>(body, x, y);
                 return expr.Compile();
             }
-
-            public readonly static Func<T, T, T> Multiply;
-
-            public readonly static Func<T, T, T> Subtract;
-
-            public static readonly Func<T, T, T> Add;
         }
 
-        static class OperatorCache<T, TU>
+        private static class OperatorCache<T, TU>
         {
+            public static readonly Func<T, TU, T> Multiply;
+            public static readonly Func<T, TU, T> Subtract;
+
             static OperatorCache()
             {
-                Multiply = MakeBinaryOperator(type: ExpressionType.Multiply);
-                Subtract = MakeBinaryOperator(type: ExpressionType.Subtract);
+                Multiply = MakeBinaryOperator(ExpressionType.Multiply);
+                Subtract = MakeBinaryOperator(ExpressionType.Subtract);
             }
 
-            static Func<T, TU, T> MakeBinaryOperator(ExpressionType type)
+            private static Func<T, TU, T> MakeBinaryOperator(ExpressionType type)
             {
-                var x = Expression.Parameter(typeof(T), "x");
-                var y = Expression.Parameter(typeof(TU), "y");
+                var x = Expression.Parameter(typeof (T), "x");
+                var y = Expression.Parameter(typeof (TU), "y");
                 var body = Expression.MakeBinary(type, x, y);
                 var expr = Expression.Lambda<Func<T, TU, T>>(body, x, y);
                 return expr.Compile();
             }
-
-            public readonly static Func<T, TU, T> Multiply;
-
-            public readonly static Func<T, TU, T> Subtract;
         }
     }
 }

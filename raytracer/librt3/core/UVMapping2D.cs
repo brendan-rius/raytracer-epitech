@@ -1,10 +1,11 @@
-﻿using OpenTK.Platform.Windows;
-
-namespace librt3.core
+﻿namespace librt3.core
 {
     public class UVMapping2D : TextureMapping2D
     {
-        private float _su, _sv, _du, _dv;
+        private readonly float _du;
+        private readonly float _dv;
+        private readonly float _su;
+        private readonly float _sv;
 
         public UVMapping2D(float ssu, float ssv, float ddu, float ddv)
         {
@@ -14,7 +15,8 @@ namespace librt3.core
             _dv = ddv;
         }
 
-        public override void Map(DifferentialGeometry dg, ref float s, ref float t, ref float dsdx, ref float dtdx, ref float dsdy,
+        public override void Map(DifferentialGeometry dg, ref float s, ref float t, ref float dsdx, ref float dtdx,
+            ref float dsdy,
             ref float dtdy)
         {
             s = _su*dg.U + _du;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using OpenTK;
 
 namespace raytracer.core.mathematics

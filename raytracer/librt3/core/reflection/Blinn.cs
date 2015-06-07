@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using OpenTK;
 
 namespace librt3.core.reflection
 {
-    class Blinn : MicrofacetDistribution
+    internal class Blinn : MicrofacetDistribution
     {
-        private float _exponent;
+        private readonly float _exponent;
 
         public Blinn(float e)
         {
@@ -21,7 +16,7 @@ namespace librt3.core.reflection
         public override float D(ref Vector3 half)
         {
             var costhetah = Math.Abs(half.Z);
-            return (_exponent + 2) * (1 / MathHelper.TwoPi) * (float)Math.Pow(costhetah, _exponent);
+            return (_exponent + 2)*(1/MathHelper.TwoPi)*(float) Math.Pow(costhetah, _exponent);
         }
     }
 }

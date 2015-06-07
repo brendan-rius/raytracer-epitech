@@ -68,7 +68,7 @@ namespace raytracer.core
         }
 
         /// <summary>
-        /// Creates a new bounding boxes from two bounding boxes
+        ///     Creates a new bounding boxes from two bounding boxes
         /// </summary>
         /// <param name="box"></param>
         /// <param name="box2"></param>
@@ -185,9 +185,9 @@ namespace raytracer.core
             t1 = tFar < t1 ? tFar : t1;
             if (t0 > t1) return false;
 
-            invRayDir = 1 / ray.Direction.Y;
-            tNear = (PMin.Y - ray.Origin.Y) * invRayDir;
-            tFar = (PMax.Y - ray.Origin.Y) * invRayDir;
+            invRayDir = 1/ray.Direction.Y;
+            tNear = (PMin.Y - ray.Origin.Y)*invRayDir;
+            tFar = (PMax.Y - ray.Origin.Y)*invRayDir;
             if (tNear > tFar)
             {
                 var tmp = tNear;
@@ -198,9 +198,9 @@ namespace raytracer.core
             t1 = tFar < t1 ? tFar : t1;
             if (t0 > t1) return false;
 
-            invRayDir = 1 / ray.Direction.Z;
-            tNear = (PMin.Z - ray.Origin.Z) * invRayDir;
-            tFar = (PMax.Z - ray.Origin.Z) * invRayDir;
+            invRayDir = 1/ray.Direction.Z;
+            tNear = (PMin.Z - ray.Origin.Z)*invRayDir;
+            tFar = (PMax.Z - ray.Origin.Z)*invRayDir;
             if (tNear > tFar)
             {
                 var tmp = tNear;

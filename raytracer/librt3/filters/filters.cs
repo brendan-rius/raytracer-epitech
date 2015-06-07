@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace raytracer.filters
+﻿namespace raytracer.filters
 {
     /// <summary>
     ///     This class creates a new filter on an image.
@@ -14,12 +8,13 @@ namespace raytracer.filters
     {
         public ContrastMore(IImage map, IImage new_map)
         {
-            Int32[,] matrix;
+            int[,] matrix;
 
-            matrix = new Int32[3, 3] {
-                { 0, -1,  0},
-                {-1,  5, -1},
-                { 0, -1,  0}
+            matrix = new int[3, 3]
+            {
+                {0, -1, 0},
+                {-1, 5, -1},
+                {0, -1, 0}
             };
             NewFilter(matrix, map, new_map);
         }
@@ -33,12 +28,13 @@ namespace raytracer.filters
     {
         public BorderMore(IImage map, IImage new_map)
         {
-            Int32[,] matrix;
+            int[,] matrix;
 
-            matrix = new Int32[3, 3] {
-                { 0,  0,  0},
-                {-1,  1,  0},
-                { 0,  0,  0}
+            matrix = new int[3, 3]
+            {
+                {0, 0, 0},
+                {-1, 1, 0},
+                {0, 0, 0}
             };
             NewFilter(matrix, map, new_map);
         }
@@ -48,16 +44,17 @@ namespace raytracer.filters
     ///     This class creates a new filter on an image.
     ///     In this case image will be blurred.
     /// </summary>
-    public class Blur: Filter
+    public class Blur : Filter
     {
         public Blur(IImage map, IImage new_map)
         {
-            Int32[,] matrix;
+            int[,] matrix;
 
-            matrix = new Int32[3, 3] {
-                { 1,  1,  1},
-                { 1,  1,  1},
-                { 1,  1,  1}
+            matrix = new int[3, 3]
+            {
+                {1, 1, 1},
+                {1, 1, 1},
+                {1, 1, 1}
             };
             NewFilter(matrix, map, new_map);
         }
@@ -71,12 +68,13 @@ namespace raytracer.filters
     {
         public BorderDetect(IImage map, IImage new_map)
         {
-            Int32[,] matrix;
+            int[,] matrix;
 
-            matrix = new Int32[3, 3] {
-                { 0,  1,  0},
-                { 1, -4,  1},
-                { 0,  1,  0}
+            matrix = new int[3, 3]
+            {
+                {0, 1, 0},
+                {1, -4, 1},
+                {0, 1, 0}
             };
             NewFilter(matrix, map, new_map);
         }
@@ -90,12 +88,13 @@ namespace raytracer.filters
     {
         public Push(IImage map, IImage new_map)
         {
-            Int32[,] matrix;
+            int[,] matrix;
 
-            matrix = new Int32[3, 3] {
-                {-2, -1,  0},
-                {-1,  1,  1},
-                { 0,  1,  2}
+            matrix = new int[3, 3]
+            {
+                {-2, -1, 0},
+                {-1, 1, 1},
+                {0, 1, 2}
             };
             NewFilter(matrix, map, new_map);
         }
@@ -109,12 +108,13 @@ namespace raytracer.filters
     {
         public BorderDetectMore(IImage map, IImage new_map)
         {
-            Int32[,] matrix;
+            int[,] matrix;
 
-            matrix = new Int32[3, 3] {
-                { 1,  1,  1},
-                { 1, -8,  1},
-                { 1,  1,  1}
+            matrix = new int[3, 3]
+            {
+                {1, 1, 1},
+                {1, -8, 1},
+                {1, 1, 1}
             };
             NewFilter(matrix, map, new_map);
         }
@@ -128,11 +128,12 @@ namespace raytracer.filters
     {
         public Sharpen(IImage map, IImage new_map)
         {
-            Int32[,] matrix;
+            int[,] matrix;
 
-            matrix = new Int32[3, 3] {
+            matrix = new int[3, 3]
+            {
                 {-1, -1, -1},
-                {-1,  9, -1},
+                {-1, 9, -1},
                 {-1, -1, -1}
             };
             NewFilter(matrix, map, new_map);
@@ -146,9 +147,9 @@ namespace raytracer.filters
         /// </summary>
         /// <param name="map"></param>
         /// <returns></returns>
-        public void NewFilter(Int32[,] transf, IImage map, IImage new_map)
+        public void NewFilter(int[,] transf, IImage map, IImage new_map)
         {
-            Int32[,]    matrix = new Int32[3, 3];
+            var matrix = new int[3, 3];
 
             for (uint y = 0; y < map.YLimit; y++)
             {
@@ -159,7 +160,6 @@ namespace raytracer.filters
                     new_map.PutPixel(x, y, CalcFilter(transf, matrix));
                 }
             }
-            return ;
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace raytracer.filters
         /// </summary>
         /// <param name="matrix">The matrix to reset.</param>
         /// <returns></returns>
-        private void    ResetMatrix(Int32[,] matrix)
+        private void ResetMatrix(int[,] matrix)
         {
             for (uint y = 0; y < 3; y++)
             {
@@ -176,7 +176,6 @@ namespace raytracer.filters
                     matrix[y, x] = 0;
                 }
             }
-            return;
         }
 
         /// <summary>
@@ -186,7 +185,7 @@ namespace raytracer.filters
         /// <param name="y">Y position.</param>
         /// <param name="matrix">Matrix where to add data.</param>
         /// <param name="map">The map interface.</param>
-        private void    FillMatrix(uint x, uint y, Int32[,] matrix, IImage map)
+        private void FillMatrix(uint x, uint y, int[,] matrix, IImage map)
         {
             if (y > 0)
             {
@@ -203,7 +202,6 @@ namespace raytracer.filters
                 matrix[2, 1] = map.GetPixel(x, y + 1);
                 matrix[2, 2] = (x < map.XLimit - 1 ? map.GetPixel(x + 1, y + 1) : 0);
             }
-            return;
         }
 
         /// <summary>
@@ -212,20 +210,20 @@ namespace raytracer.filters
         /// <param name="transformation">The transformation matrix.</param>
         /// <param name="matrix">The pixel's neighbour matrix to calculate</param>
         /// <returns></returns>
-        private Int32   CalcFilter(Int32[,] transf, Int32[,] matrix)
+        private int CalcFilter(int[,] transf, int[,] matrix)
         {
-            Int32 result = 0;
-            float[,] R = new float[3, 3];
-            float[,] G = new float[3, 3];
-            float[,] B = new float[3, 3];
+            var result = 0;
+            var R = new float[3, 3];
+            var G = new float[3, 3];
+            var B = new float[3, 3];
 
             for (uint y = 0; y < 3; y++)
             {
                 for (uint x = 0; x < 3; x++)
                 {
-                    R[y, x] = ((matrix[y, x] >> 16) & 0xFF) / 255.0F;
-                    G[y, x] = ((matrix[y, x] >> 8) & 0xFF) / 255.0F;
-                    B[y, x] = (matrix[y, x] & 0xFF) / 255.0F;
+                    R[y, x] = ((matrix[y, x] >> 16) & 0xFF)/255.0F;
+                    G[y, x] = ((matrix[y, x] >> 8) & 0xFF)/255.0F;
+                    B[y, x] = (matrix[y, x] & 0xFF)/255.0F;
                 }
             }
             result |= 255 << 24;
@@ -241,16 +239,16 @@ namespace raytracer.filters
         /// <param name="transf">points to calculate</param>
         /// <param name="color">color channel</param>
         /// <returns></returns>
-        private Int32 CalcRes(Int32[,] transf, float[,] color)
+        private int CalcRes(int[,] transf, float[,] color)
         {
             float result;
 
             result =
-                transf[0, 0] * color[0, 0] + transf[0, 1] * color[0, 1] + transf[0, 2] * color[0, 2] +
-                transf[1, 0] * color[1, 0] + transf[1, 1] * color[1, 1] + transf[1, 2] * color[2, 2] +
-                transf[2, 0] * color[2, 0] + transf[2, 1] * color[2, 1] + transf[2, 2] * color[2, 2];
+                transf[0, 0]*color[0, 0] + transf[0, 1]*color[0, 1] + transf[0, 2]*color[0, 2] +
+                transf[1, 0]*color[1, 0] + transf[1, 1]*color[1, 1] + transf[1, 2]*color[2, 2] +
+                transf[2, 0]*color[2, 0] + transf[2, 1]*color[2, 1] + transf[2, 2]*color[2, 2];
             if (result >= 0.0F && result <= 1.0F)
-                return ((Int32) (result * 255.0F));
+                return ((int) (result*255.0F));
             return (result < 0.0F ? 0 : 255);
         }
     }
@@ -260,11 +258,9 @@ namespace raytracer.filters
     /// </summary>
     public interface IImage
     {
-        Int32 GetPixel(uint x, uint y);
-
-        void PutPixel(uint x, uint y, Int32 color);
-
         uint XLimit { get; set; }
         uint YLimit { get; set; }
+        int GetPixel(uint x, uint y);
+        void PutPixel(uint x, uint y, int color);
     }
 }

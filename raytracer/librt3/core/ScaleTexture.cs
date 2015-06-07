@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.OpenGL;
-
-namespace librt3.core
+﻿namespace librt3.core
 {
-    class ScaleTexture<T, TU> : Texture<TU>
+    internal class ScaleTexture<T, TU> : Texture<TU>
     {
         private readonly Texture<T> _tex1;
-
         private readonly Texture<TU> _tex2;
 
         public ScaleTexture(Texture<T> t1, Texture<TU> t2)

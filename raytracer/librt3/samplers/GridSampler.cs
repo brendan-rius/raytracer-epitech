@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using OpenTK;
 using raytracer.core;
-using raytracer.core.mathematics;
 
 namespace raytracer.samplers
 {

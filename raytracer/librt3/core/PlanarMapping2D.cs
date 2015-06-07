@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
 
 namespace librt3.core
 {
-    class PlanarMapping2D : TextureMapping2D
+    internal class PlanarMapping2D : TextureMapping2D
     {
-        private Vector3 _vs, _vt;
-
         private readonly float _ds, _dt;
+        private Vector3 _vs, _vt;
 
         public PlanarMapping2D(ref Vector3 v1, ref Vector3 v2, float dds = 0, float ddt = 0)
         {
@@ -21,7 +15,8 @@ namespace librt3.core
             _dt = ddt;
         }
 
-        public override void Map(DifferentialGeometry dg, ref float s, ref float t, ref float dsdx, ref float dtdx, ref float dsdy,
+        public override void Map(DifferentialGeometry dg, ref float s, ref float t, ref float dsdx, ref float dtdx,
+            ref float dsdy,
             ref float dtdy)
         {
             Vector3 vec;

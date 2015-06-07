@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 using raytracer.core;
 using raytracer.core.mathematics;
 
 namespace librt3.core.reflection
 {
-    class Microfacet : BxDF
+    internal class Microfacet : BxDF
     {
-        private SampledSpectrum _spectrum;
+        private readonly MicrofacetDistribution _distribution;
+        private readonly Fresnel _fresnel;
+        private readonly SampledSpectrum _spectrum;
 
-        private MicrofacetDistribution _distribution;
-
-        private Fresnel _fresnel;
-
-        public Microfacet(SampledSpectrum reflectance, Fresnel f, MicrofacetDistribution d) : base(BxDFType.Reflection | BxDFType.Glossy)
+        public Microfacet(SampledSpectrum reflectance, Fresnel f, MicrofacetDistribution d)
+            : base(BxDFType.Reflection | BxDFType.Glossy)
         {
             _spectrum = reflectance;
             _distribution = d;
@@ -41,8 +36,8 @@ namespace librt3.core.reflection
             var NdotWo = AbsCosTheta(ref leaving);
             var NdotWi = AbsCosTheta(ref incoming);
             var WOdotWh = AbsDot(ref leaving, ref half);
-            return Math.Min(1, Math.Min((2 * NdotWh * NdotWo / WOdotWh),
-                                        (2 * NdotWh * NdotWi / WOdotWh)));
+            return Math.Min(1, Math.Min((2*NdotWh*NdotWo/WOdotWh),
+                (2*NdotWh*NdotWi/WOdotWh)));
         }
     }
 }

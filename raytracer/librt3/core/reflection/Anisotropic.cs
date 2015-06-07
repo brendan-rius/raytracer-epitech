@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
 
 namespace librt3.core.reflection
 {
-    class Anisotropic : MicrofacetDistribution
+    internal class Anisotropic : MicrofacetDistribution
     {
-        private float _ex, _ey;
+        private readonly float _ex;
+        private readonly float _ey;
 
         public Anisotropic(float x, float y)
         {
@@ -25,7 +22,7 @@ namespace librt3.core.reflection
             var d = 1 - costhetah*costhetah;
             if (d == 0) return 0;
             var e = (_ex*half.X*half.X + _ey*half.Y*half.Y)/d;
-            return (float)Math.Sqrt((_ex + 2)*(_ey + 2))*(1/MathHelper.TwoPi)*(float)Math.Pow(costhetah, e);
+            return (float) Math.Sqrt((_ex + 2)*(_ey + 2))*(1/MathHelper.TwoPi)*(float) Math.Pow(costhetah, e);
         }
     }
 }
