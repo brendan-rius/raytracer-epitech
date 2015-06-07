@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using OpenTK;
 
 namespace raytracer.core.mathematics
@@ -26,6 +27,16 @@ namespace raytracer.core.mathematics
             firstRoot = secondRoot;
             secondRoot = tmp;
             return true;
+        }
+
+        public static bool SolveLinearSystem2X2(float[,] a, float[] b, ref float x0, ref float x1)
+        {
+            var det = a[0, 0]*a[1, 1] - a[0, 1]*a[1, 0];
+            if (Math.Abs(det) < 1e-10f)
+                return false;
+            x0 = (a[1, 1]*b[0] - a[0, 1]*b[1])/det;
+            x1 = (a[0, 0]*b[1] - a[1, 0]*b[0])/det;
+            return !float.IsNaN(x0) && !float.IsNaN(x1);
         }
 
         public static float Lerp(float t, float start, float end)

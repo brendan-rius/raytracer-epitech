@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 using System.Text.RegularExpressions;
 using OpenTK;
-using raytracer.core;
 using raytracer.materials;
+using raytracer.core;
 
 namespace rt.ObjParser
 {
@@ -63,7 +63,7 @@ namespace rt.ObjParser
 
         public Material ExportToMaterial()
         {
-            return new ClementiteMaterial(Ka, Kd, Ks, (uint) Ns, (uint) Illum);
+            return new ClementiteMaterial(Ka, Kd, Ks, (uint)Ns, (uint)Illum);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace rt
             var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(400, 400, -1000));
+                Transformation.Translation(0, 0, -1000));
             _renderer = new Renderer(_scene,
                 new JitterGridSampler(screen, NSamples), camera, _film,
                 new DirectLightingIntegrator(DirectLightingIntegrator.LightSamplingStrategy.Single));
