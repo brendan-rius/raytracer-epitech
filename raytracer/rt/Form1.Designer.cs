@@ -45,6 +45,7 @@
             this.FiltersPush = new System.Windows.Forms.Button();
             this.FiltersSharpeness = new System.Windows.Forms.Button();
             this.ButtonExit = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.RenderPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,7 +60,7 @@
             // 
             // StatusText
             // 
-            this.StatusText.Font = new System.Drawing.Font("Cicle Gordita", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StatusText.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StatusText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
             this.StatusText.Location = new System.Drawing.Point(0, 852);
             this.StatusText.Name = "StatusText";
@@ -83,7 +84,7 @@
             // 
             // LoadButton
             // 
-            this.LoadButton.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LoadButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LoadButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.LoadButton.Location = new System.Drawing.Point(576, 67);
             this.LoadButton.Name = "LoadButton";
@@ -95,7 +96,7 @@
             // 
             // PathText
             // 
-            this.PathText.Font = new System.Drawing.Font("Cicle Gordita", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PathText.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PathText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
             this.PathText.Location = new System.Drawing.Point(48, 67);
             this.PathText.Name = "PathText";
@@ -107,7 +108,7 @@
             // RenderButton
             // 
             this.RenderButton.Enabled = false;
-            this.RenderButton.Font = new System.Drawing.Font("Cicle Gordita", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RenderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RenderButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.RenderButton.Location = new System.Drawing.Point(54, 739);
             this.RenderButton.Name = "RenderButton";
@@ -120,7 +121,7 @@
             // FiltersTitle
             // 
             this.FiltersTitle.BackColor = System.Drawing.Color.Transparent;
-            this.FiltersTitle.Font = new System.Drawing.Font("Cicle Gordita", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersTitle.Location = new System.Drawing.Point(54, 144);
             this.FiltersTitle.Name = "FiltersTitle";
@@ -132,7 +133,7 @@
             // FiltersContrastMore
             // 
             this.FiltersContrastMore.Enabled = false;
-            this.FiltersContrastMore.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersContrastMore.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersContrastMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersContrastMore.Location = new System.Drawing.Point(54, 229);
             this.FiltersContrastMore.Name = "FiltersContrastMore";
@@ -145,7 +146,7 @@
             // FiltersBorderEnhancement
             // 
             this.FiltersBorderEnhancement.Enabled = false;
-            this.FiltersBorderEnhancement.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBorderEnhancement.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersBorderEnhancement.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersBorderEnhancement.Location = new System.Drawing.Point(54, 299);
             this.FiltersBorderEnhancement.Name = "FiltersBorderEnhancement";
@@ -158,7 +159,7 @@
             // FiltersBlur
             // 
             this.FiltersBlur.Enabled = false;
-            this.FiltersBlur.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBlur.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersBlur.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersBlur.Location = new System.Drawing.Point(54, 369);
             this.FiltersBlur.Name = "FiltersBlur";
@@ -171,7 +172,7 @@
             // FiltersBorderDetect
             // 
             this.FiltersBorderDetect.Enabled = false;
-            this.FiltersBorderDetect.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBorderDetect.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersBorderDetect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersBorderDetect.Location = new System.Drawing.Point(54, 439);
             this.FiltersBorderDetect.Name = "FiltersBorderDetect";
@@ -184,7 +185,7 @@
             // FiltersBorderDetectMore
             // 
             this.FiltersBorderDetectMore.Enabled = false;
-            this.FiltersBorderDetectMore.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersBorderDetectMore.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersBorderDetectMore.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersBorderDetectMore.Location = new System.Drawing.Point(54, 509);
             this.FiltersBorderDetectMore.Name = "FiltersBorderDetectMore";
@@ -197,7 +198,7 @@
             // FiltersPush
             // 
             this.FiltersPush.Enabled = false;
-            this.FiltersPush.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersPush.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersPush.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersPush.Location = new System.Drawing.Point(54, 579);
             this.FiltersPush.Name = "FiltersPush";
@@ -210,7 +211,7 @@
             // FiltersSharpeness
             // 
             this.FiltersSharpeness.Enabled = false;
-            this.FiltersSharpeness.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltersSharpeness.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FiltersSharpeness.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.FiltersSharpeness.Location = new System.Drawing.Point(54, 649);
             this.FiltersSharpeness.Name = "FiltersSharpeness";
@@ -222,7 +223,7 @@
             // 
             // ButtonExit
             // 
-            this.ButtonExit.Font = new System.Drawing.Font("Cicle Gordita", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ButtonExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ButtonExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.ButtonExit.Location = new System.Drawing.Point(16, 1000);
             this.ButtonExit.Name = "ButtonExit";
@@ -232,12 +233,22 @@
             this.ButtonExit.UseVisualStyleBackColor = true;
             this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(218, 1000);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "label1";
+            // 
             // RayTracer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ButtonExit);
             this.Controls.Add(this.FiltersSharpeness);
             this.Controls.Add(this.FiltersPush);
@@ -264,6 +275,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.RenderPicture)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -285,6 +297,7 @@
         private System.Windows.Forms.Button FiltersPush;
         private System.Windows.Forms.Button FiltersSharpeness;
         private System.Windows.Forms.Button ButtonExit;
+        private System.Windows.Forms.Label label1;
     }
 }
 
