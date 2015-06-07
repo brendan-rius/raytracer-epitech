@@ -33,7 +33,9 @@ namespace rt.ObjParser
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
             Regex rgxKs = new Regex(@"Ks\s+([+|-]?\d+(?:\.\d+)?)\s+([+|-]?\d+(?:\.\d+)?)\s+([+|-]?\d+(?:\.\d+)?)",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            Regex rgxNs = new Regex(@"", // 0 10000 ,
+            Regex rgxNs = new Regex(@"Ns\s+(\d+(?:\.\d+)?)", // 0 10000 ,
+                RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Regex rgxD = new Regex(@"d\s+(\d+(?:\.\d+)?)", // 0 10000 ,
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             foreach (string line in _lines)
@@ -48,6 +50,8 @@ namespace rt.ObjParser
                 _getKa(line, currentGroup, rgxKa);
                 _getKd(line, currentGroup, rgxKd);
                 _getKs(line, currentGroup, rgxKs);
+                _getNs(line, currentGroup, rgxNs);
+                _getD(line, currentGroup, rgxD);
             }
             return _materialsProperty;
         }
@@ -91,6 +95,24 @@ namespace rt.ObjParser
                     float.Parse(rgx.Match(line).Groups[1].Value.Replace('.', ',')),
                     float.Parse(rgx.Match(line).Groups[2].Value.Replace('.', ',')),
                     float.Parse(rgx.Match(line).Groups[3].Value.Replace('.', ',')));
+            }
+        }
+
+        private void _getNs(string line, string currentGroup, Regex rgx)
+        {
+            if (rgx.IsMatch(line))
+            {
+                _materialsProperty[currentGroup].AddNs(
+                    float.Parse(rgx.Match(line).Groups[1].Value.Replace('.', ',')));
+            }
+        }
+
+        private void _getD(string line, string currentGroup, Regex rgx)
+        {
+            if (rgx.IsMatch(line))
+            {
+                _materialsProperty[currentGroup].AddD(
+                    float.Parse(rgx.Match(line).Groups[1].Value.Replace('.', ',')));
             }
         }
 
