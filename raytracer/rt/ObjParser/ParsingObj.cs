@@ -43,6 +43,8 @@ namespace rt.ObjParser
             foreach (var group in _facesGroup.Values)
             {
                 var triangleMesh = group.ExportToTriangleMesh(_vertexList);
+                if (triangleMesh == null)
+                    continue;
                 var material = _materialsProperty["default"].ExportToMaterial();
                 if (_materialsProperty.ContainsKey(group.Material))
                     material = _materialsProperty[group.Material].ExportToMaterial();
@@ -97,7 +99,7 @@ namespace rt.ObjParser
             string currentGroup = "default";
             Regex rgxGroup = new Regex(@"g\s+(\w+)",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            Regex rgxFace = new Regex(@"f\s+(\d+)\s+(\d+)\s+(\d+)",
+            Regex rgxFace = new Regex(@"f\s+(\d+)(?:\/+\d+)?\s+(\d+)(?:\/+\d+)?\s+(\d+)(?:\/+\d+)?",
                RegexOptions.IgnoreCase | RegexOptions.Compiled);
             Regex rgxMaterial = new Regex(@"usemtl\s+(\w+)",
                 RegexOptions.IgnoreCase | RegexOptions.Compiled);

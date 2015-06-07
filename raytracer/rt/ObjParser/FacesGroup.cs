@@ -54,6 +54,8 @@ namespace rt.ObjParser
                 var p3 = vertices.ElementAt((int) ids.Z - 1);
                 triangles.Add(new Triangle(new[] { p1, p2, p3 }));
             }
+            if (triangles.Count == 0)
+                return null;
             return new TriangleMesh(triangles);
         }
     }
