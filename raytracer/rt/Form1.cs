@@ -22,7 +22,7 @@ namespace rt
 {
     public partial class RayTracer : Form
     {
-        private const uint NSamples = 15;
+        private const uint NSamples = 1;
         private readonly MyFilm _film;
         private readonly Renderer _renderer;
         private readonly Scene _scene;
@@ -42,7 +42,9 @@ namespace rt
             _renderer = new Renderer(_scene,
                 new JitterGridSampler(screen, NSamples), camera, _film,
                 new DirectLightingIntegrator());
-            _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 650, -500), 50));
+            _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 650, -500), 50, SampledSpectrum.White()*10));
+            _scene.Lights.Add(new PointLight(Transformation.Translation(100, 650, -500),
+                SampledSpectrum.White()));
         }
 
         public async void Render()

@@ -47,6 +47,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
@@ -95,6 +96,7 @@
     <Compile Include="core\StaticRandom.cs" />
     <Compile Include="core\VisibilityTester.cs" />
     <Compile Include="filters\filters.cs" />
+    <Compile Include="integrators\DirectLightingIntegrator.cs" />
     <Compile Include="integrators\WhittedIntegrator.cs" />
     <Compile Include="lights\DiskLight.cs" />
     <Compile Include="lights\PointLight.cs" />

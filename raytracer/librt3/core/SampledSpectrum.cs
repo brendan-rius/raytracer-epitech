@@ -878,5 +878,10 @@ namespace raytracer.core
         {
             return string.Format("Samples: {0}, Average: {1}", _nsamples, Average());
         }
+
+        public static SampledSpectrum White()
+        {
+            return new SampledSpectrum(1f);
+        }
     }
 }
