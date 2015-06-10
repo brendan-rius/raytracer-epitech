@@ -22,7 +22,7 @@ namespace rt
 {
     public partial class RayTracer : Form
     {
-        private const uint NSamples = 8;
+        private const uint NSamples = 1;
         private readonly MyFilm _film;
         private readonly Renderer _renderer;
         private readonly Scene _scene;
@@ -40,11 +40,11 @@ namespace rt
             Camera camera = new SimpleCamera(screen,
                 Transformation.Translation(0, 0, -1000));
             _renderer = new Renderer(_scene,
-                new JitterGridSampler(screen, NSamples), camera, _film,
+                new GridSampler(screen), camera, _film,
                 new DirectLightingIntegrator(DirectLightingIntegrator.LightSamplingStrategy.Multiple));
-            _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 650, -500), 200, SampledSpectrum.White()*10));
+            _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 750, -500), 500, SampledSpectrum.White()*10));
             _scene.Lights.Add(new PointLight(Transformation.Translation(100, 650, -500),
-                SampledSpectrum.White()));
+                SampledSpectrum.White() * 2000000));
         }
 
         public async void Render()
@@ -111,6 +111,7 @@ namespace rt
             StatusText.ForeColor = Color.FromArgb(0x2E, 0xCC, 0x71);
             StatusText.Text = "Rendering in progress...";
             SimpleObjParser(_scene, _file);
+            _scene.Initialize();
             Render();
         }
 

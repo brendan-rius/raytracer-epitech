@@ -9,38 +9,38 @@ namespace raytracer.materials
         /// <summary>
         ///     The "transparency"
         /// </summary>
-        private float _d;
+        private readonly float _d;
 
         /// <summary>
         ///     The type of illumation
         /// </summary>
-        private uint _illum;
+        private readonly uint _illum;
 
         /// <summary>
         ///     Ambient lighting
         /// </summary>
-        private Vector3 _ka;
+        private readonly SampledSpectrum _ka;
 
         /// <summary>
         ///     Diffuse lighting
         /// </summary>
-        private Vector3 _kd;
+        private readonly SampledSpectrum _kd;
 
         /// <summary>
         ///     Specular lighting
         /// </summary>
-        private Vector3 _ks;
+        private readonly SampledSpectrum _ks;
 
         /// <summary>
         ///     The specular coefficient
         /// </summary>
-        private uint _ns;
+        private readonly uint _ns;
 
         public ClementiteMaterial(Vector3 ka, Vector3 kd, Vector3 ks, uint ns, float d, uint illum)
         {
-            _ka = ka;
-            _kd = kd;
-            _ks = ks;
+            _ka = SampledSpectrum.FromRGB(new[] {ka.X, ka.Y, ka.Z}, SampledSpectrum.SpectrumType.SpectrumReflectance);
+            _kd = SampledSpectrum.FromRGB(new[] {kd.X, kd.Y, kd.Z}, SampledSpectrum.SpectrumType.SpectrumReflectance);
+            _ks = SampledSpectrum.FromRGB(new[] {ks.X, ks.Y, ks.Z}, SampledSpectrum.SpectrumType.SpectrumReflectance);
             _ns = ns;
             _illum = illum;
             _d = d;
@@ -49,8 +49,7 @@ namespace raytracer.materials
         public override BSDF GetBSDF(ref Intersection intersection)
         {
             var bsdf = new BSDF(ref intersection);
-            bsdf.AddBxDF(new Microfacet(_ks, null, _ns));
-            bsdf.AddBxDF(new LambertianReflection(SampledSpectrum.Random()));
+            bsdf.AddBxDF(new LambertianReflection(_kd));
             return bsdf;
         }
     }
