@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Text.RegularExpressions;
-using OpenTK;
-using raytracer.materials;
+﻿using OpenTK;
 using raytracer.core;
+using raytracer.materials;
 
 namespace rt.ObjParser
 {
     public class MaterialsGroup
     {
-        public string Name { get; private set; }
+        public float D;
         public int Illum = 1;
         public Vector3 Ka = new Vector3(1, 1, 1);
         public Vector3 Kd = new Vector3(1, 1, 1);
         public Vector3 Ks = new Vector3(1, 1, 1);
         public float Ns = 1;
-        public float d = 1;
 
         /// <summary>
-        /// MaterialsGroup constructor
+        ///     MaterialsGroup constructor
         /// </summary>
         /// <param name="name">Name of the material</param>
         public MaterialsGroup(string name)
         {
             Name = name;
         }
+
+        public string Name { get; private set; }
 
         public void AddIllum(int nb)
         {
@@ -63,12 +57,12 @@ namespace rt.ObjParser
 
         public void AddD(float nb)
         {
-            d = nb;
+            D = nb;
         }
 
         public Material ExportToMaterial()
         {
-            return new ClementiteMaterial(Ka, Kd, Ks, (uint)Ns, d, (uint)Illum);
+            return new ClementiteMaterial(Ka, Kd, Ks, (uint) Ns, D, (uint) Illum);
         }
     }
 }

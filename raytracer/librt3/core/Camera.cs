@@ -1,4 +1,5 @@
-﻿using raytracer.core.mathematics;
+﻿using OpenTK;
+using raytracer.core.mathematics;
 
 namespace raytracer.core
 {

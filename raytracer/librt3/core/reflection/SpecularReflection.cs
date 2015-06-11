@@ -36,13 +36,13 @@ namespace raytracer.core
         /// <summary>
         ///     Creates a specular reflection model based on unrealistic properties
         /// </summary>
-        /// <param name="reflectiveness">the reflectiveness (between 0 and 1)</param>
+        /// <param name="reflectiveness">the reflectiveness (between 0 and 1000)</param>
         /// <param name="spectrum">a scaling spectrum</param>
         public SpecularReflection(float reflectiveness = 1, SampledSpectrum spectrum = null)
             : base(BxDFType.Reflection | BxDFType.Specular)
         {
             _spectrum = spectrum ?? new SampledSpectrum(1);
-            _reflectiveness = MathHelper.Clamp(reflectiveness, 0, 1);
+            _reflectiveness = MathHelper.Clamp(reflectiveness, 0, 1000);
         }
 
         /// <summary>

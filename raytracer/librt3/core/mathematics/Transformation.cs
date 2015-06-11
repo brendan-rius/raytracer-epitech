@@ -255,6 +255,18 @@ namespace raytracer.core.mathematics
         }
 
         /// <summary>
+        ///     Create a look-at transformation
+        /// </summary>
+        /// <param name="eye"></param>
+        /// <param name="target"></param>
+        /// <param name="up"></param>
+        /// <returns></returns>
+        public static Transformation LookAt(Vector3 eye, Vector3 target, Vector3 up)
+        {
+            return new Transformation(Matrix4.LookAt(eye, target, up));
+        }
+
+        /// <summary>
         ///     Create a coordinate system from a single vector
         /// </summary>
         /// <param name="v1">the vector</param>

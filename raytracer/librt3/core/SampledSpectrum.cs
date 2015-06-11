@@ -1152,7 +1152,7 @@ namespace raytracer.core
             return new SampledSpectrum(1f);
         }
 
-        public static SampledSpectrum FromRGB(float[] rgb, SpectrumType type)
+        public static SampledSpectrum FromRGB(float[] rgb, SpectrumType type = SpectrumType.SpectrumReflectance)
         {
             var r = Black();
 

@@ -66,7 +66,7 @@ namespace raytracer.core
                 return SampledSpectrum.Black();
             // random selection over matching bxdfs
             var bxdf =
-                _bxdfs.ElementAt(Math.Min((int) (StaticRandom.NextFloat()*matchingBxDFs.Count), matchingBxDFs.Count - 1));
+                matchingBxDFs.ElementAt(Math.Min((int) (StaticRandom.NextFloat()*matchingBxDFs.Count), matchingBxDFs.Count - 1));
             var leavingLocal = WorldToLocal(ref leaving);
             Vector3 incomingLocal;
             // we sample the chosen bxdf

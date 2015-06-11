@@ -38,13 +38,12 @@ namespace rt
             var screen = new raytracer.core.Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 0, -1000));
+                Transformation.Translation(0, 10, -10) * Transformation.RotateX(-30));
             _renderer = new Renderer(_scene,
                 new GridSampler(screen), camera, _film,
-                new DirectLightingIntegrator(DirectLightingIntegrator.LightSamplingStrategy.Multiple));
-            _scene.Lights.Add(new DiskLight(Transformation.Translation(100, 750, -500), 500, SampledSpectrum.White()*10));
-            _scene.Lights.Add(new PointLight(Transformation.Translation(100, 650, -500),
-                SampledSpectrum.White() * 2000000));
+                new WhittedIntegrator());
+            //_scene.Lights.Add(new DiskLight(Transformation.Translation(100, 750, -500), 500, SampledSpectrum.White()*10000000));
+            _scene.Lights.Add(new PointLight(Transformation.Translation(100, 650, -500), SampledSpectrum.White() * 200000));
         }
 
         public async void Render()
