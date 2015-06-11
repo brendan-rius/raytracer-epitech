@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK;
-using raytracer;
-using rt.ObjParser;
-using System.Diagnostics;
-using raytracer.core;
-using raytracer.samplers;
-using raytracer.lights;
-using raytracer.core.mathematics;
-using raytracer.integrators;
 using raytracer.cameras;
+using raytracer.core;
+using raytracer.core.mathematics;
 using raytracer.filters;
+using raytracer.integrators;
+using raytracer.lights;
+using raytracer.samplers;
+using rt.ObjParser;
+using Screen = raytracer.core.Screen;
 
 namespace rt
 {
@@ -35,15 +31,16 @@ namespace rt
             _filtersState = false;
             InitializeComponent();
             _scene = new Scene();
-            var screen = new raytracer.core.Screen(1024, 768);
+            var screen = new Screen(1024, 768);
             _film = new MyFilm(screen, NSamples);
             Camera camera = new SimpleCamera(screen,
-                Transformation.Translation(0, 10, -10) * Transformation.RotateX(-30));
+                Transformation.Translation(0, 10, -10)*Transformation.RotateX(-30));
             _renderer = new Renderer(_scene,
                 new GridSampler(screen), camera, _film,
                 new WhittedIntegrator());
-            //_scene.Lights.Add(new DiskLight(Transformation.Translation(100, 750, -500), 500, SampledSpectrum.White()*10000000));
-            _scene.Lights.Add(new PointLight(Transformation.Translation(100, 650, -500), SampledSpectrum.White() * 200000));
+            //_scene.Lights.Add(new DiskLight(Transformation.Translation(100, 750, -500), 200,
+            //SampledSpectrum.White()*500000));
+            _scene.Lights.Add(new PointLight(Transformation.Translation(0, 10, -20), SampledSpectrum.White() * 600));
         }
 
         public async void Render()
@@ -66,7 +63,7 @@ namespace rt
         {
             try
             {
-                ParsingObj parser = new ParsingObj(filename);
+                var parser = new ParsingObj(filename);
                 parser.AddToScene(scene);
             }
             catch (Exception e)
@@ -246,6 +243,10 @@ namespace rt
                 RenderButton.Enabled = true;
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+        }
+
         internal class SampledColor
         {
             public float R, G, B;
@@ -274,7 +275,7 @@ namespace rt
 
         internal class MyFilm : Film
         {
-            public MyFilm(raytracer.core.Screen screen, uint nsamples)
+            public MyFilm(Screen screen, uint nsamples)
                 : base(screen)
             {
                 Flag = new Bitmap((int) screen.Width, (int) screen.Height);
@@ -341,11 +342,6 @@ namespace rt
                 get { return (uint) _bitmap.Height; }
                 set { throw new NotImplementedException(); }
             }
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

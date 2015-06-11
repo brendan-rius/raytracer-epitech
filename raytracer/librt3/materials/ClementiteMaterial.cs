@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using librt3.core.reflection;
+using OpenTK;
 using raytracer.core;
 using raytracer.core.reflection;
 
@@ -50,8 +51,8 @@ namespace raytracer.materials
         {
             var bsdf = new BSDF(ref intersection);
             bsdf.AddBxDF(new LambertianReflection(_kd));
-            bsdf.AddBxDF(new SpecularReflection(_ns, _ks));
-            bsdf.AddBxDF(new SpecularTransmission(1f, 1.14f, _kd));
+            //bsdf.AddBxDF(new SpecularReflection());
+            //bsdf.AddBxDF(new SpecularTransmission(1f, 1.14f, _kd));
             return bsdf;
         }
     }
