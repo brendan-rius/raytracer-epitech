@@ -146,6 +146,7 @@ namespace RT_2_poule
         /// </summary>
         private async void Render()
         {
+            _scene.Initialize();
             await Task.Run(() => _renderer.Render());
             _film.Display(RenderPicture);
             RenderPicture.Image = new Bitmap(RenderPicture.Image);
@@ -170,18 +171,17 @@ namespace RT_2_poule
                     scene.Lights.Add(new PointLight(Transformation.Translation(
                         float.Parse(array[1], CultureInfo.InvariantCulture.NumberFormat),
                         float.Parse(array[2], CultureInfo.InvariantCulture.NumberFormat),
-                        float.Parse(array[3], CultureInfo.InvariantCulture.NumberFormat))));
-                    // luminance ???
+                        float.Parse(array[3], CultureInfo.InvariantCulture.NumberFormat)),
+                        SampledSpectrum.White()));
                 }
                 else if (_diskLightReg.Match(str).Success)
                 {
                     string[] array = str.Split(' ');
-                    // -> DISK LIGHT
                     scene.Lights.Add(new PointLight(Transformation.Translation(
                         float.Parse(array[1], CultureInfo.InvariantCulture.NumberFormat),
                         float.Parse(array[2], CultureInfo.InvariantCulture.NumberFormat),
-                        float.Parse(array[3], CultureInfo.InvariantCulture.NumberFormat))));
-                    // luminance ???
+                        float.Parse(array[3], CultureInfo.InvariantCulture.NumberFormat)),
+                        SampledSpectrum.White()));
                 }
                 else if (_cameraReg.Match(str).Success)
                 {
@@ -264,6 +264,7 @@ namespace RT_2_poule
             LoadFile.Enabled = false;
             RenderScene.Enabled = false;
             SaveScene.Enabled = false;
+            InitNewScene();
             ParsePoule(_scene, _file);
             Render();
         }
